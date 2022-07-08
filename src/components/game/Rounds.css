@@ -1,0 +1,13 @@
+div.rounds{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+div.rounds span{
+    color: var(--font-color);
+    padding-bottom: 5px;
+    font-size: 1.15em;
+    font-family: 'Patrick Hand', cursive;
+}

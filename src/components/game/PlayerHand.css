@@ -1,0 +1,19 @@
+.player-hand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-center{
+    margin-bottom: 30px;
+}
+
+.player-left{
+    margin-right: 30px;
+    transform: rotate(-15deg);
+}
+
+.player-right{
+    margin-left: 30px;
+    transform: rotate(15deg);
+}

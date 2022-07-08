@@ -1,0 +1,26 @@
+.open-cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 250px;
+}
+
+.deck{
+    margin-left: -60px;
+}
+
+.vira{
+    transform: rotate(-15deg);
+}
+
+.opponent-card{
+    margin-bottom: 70px;
+    transform: rotate(20deg);
+    margin-left: 70px;
+}
+
+.player-card{
+    margin-top: 70px;
+    transform: rotate(-5deg);
+    margin-left: 40px;
+}

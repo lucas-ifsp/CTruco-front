@@ -1,0 +1,13 @@
+div.commands{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div.commands button{
+    width: 130px;
+    color: var(--font-color);
+    margin-bottom: 5px;
+    font-family: 'Patrick Hand', cursive;
+}

@@ -1,0 +1,31 @@
+nav.menu-area{
+    display: flex;
+    background: var(--menu-bg-color);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: 10px;
+    box-shadow: 
+    2px 0 10px 0 rgba(0, 0, 0, 0.12),
+    2px 0 15px 0 rgba(0, 0, 0, 0.09);
+}
+
+.menu-area a{
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.menu-area a > i{
+    padding-right: 5px;
+}
+
+.menu-area a:hover{
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, #0e484e 0%, #417c81 100%);
+}
+

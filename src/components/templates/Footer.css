@@ -1,0 +1,22 @@
+footer.footer{
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.footer span{
+    color: var(--font-color);
+    padding-right: 20px;
+    font-size: 0.7em;
+}
+
+div a {
+    text-decoration: none;
+    color: var(--font-color);
+}
+
+div a:hover {
+    color: var(--font-color);
+}
+
