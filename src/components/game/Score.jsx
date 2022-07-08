@@ -1,10 +1,10 @@
 import React from "react";
-import "./Points.css"
+import "./Score.css"
 
-const Points = props => 
-    <div className="points">
+const Score = props => 
+    <div className={`score ${props.position}`}>
         <span>{`Jogador: ${props.player}`}</span>
         <span>{`Tentos: ${props.score}`}</span>
     </div>
 
-export default Points;
+export default Score;

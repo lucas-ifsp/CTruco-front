@@ -1,14 +1,22 @@
-div.rounds{
+div.score{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-start;
     height: 100%;
-    padding-left: 15px;
+    padding-left: 25px;
+}
+
+div.botton{
+    justify-content: flex-end;
+    padding-bottom: 25px;
+}
+
+div.top{
+    justify-content: flex-start;
     padding-top: 25px;
 }
 
-div.rounds span{
+div.score span{
     color: var(--font-color);
     padding-bottom: 5px;
     font-size: 1.15em;

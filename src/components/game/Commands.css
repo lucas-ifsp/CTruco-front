@@ -1,8 +1,10 @@
 div.commands{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-right: 25px;
+    padding-bottom: 25px;
 }
 
 div.commands button{

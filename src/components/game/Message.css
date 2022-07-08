@@ -1,0 +1,11 @@
+div.message{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+div.message > .alert{
+    line-height: 65%;
+    font-family: 'Patrick Hand', cursive;
+}
