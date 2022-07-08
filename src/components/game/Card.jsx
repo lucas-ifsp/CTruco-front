@@ -4,9 +4,17 @@ import IMAGES from "../../assets/images/cards/CardImages"
 
 
 const Card = props => { 
+    let cardName = props.name;
+    let played = "";
+    
+    if(cardName === "none"){
+        played = "none";
+        cardName = "back";
+    }
+
     return (
-        <div className="card"> 
-            <img src={IMAGES[`card_${props.name}`]} alt="" />
+        <div className={`card ${played}`}> 
+            <img src={IMAGES[`card_${cardName}`]} alt={cardName} />
         </div>
     )
 }

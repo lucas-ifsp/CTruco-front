@@ -11,3 +11,7 @@ div.card{
 div.card img{
     height: 100%;
 }
+
+div.none{
+    opacity: 0;
+}

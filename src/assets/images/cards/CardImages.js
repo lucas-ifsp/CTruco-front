@@ -50,7 +50,9 @@ const IMAGES = {
     card_3H: require("./3H.png"), 
     card_3C: require("./3C.png"), 
 
-    card_back: require("./red_back.png")     
+    card_back: require("./red_back.png"),     
+    card_played: require("./table.png")     
+
 }
 
 export default IMAGES;
