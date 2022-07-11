@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PlayerHand from "./PlayerHand";
 import OpponentHand from "./OpponentHand";
 import OpenCards from "./OpenCards";
@@ -6,7 +6,7 @@ import Score from "./Score";
 import Rounds from "./Rounds";
 import Commands from "./Commands";
 import Message from "./Message";
-import axios from "axios";
+
 import "./Mat.css";
 
 const Mat = props => {
@@ -17,7 +17,6 @@ const Mat = props => {
     const playerCard = "AS";
     const opponentCard = null;
     const message = "Palmeiras não tem mundial";
-
 
     return (
         <main className="mat-area">
