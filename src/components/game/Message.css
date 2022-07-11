@@ -9,3 +9,7 @@ div.message > .alert{
     line-height: 65%;
     font-family: 'Patrick Hand', cursive;
 }
+
+div.message > .hidden{
+    opacity: 0;
+}
