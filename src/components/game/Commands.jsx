@@ -1,11 +1,39 @@
-import React from "react";
-import "./Commands.css";
+import './Commands.css'
 
-const Commands = props => 
-    <div className="commands">
-        <button type="button" className="btn btn-secondary" disabled={props.raiseDisabled}>Pedir Truco</button>
-        <button type="button" className="btn btn-secondary" disabled={props.acceptDisabled}>Aceitar</button>
-        <button type="button" className="btn btn-secondary" disabled={props.quitDisabled}>Correr</button>
-    </div>
+const Commands = ({ raiseDisabled, acceptDisabled, quitDisabled, handlePointsChange }) => {
+    const action = {
+        raise: 'raised-points',
+        accept: 'accepted-bet',
+        quit: 'quit-hand',
+    }
 
-export default Commands;
+    return (
+        <div className='commands'>
+            <button
+                type='button'
+                className='btn btn-secondary'
+                disabled={raiseDisabled}
+                onClick={() => handlePointsChange(action['raise'])}
+            >
+                Pedir Truco
+            </button>
+            <button
+                type='button'
+                className='btn btn-secondary'
+                disabled={acceptDisabled}
+                onClick={() => handlePointsChange(action['accept'])}
+            >
+                Aceitar
+            </button>
+            <button
+                type='button'
+                className='btn btn-secondary'
+                disabled={quitDisabled}
+                onClick={() => handlePointsChange(action['quit'])}
+            >
+                Correr
+            </button>
+        </div>
+    )
+}
+export default Commands
