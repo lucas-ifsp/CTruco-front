@@ -13,12 +13,13 @@ import './Mat.css'
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
 
-    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
     const toCardString = card => card.rank + card.suit
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
+    const getPlayer = intel => intel.players.find(aPlayer => aPlayer.uuid === uuid)
+    const getOpponent = intel => intel.players.find(aPlayer => aPlayer.uuid !== uuid)
 
-    let player = initialIntel.players.find(aPlayer => aPlayer.uuid === uuid)
-    let opponent = initialIntel.players.find(aPlayer => aPlayer.uuid !== uuid)
+    let player = getPlayer(initialIntel)
+    let opponent = getOpponent(initialIntel)
 
     const scoreToString = {
         3: 'truco',
@@ -49,26 +50,23 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [acceptDisabled, setAcceptDisabled] = useState(false)
     const [quitDisabled, setQuitDisabled] = useState(false)
 
-    // SOLVE LIFECYCLE ISSUES
-    // DEAL WITH NO RENDERING STATES OF CARDS
-    // IMPLEMENT MISSING INTEL LOGIC
     // IMPLEMENT OPEN CARDS LOGIC
-    // TIP: TO CHANGE PARENT FROM CHILD, PASS CALLBACK FUNCTION (HOW ABOUT CREATING A FLAG TO TRIGGER UPDATE AND USE IT IN USEEFFECT TRIGGER CRITERION? )
+    // IMPLEMENT PREPARE NEW HAND
+    // FIX UNDEFINED IN MESSAGE
+    // ADD MORE ANIMATION WITHIN THE SAME INTEL
 
     useEffect(() => {
-        const intelToProcess = [...missingIntel]
-        while (intelToProcess.length > 0) {
-            const intel = intelToProcess.shift()
-            setInterval(() => updateView(intel), 1500)
-        }
+        missingIntel.forEach((intel, i) => {
+            setTimeout(() => updateView(intel), i * 3000)
+        })
         setMissingIntel([])
     }, [lastIntel])
 
-    function updateView(intel) {
-        updateButtons(intel)
-        updateScores(intel)
-        updateHand(intel)
+    async function updateView(intel) {
         updatePlayersHands(intel)
+        updateButtons(intel)
+        updateHand(intel)
+        updateScores(intel)
         updateMessage(intel)
     }
 
@@ -78,13 +76,13 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
     }
 
+    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
+
     const canPerform = (intel, action) => intel.possibleActions.includes(action)
 
     function updateScores(intel) {
-        const newPlayerScore = intel.players.find(aPlayer => aPlayer.uuid === uuid).score
-        const newOpponentScore = initialIntel.players.find(aPlayer => aPlayer.uuid !== uuid).score
-        setPlayerScore(newPlayerScore)
-        setOpponentScore(newOpponentScore)
+        setPlayerScore(getPlayer(intel).score)
+        setOpponentScore(getOpponent(intel).score)
     }
 
     function updateHand(intel) {
@@ -94,40 +92,39 @@ const Mat = ({ initialIntel, uuid, token }) => {
     }
 
     function updatePlayersHands(intel) {
-        const getSameFromIntelOrNull = (handIntel, someCard) =>
-            handIntel.find(card => card === someCard) || null
-        const getUpdatedHand = (handState, handIntel) =>
-            handState.map(card => getSameFromIntelOrNull(handIntel, card))
-        setPlayerHand(getUpdatedHand(playerHand, getCardsAsStrings(player.cards)))
-        setOpponentHand(getUpdatedHand(opponentHand, getCardsAsStrings(opponent.cards)))
+        const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
+        const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
+        setPlayerHand(getUpdatedHand(playerHand, getCardsAsStrings(getPlayer(intel).cards)))
+        setOpponentHand(getUpdatedHand(opponentHand, getCardsAsStrings(getOpponent(intel).cards)))
     }
 
     function updateMessage(intel) {
+        const description = {
+            QUIT: 'correu!',
+            QUIT_HAND: 'não aceitou a mão!',
+            ACCEPT: 'aceitou!',
+        }
         if (intel.isGameDone) {
             setMessage(`Game Over - Você ${player.score === 12 ? 'Venceu!' : 'Perdeu.'}`)
             return
         }
         if (!isPlayerTurn(intel)) {
-            switch (intel.event) {
-                case 'QUIT':
-                    setMessage(`${opponent.name} correu!`)
-                    break
-                case 'QUIT_HAND':
-                    setMessage(`${opponent.name} não aceitou a mão!`)
-                    break
-                case 'ACCEPT':
-                    setMessage(`${opponent.name} aceitou!`)
-                    break
-            }
+            setMessage(`${opponent.name} ${description[intel.event]}`)
             return
         }
-        if (canPerform(intel, 'PLAY'))
-            setMessage('Click esquerdo na carta para jogar. Clique direito na carta para ocultar.')
-        else if (intel.handPointsProposal)
+        if (canPerform(intel, 'PLAY')) {
+            setMessage('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
+            return
+        }
+        if (intel.handPointsProposal) {
             setMessage(`${opponent.name} está pedindo ${scoreToString[intel.handPointsProposal]}`)
-        else if (intel.isMaoDeOnze && intel.handPoints === 1)
+            return
+        }
+        if (intel.isMaoDeOnze && intel.handPoints === 1) {
             setMessage('Mão de Onze! Escolha se você aceita ou corre.')
-        else setMessage('')
+            return
+        }
+        setMessage('')
     }
 
     async function updateIntel() {
@@ -137,8 +134,11 @@ const Mat = ({ initialIntel, uuid, token }) => {
             Authorization: token,
         }
         try {
-            const { data: receivedIntel } = await axios.get(url, { headers: headers })
-            console.log(receivedIntel)
+            const {data: { intelSinceBaseTimestamp }} = await axios.get(url, { headers: headers })
+            if (intelSinceBaseTimestamp.length === 0) return
+            setMissingIntel([...intelSinceBaseTimestamp])
+            const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
+            setLastIntel(lastMissingIntel)
         } catch (error) {
             console.error(error)
         }
@@ -152,8 +152,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
             Authorization: token,
         }
         try {
-            const { data: newState } = await axios.post(url, payload, { headers: headers })
-            console.log(newState)
+            await axios.post(url, payload, { headers: headers })
             updateIntel()
         } catch (error) {
             console.error(error)
@@ -186,11 +185,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 </div>
                 <OpponentHand cards={opponentHand} />
                 <OpenCards vira={vira} playerCard={playerCard} opponentCard={opponentCard} />
-                <PlayerHand
-                    cards={playerHand}
-                    handleCardPlay={handleCardPlay}
-                    inTurn={isPlayerTurn(lastIntel)}
-                />
+                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} inTurn={isPlayerTurn(lastIntel)} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
                     quitDisabled={quitDisabled}
