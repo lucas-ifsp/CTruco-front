@@ -1,6 +1,6 @@
 import React from "react";
+import IMAGES from "../../../assets/images/cards/CardImages";
 import "./Card.css";
-import IMAGES from "../../assets/images/cards/CardImages"
 
 
 const Card = props => { 

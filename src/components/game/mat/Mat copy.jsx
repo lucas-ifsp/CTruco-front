@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import Commands from './Commands'
+import OpenCards from '../cards/OpenCards'
+import OpponentHand from '../cards/OpponentHand'
+import PlayerHand from '../cards/PlayerHand'
+import Commands from '../commands/Commands'
 import Message from './Message'
-import OpenCards from './OpenCards'
-import OpponentHand from './OpponentHand'
-import PlayerHand from './PlayerHand'
 import Rounds from './Rounds'
 import Score from './Score'
 
@@ -13,7 +13,7 @@ import './Mat.css'
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
 
-    const toCardString = card => card.rank + card.suit
+    const toCardString = card => `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
     const getPlayer = intel => intel.players.find(aPlayer => aPlayer.uuid === uuid)
     const getOpponent = intel => intel.players.find(aPlayer => aPlayer.uuid !== uuid)
@@ -51,8 +51,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [quitDisabled, setQuitDisabled] = useState(false)
 
     // IMPLEMENT OPEN CARDS LOGIC
-    // IMPLEMENT PREPARE NEW HAND
-    // FIX UNDEFINED IN MESSAGE
+    // UPDATE ISTURN FOR CANPLAY IN PLAYER CARD PROPS
     // ADD MORE ANIMATION WITHIN THE SAME INTEL
 
     useEffect(() => {
@@ -63,11 +62,36 @@ const Mat = ({ initialIntel, uuid, token }) => {
     }, [lastIntel])
 
     async function updateView(intel) {
+        clearCardsIfNecessary(intel)
         updatePlayersHands(intel)
         updateButtons(intel)
+        updateOpenCards(intel)
         updateHand(intel)
         updateScores(intel)
         updateMessage(intel)
+    }
+
+    function hasCardsToClean(intel) {
+        const cardsPlayed = intel.openCards.length;
+        const isSecondCardOfRound = cardsPlayed % 2 == 1;
+        if(intel.event === null) return false;
+        return intel.event === 'PLAY' && cardsPlayed > 1 && isSecondCardOfRound;
+    }
+
+    function clearCardsIfNecessary(intel){
+        console.log(playerCard)
+        console.log(opponentCard)
+        console.log(rounds)
+        console.log(intel.roundWinnersUsernames)
+        console.log('-----')
+
+        if(rounds === intel.roundWinnersUsernames) return
+
+        const hasTwoOpenCards = !!playerCard && !!opponentCard
+        if(intel.event !== 'HAND_START' && !hasTwoOpenCards) return
+
+        setPlayerCard(null)
+        setOpponentCard(null)
     }
 
     function updateButtons(intel) {
@@ -76,9 +100,17 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
     }
 
+    function updateOpenCards(intel){
+        if(intel.event !== 'PLAY') return
+        const lastPlayedCard = intel.openCards.slice(-1)[0]
+        const cardAsString = toCardString(lastPlayedCard)
+        if(intel.eventPlayerUUID === uuid) setPlayerCard(cardAsString)
+        else setOpponentCard(cardAsString)
+    }
+
     const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
 
-    const canPerform = (intel, action) => intel.possibleActions.includes(action)
+    const canPerform = (intel, action) => isPlayerTurn && intel.possibleActions.includes(action)
 
     function updateScores(intel) {
         setPlayerScore(getPlayer(intel).score)
@@ -94,8 +126,24 @@ const Mat = ({ initialIntel, uuid, token }) => {
     function updatePlayersHands(intel) {
         const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
         const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
-        setPlayerHand(getUpdatedHand(playerHand, getCardsAsStrings(getPlayer(intel).cards)))
-        setOpponentHand(getUpdatedHand(opponentHand, getCardsAsStrings(getOpponent(intel).cards)))
+
+        const playerCardsFromIntel = getCardsAsStrings(getPlayer(intel).cards)
+        const opponentCardsFromIntel = getCardsAsStrings(getOpponent(intel).cards)
+
+        if(intel.event === 'HAND_START'){
+            setPlayerHand(playerCardsFromIntel)
+            setOpponentHand(opponentCardsFromIntel)
+            return
+        }
+
+        const numberOfPlayerCards = playerHand.filter(card => card !== null).length
+        const numberOfOpponentCards = opponentHand.filter(card => card !== null).length
+
+        if(playerCardsFromIntel.length <= numberOfPlayerCards) 
+            setPlayerHand(getUpdatedHand(playerHand, playerCardsFromIntel))
+        
+        if(opponentCardsFromIntel.length <= numberOfOpponentCards)
+            setOpponentHand(getUpdatedHand(opponentHand, opponentCardsFromIntel))
     }
 
     function updateMessage(intel) {
@@ -104,12 +152,14 @@ const Mat = ({ initialIntel, uuid, token }) => {
             QUIT_HAND: 'não aceitou a mão!',
             ACCEPT: 'aceitou!',
         }
+        const event = description[intel.event]
+
         if (intel.isGameDone) {
             setMessage(`Game Over - Você ${player.score === 12 ? 'Venceu!' : 'Perdeu.'}`)
             return
         }
-        if (!isPlayerTurn(intel)) {
-            setMessage(`${opponent.name} ${description[intel.event]}`)
+        if (!isPlayerTurn(intel) && description.hasOwnProperty(event)) {
+            setMessage(`${getOpponent(intel).username} ${event}`)
             return
         }
         if (canPerform(intel, 'PLAY')) {
@@ -117,7 +167,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
             return
         }
         if (intel.handPointsProposal) {
-            setMessage(`${opponent.name} está pedindo ${scoreToString[intel.handPointsProposal]}`)
+            setMessage(`${getOpponent(intel).username} está pedindo ${scoreToString[intel.handPointsProposal]}`)
             return
         }
         if (intel.isMaoDeOnze && intel.handPoints === 1) {

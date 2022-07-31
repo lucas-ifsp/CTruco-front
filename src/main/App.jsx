@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import Mat from '../components/game/mat/Mat'
 import Footer from '../components/templates/Footer'
 import Header from '../components/templates/Header'
-import Mat from '../components/game/Mat'
 import Menu from '../components/templates/Menu'
-import axios from 'axios'
 
 import './App.css'
 
@@ -13,7 +13,7 @@ const App = props => {
     const username = 'Lucas'
     const email = 'lucas.ruas@gmail.com'
     const password = '123123'
-    const botName = 'MineiroBot'
+    const botName = 'MineiroByBueno'
 
     const defaultGameState = {
         uuid: null, 

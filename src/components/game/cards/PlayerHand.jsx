@@ -16,13 +16,9 @@ const PlayerHand = ({cards, inTurn, handleCardPlay}) => {
         baseCenter = cards[1] || 'none'
         baseRight = cards[2] || 'none'
 
-        console.log(`${shouldUpdate(left, baseLeft)} | ${shouldUpdate(center, baseCenter)} | ${shouldUpdate(right, baseRight)}`)
-
         if(shouldUpdate(left, baseLeft)) setLeft(baseLeft) 
         if(shouldUpdate(center, baseCenter)) setCenter(baseCenter) 
         if(shouldUpdate(right, baseRight)) setRight(baseRight) 
-
-        console.log(`${baseLeft} | ${baseCenter} | ${baseRight}`)
     }, cards)
 
     const shouldUpdate = (currentState, newState) => currentState !== 'back' || newState === 'none'
