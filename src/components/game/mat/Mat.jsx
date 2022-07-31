@@ -22,12 +22,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     let player = getPlayer(initialIntel)
     let opponent = getOpponent(initialIntel)
 
-    const scoreToString = {
-        3: 'truco',
-        6: 'seis',
-        9: 'nove',
-        12: 'doze',
-    }
+    const scoreToString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
 
     const [lastIntel, setLastIntel] = useState(initialIntel)
     const [missingIntel, setMissingIntel] = useState([initialIntel])
@@ -50,10 +45,9 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [quitDisabled, setQuitDisabled] = useState(false)
 
     useEffect(() => {
+        if(!missingIntel) return
         const timeline = buildTimeline(missingIntel)
-        console.log(timeline)
 
-        if(!timeline) return 
         timeline.forEach(animation => {
             setTimeout(() => animation.event(), animation.time)
         })
@@ -61,8 +55,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
     }, [lastIntel])
 
     function buildTimeline(missingIntel){
-        if(missingIntel.length < 2) return 
-
         const DELAY_UNIT = 100;
         const timeline = new Timeline()
 
@@ -85,10 +77,10 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 timeline.addEvent(DELAY_UNIT * 3, async () => setVira(toCardString(currentIntel.vira)))
 
             if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 4, async () => updateOpponentCards(currentIntel))
+                timeline.addEvent(DELAY_UNIT * 4, async () => updateHand(getOpponent(currentIntel).cards, currentIntel.event, opponentHand, setOpponentHand))
             
             if(hasChangedPlayerProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => updatePlayerCards(currentIntel))
+                timeline.addEvent(DELAY_UNIT * 3, async () => updateHand(getPlayer(currentIntel).cards, currentIntel.event, playerHand, setPlayerHand))
 
             if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) 
                 timeline.addEvent(DELAY_UNIT * 3, async () => updateOpenCards(currentIntel))
@@ -97,7 +89,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
                 timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
             } 
-                     
         }
         return timeline.get()  
     }
@@ -128,36 +119,19 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setOpponentCard(null)
     }
 
-    function updatePlayerCards(intel) {
+    function updateHand(cards, intelEvent, cardState, setCardStateFunction) {
         const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
         const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
+        const cardsFromIntel = getCardsAsStrings(cards)
 
-        const playerCardsFromIntel = getCardsAsStrings(getPlayer(intel).cards)
-
-        if(intel.event === 'HAND_START'){
-            setPlayerHand(playerCardsFromIntel)
+        if(intelEvent === 'HAND_START'){
+            setCardStateFunction(cardsFromIntel)
             return
         }
 
-        const numberOfPlayerCards = playerHand.filter(card => card !== null).length
-        if(playerCardsFromIntel.length <= numberOfPlayerCards) 
-            setPlayerHand(getUpdatedHand(playerHand, playerCardsFromIntel))
-    }
-
-    function updateOpponentCards(intel) {
-        const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
-        const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
-
-        const opponentCardsFromIntel = getCardsAsStrings(getOpponent(intel).cards)
-
-        if(intel.event === 'HAND_START'){
-            setOpponentHand(opponentCardsFromIntel)
-            return
-        }
-
-        const numberOfOpponentCards = opponentHand.filter(card => card !== null).length
-        if(opponentCardsFromIntel.length <= numberOfOpponentCards)
-            setOpponentHand(getUpdatedHand(opponentHand, opponentCardsFromIntel))
+        const currentNumberOfCards = cardState.filter(card => card !== null).length
+        if(cardsFromIntel.length <= currentNumberOfCards) 
+            setCardStateFunction(getUpdatedHand(cardState, cardsFromIntel))
     }
 
     function updateOpenCards(intel){
