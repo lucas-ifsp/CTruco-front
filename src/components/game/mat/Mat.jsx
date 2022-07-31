@@ -70,12 +70,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
             const prevIntel = missingIntel[i - 1]
             const currentIntel = missingIntel[i]
 
-            timeline.addEvent(0, async () => updateButtons(currentIntel))
-
-            if(hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)){
-                timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
-                timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
-            }   
+            timeline.addEvent(0, async () => updateButtons(currentIntel))  
 
             if(hasChangedPlayerProperty('score', currentIntel, prevIntel)) 
                 timeline.addEvent(DELAY_UNIT, async () => setPlayerScore(getPlayer(currentIntel).score))
@@ -97,9 +92,23 @@ const Mat = ({ initialIntel, uuid, token }) => {
 
             if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) 
                 timeline.addEvent(DELAY_UNIT * 3, async () => updateOpenCards(currentIntel))
+
+            if(hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)){
+                timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
+                timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
+            } 
                      
         }
         return timeline.get()  
+    }
+    
+    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
+    const canPerform = (intel, action) => isPlayerTurn && intel.possibleActions.includes(action)
+
+    function updateButtons(intel) {
+        setRaiseDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'RAISE'))
+        setAcceptDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'ACCEPT'))
+        setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
     }
 
     function hasChangedPlayerProperty(propertyName, currentIntel, prevIntel) {
@@ -151,67 +160,12 @@ const Mat = ({ initialIntel, uuid, token }) => {
             setOpponentHand(getUpdatedHand(opponentHand, opponentCardsFromIntel))
     }
 
-
-    async function updateView(intel) {
-        clearCardsIfNecessary(intel)
-        updatePlayersHands(intel)
-        updateButtons(intel)
-        updateOpenCards(intel)
-        updateHand(intel)
-        updateScores(intel)
-        updateMessage(intel)
-    }
-
-    function hasCardsToClean(intel) {
-        const cardsPlayed = intel.openCards.length;
-        const isSecondCardOfRound = cardsPlayed % 2 == 1;
-        if(intel.event === null) return false;
-        return intel.event === 'PLAY' && cardsPlayed > 1 && isSecondCardOfRound;
-    }
-
-    function clearCardsIfNecessary(intel){
-        console.log(playerCard)
-        console.log(opponentCard)
-        console.log(rounds)
-        console.log(intel.roundWinnersUsernames)
-        console.log('-----')
-
-        if(rounds === intel.roundWinnersUsernames) return
-
-        const hasTwoOpenCards = !!playerCard && !!opponentCard
-        if(intel.event !== 'HAND_START' && !hasTwoOpenCards) return
-
-        setPlayerCard(null)
-        setOpponentCard(null)
-    }
-
-    function updateButtons(intel) {
-        setRaiseDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'RAISE'))
-        setAcceptDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'ACCEPT'))
-        setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
-    }
-
     function updateOpenCards(intel){
         if(intel.event !== 'PLAY') return
         const lastPlayedCard = intel.openCards.slice(-1)[0]
         const cardAsString = toCardString(lastPlayedCard)
         if(intel.eventPlayerUUID === uuid) setPlayerCard(cardAsString)
         else setOpponentCard(cardAsString)
-    }
-
-    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
-
-    const canPerform = (intel, action) => isPlayerTurn && intel.possibleActions.includes(action)
-
-    function updateScores(intel) {
-        setPlayerScore(getPlayer(intel).score)
-        setOpponentScore(getOpponent(intel).score)
-    }
-
-    function updateHand(intel) {
-        setVira(toCardString(intel.vira))
-        setHandPoints(intel.handPoints)
-        setRounds(intel.roundWinnersUsernames)
     }
 
     function updateMessage(intel) {
@@ -292,30 +246,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         }
     }
 
-    function updatePlayersHands(intel) {
-        const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
-        const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
-
-        const playerCardsFromIntel = getCardsAsStrings(getPlayer(intel).cards)
-        const opponentCardsFromIntel = getCardsAsStrings(getOpponent(intel).cards)
-
-        if(intel.event === 'HAND_START'){
-            setPlayerHand(playerCardsFromIntel)
-            setOpponentHand(opponentCardsFromIntel)
-            return
-        }
-
-        const numberOfPlayerCards = playerHand.filter(card => card !== null).length
-        const numberOfOpponentCards = opponentHand.filter(card => card !== null).length
-
-        if(playerCardsFromIntel.length <= numberOfPlayerCards) 
-            setPlayerHand(getUpdatedHand(playerHand, playerCardsFromIntel))
-        
-        if(opponentCardsFromIntel.length <= numberOfOpponentCards)
-            setOpponentHand(getUpdatedHand(opponentHand, opponentCardsFromIntel))
-    }
-
-    
     return (
         <main className='mat-area'>
             <div className='mat'>
