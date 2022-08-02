@@ -24,7 +24,7 @@ const PlayerHand = ({cards, inTurn, handleCardPlay}) => {
     const shouldUpdate = (currentState, newState) => currentState !== 'back' || newState === 'none'
 
     const flipOrThrow = (e, currentState, setNextState, baseState) => {
-        if(!inTurn || baseState === 'none') return
+        if(!inTurn || !baseState || baseState === 'none') return
         if(e.altKey){
             const nextState = currentState === baseState ? 'back' : baseState
             setNextState(nextState)

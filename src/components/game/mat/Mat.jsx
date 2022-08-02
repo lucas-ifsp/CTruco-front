@@ -14,6 +14,8 @@ import './Mat.css'
 //SOLVE OPPONENT CARD NOT THROWING BUG
 //EXTRACT API CALLS TO EXTERNAL FILES
 
+ // TEST IF GAME RESULT AND WINNER SCORE HAS BEEN FIXED
+
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
 
@@ -26,6 +28,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     let opponent = getOpponent(initialIntel)
 
     const scoreToString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
+    //const nextScoreAsString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
 
     const [lastIntel, setLastIntel] = useState(initialIntel)
     const [missingIntel, setMissingIntel] = useState([initialIntel])
@@ -63,30 +66,30 @@ const Mat = ({ initialIntel, uuid, token }) => {
             const currentIntel = missingIntel[i]
 
             if(currentIntel.event === 'HAND_START'){
-                timeline.addEvent(DELAY_UNIT * 10, async () => prepareNewHand(currentIntel))
-                continue
+                timeline.addEvent(DELAY_UNIT * 15, async () => prepareNewHand(currentIntel))
+            } else if(currentIntel.event === 'GAME_OVER'){
+                timeline.addEvent(DELAY_UNIT, async () => setPlayerScore(getPlayer(currentIntel).score))
+                timeline.addEvent(0, async () => setOpponentScore(getOpponent(currentIntel).score))
+            }else {
+                if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) 
+                    timeline.addEvent(DELAY_UNIT * 3, async () => setHandPoints(currentIntel.handPoints))
+
+                if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) 
+                    timeline.addEvent(DELAY_UNIT * 5, async () => updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand))
+                
+                if(hasChangedPlayerProperty('cards', currentIntel, prevIntel)) 
+                    timeline.addEvent(DELAY_UNIT * 3, async () => updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand))
+
+                if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) 
+                    timeline.addEvent(DELAY_UNIT * 3, async () => updateOpenCards(currentIntel))
+
+                if(hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)){
+                    timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
+                    timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
+                } 
             }
-
-            if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => setHandPoints(currentIntel.handPoints))
-
-            if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 5, async () => updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand))
-            
-            if(hasChangedPlayerProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand))
-
-            if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => updateOpenCards(currentIntel))
-
-            if(hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)){
-                timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
-                timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
-            } 
-
             timeline.addEvent(DELAY_UNIT * 3, async () => updateButtons(currentIntel))  
             timeline.addEvent(DELAY_UNIT * 2, async () => updateMessage(currentIntel))  
-
         }
         return timeline.get()  
     }
@@ -108,8 +111,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setPlayerHand(getCardsAsStrings(getPlayer(intel).cards))
         setOpponentHand(getCardsAsStrings(getOpponent(intel).cards))
         setRounds(intel.roundWinnersUsernames)
-        updateButtons(intel)  
-        updateMessage(intel)
         clearOpenCards()
     }
 
@@ -155,8 +156,9 @@ const Mat = ({ initialIntel, uuid, token }) => {
         const event = description[intel.event]
         const isOpponentEvent = !!intel.eventPlayerUUID && intel.eventPlayerUUID !== uuid
 
-        if (intel.isGameDone) {
-            setMessage(`Game Over - Você ${player.score === 12 ? 'Venceu!' : 'Perdeu.'}`)
+        if (intel.event === 'GAME_OVER') {
+            const result = intel.gameWinner === uuid? 'Venceu!' : 'Perdeu.'
+            setMessage(`Game Over - Você ${result}`)
             return
         }
         if (isOpponentEvent && description.hasOwnProperty(intel.event)) {
