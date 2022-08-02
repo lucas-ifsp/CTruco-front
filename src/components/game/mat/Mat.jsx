@@ -11,6 +11,9 @@ import Timeline from './Timeline'
 
 import './Mat.css'
 
+//SOLVE OPPONENT CARD NOT THROWING BUG
+//EXTRACT API CALLS TO EXTERNAL FILES
+
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
 
@@ -28,7 +31,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [missingIntel, setMissingIntel] = useState([initialIntel])
 
     const [vira, setVira] = useState(toCardString(initialIntel.vira))
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
     const [rounds, setRounds] = useState([])
     const [handPoints, setHandPoints] = useState(1)
 
@@ -47,40 +50,31 @@ const Mat = ({ initialIntel, uuid, token }) => {
     useEffect(() => {
         if(!missingIntel) return
         const timeline = buildTimeline(missingIntel)
-
-        timeline.forEach(animation => {
-            setTimeout(() => animation.event(), animation.time)
-        })
+        timeline.forEach(animation => setTimeout(() => animation.event(), animation.time))
         setMissingIntel([])
     }, [lastIntel])
 
     function buildTimeline(missingIntel){
-        const DELAY_UNIT = 100;
+        const DELAY_UNIT = 120;
         const timeline = new Timeline()
 
         for(let i = 1; i < missingIntel.length; i++) {
             const prevIntel = missingIntel[i - 1]
             const currentIntel = missingIntel[i]
 
-            timeline.addEvent(0, async () => updateButtons(currentIntel))  
-
-            if(hasChangedPlayerProperty('score', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT, async () => setPlayerScore(getPlayer(currentIntel).score))
-
-            if(hasChangedOpponentProperty('score', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT, async () => setOpponentScore(getOpponent(currentIntel).score))
+            if(currentIntel.event === 'HAND_START'){
+                timeline.addEvent(DELAY_UNIT * 10, async () => prepareNewHand(currentIntel))
+                continue
+            }
 
             if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) 
                 timeline.addEvent(DELAY_UNIT * 3, async () => setHandPoints(currentIntel.handPoints))
 
-            if(hasChangedMatchProperty('vira', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => setVira(toCardString(currentIntel.vira)))
-
             if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 4, async () => updateHand(getOpponent(currentIntel).cards, currentIntel.event, opponentHand, setOpponentHand))
+                timeline.addEvent(DELAY_UNIT * 5, async () => updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand))
             
             if(hasChangedPlayerProperty('cards', currentIntel, prevIntel)) 
-                timeline.addEvent(DELAY_UNIT * 3, async () => updateHand(getPlayer(currentIntel).cards, currentIntel.event, playerHand, setPlayerHand))
+                timeline.addEvent(DELAY_UNIT * 3, async () => updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand))
 
             if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) 
                 timeline.addEvent(DELAY_UNIT * 3, async () => updateOpenCards(currentIntel))
@@ -89,17 +83,34 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 timeline.addEvent(DELAY_UNIT * 3, async () => setRounds(currentIntel.roundWinnersUsernames))
                 timeline.addEvent(DELAY_UNIT * 30, async () => clearOpenCards())
             } 
+
+            timeline.addEvent(DELAY_UNIT * 3, async () => updateButtons(currentIntel))  
+            timeline.addEvent(DELAY_UNIT * 2, async () => updateMessage(currentIntel))  
+
         }
         return timeline.get()  
     }
     
-    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
-    const canPerform = (intel, action) => isPlayerTurn && intel.possibleActions.includes(action)
-
     function updateButtons(intel) {
         setRaiseDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'RAISE'))
         setAcceptDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'ACCEPT'))
         setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
+    }
+
+    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
+    const canPerform = (intel, action) => isPlayerTurn(intel) && intel.possibleActions.includes(action)
+
+    function prepareNewHand(intel){
+        setHandPoints(1)
+        setPlayerScore(getPlayer(intel).score)
+        setOpponentScore(getOpponent(intel).score)
+        setVira(toCardString(intel.vira))
+        setPlayerHand(getCardsAsStrings(getPlayer(intel).cards))
+        setOpponentHand(getCardsAsStrings(getOpponent(intel).cards))
+        setRounds(intel.roundWinnersUsernames)
+        updateButtons(intel)  
+        updateMessage(intel)
+        clearOpenCards()
     }
 
     function hasChangedPlayerProperty(propertyName, currentIntel, prevIntel) {
@@ -119,19 +130,12 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setOpponentCard(null)
     }
 
-    function updateHand(cards, intelEvent, cardState, setCardStateFunction) {
-        const getSameFromIntelOrNull = (handIntel, someCard) => handIntel.find(card => card === someCard) || null
-        const getUpdatedHand = (handState, handIntel) => handState.map(card => getSameFromIntelOrNull(handIntel, card))
+    function updateHand(cards, cardState, setCardStateFunction) {
+        const getSameFromIntelOrNull = (handFromIntel, someCard) => handFromIntel.find(card => card === someCard) || null
+        const getUpdatedHand = (receivedHand, handFromIntel) => receivedHand.map(card => getSameFromIntelOrNull(handFromIntel, card))
         const cardsFromIntel = getCardsAsStrings(cards)
-
-        if(intelEvent === 'HAND_START'){
-            setCardStateFunction(cardsFromIntel)
-            return
-        }
-
-        const currentNumberOfCards = cardState.filter(card => card !== null).length
-        if(cardsFromIntel.length <= currentNumberOfCards) 
-            setCardStateFunction(getUpdatedHand(cardState, cardsFromIntel))
+        const updateHand = getUpdatedHand(cardState, cardsFromIntel)
+        setCardStateFunction(updateHand)
     }
 
     function updateOpenCards(intel){
@@ -149,26 +153,30 @@ const Mat = ({ initialIntel, uuid, token }) => {
             ACCEPT: 'aceitou!',
         }
         const event = description[intel.event]
+        const isOpponentEvent = !!intel.eventPlayerUUID && intel.eventPlayerUUID !== uuid
 
+        console.log(e)
         if (intel.isGameDone) {
             setMessage(`Game Over - Você ${player.score === 12 ? 'Venceu!' : 'Perdeu.'}`)
             return
         }
-        if (!isPlayerTurn(intel) && description.hasOwnProperty(event)) {
+        if (isOpponentEvent && description.hasOwnProperty(intel.event)) {
             setMessage(`${getOpponent(intel).username} ${event}`)
             return
         }
-        if (canPerform(intel, 'PLAY')) {
-            setMessage('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
-            return
-        }
-        if (intel.handPointsProposal) {
-            setMessage(`${getOpponent(intel).username} está pedindo ${scoreToString[intel.handPointsProposal]}`)
-            return
-        }
-        if (intel.isMaoDeOnze && intel.handPoints === 1) {
-            setMessage('Mão de Onze! Escolha se você aceita ou corre.')
-            return
+        if(isPlayerTurn(intel)){
+            if (canPerform(intel, 'PLAY')) {
+                setMessage('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
+                return
+            }
+            if (intel.handPointsProposal) {
+                setMessage(`${getOpponent(intel).username} está pedindo ${scoreToString[intel.handPointsProposal]}`)
+                return
+            }
+            if (intel.isMaoDeOnze && intel.handPoints === 1) {
+                setMessage('Mão de Onze! Escolha se você aceita ou corre.')
+                return
+            }
         }
         setMessage('')
     }
@@ -211,9 +219,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
             Authorization: token,
         }
         try {
-            console.log(url)
-            const { data: newState } = await axios.post(url, undefined, { headers: headers })
-            console.log(newState)
+            await axios.post(url, undefined, { headers: headers })
             updateIntel()
         } catch (error) {
             console.error(error)
