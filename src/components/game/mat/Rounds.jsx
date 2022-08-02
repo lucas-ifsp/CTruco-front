@@ -1,10 +1,12 @@
 import React from "react";
-import "./Rounds.css"
+import "./Rounds.css";
 
 const Rounds = props => {
 
+    const roundWinnerName = roundWinner => roundWinner || 'Empate'
+    
     let rounds = props.rounds.map((roundWinner, index) =>  
-        <span key={index}>{`${index+1}ª Rodada: ${roundWinner}`}</span>)
+        <span key={index}>{`${index+1}ª Rodada: ${roundWinnerName(roundWinner)}`}</span>)
 
     if (!rounds) rounds = "";    
 

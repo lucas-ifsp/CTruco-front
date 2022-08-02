@@ -155,7 +155,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         const event = description[intel.event]
         const isOpponentEvent = !!intel.eventPlayerUUID && intel.eventPlayerUUID !== uuid
 
-        console.log(e)
         if (intel.isGameDone) {
             setMessage(`Game Over - Você ${player.score === 12 ? 'Venceu!' : 'Perdeu.'}`)
             return
