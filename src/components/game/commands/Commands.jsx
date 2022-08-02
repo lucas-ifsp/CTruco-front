@@ -1,6 +1,6 @@
 import './Commands.css'
 
-const Commands = ({ raiseDisabled, acceptDisabled, quitDisabled, handlePointsChange }) => {
+const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel, handlePointsChange }) => {
     const action = {
         raise: 'raised-points',
         accept: 'accepted-bet',
@@ -15,7 +15,7 @@ const Commands = ({ raiseDisabled, acceptDisabled, quitDisabled, handlePointsCha
                 disabled={raiseDisabled}
                 onClick={() => handlePointsChange(action['raise'])}
             >
-                Pedir Truco
+                {`${raiseLabel}`}
             </button>
             <button
                 type='button'
@@ -31,7 +31,7 @@ const Commands = ({ raiseDisabled, acceptDisabled, quitDisabled, handlePointsCha
                 disabled={quitDisabled}
                 onClick={() => handlePointsChange(action['quit'])}
             >
-                Correr
+                {`${quitLabel}`}
             </button>
         </div>
     )

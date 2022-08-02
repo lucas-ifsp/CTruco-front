@@ -28,7 +28,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     let opponent = getOpponent(initialIntel)
 
     const scoreToString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
-    //const nextScoreAsString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
+    const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
 
     const [lastIntel, setLastIntel] = useState(initialIntel)
     const [missingIntel, setMissingIntel] = useState([initialIntel])
@@ -46,9 +46,13 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [opponentCard, setOpponentCard] = useState(null)
     const [opponentScore, setOpponentScore] = useState(0)
 
-    const [raiseDisabled, setRaiseDisabled] = useState(true)
-    const [acceptDisabled, setAcceptDisabled] = useState(false)
-    const [quitDisabled, setQuitDisabled] = useState(false)
+    const [raiseDisabled, setRaiseDisabled] = useState(false)
+    const [acceptDisabled, setAcceptDisabled] = useState(true)
+    const [quitDisabled, setQuitDisabled] = useState(true)
+
+    const [raiseLabel, setRaiseLabel] = useState('Pedir truco')
+    const [quitLabel, setQuitLabel] = useState('Correr')
+
 
     useEffect(() => {
         if(!missingIntel) return
@@ -95,6 +99,9 @@ const Mat = ({ initialIntel, uuid, token }) => {
     }
     
     function updateButtons(intel) {
+        const nextHandPointValue = intel.HandPointsProposal ? nextScoreAsString[`${intel.handPointsProposal}`] : nextScoreAsString[`${intel.handPoints}`]
+        setRaiseLabel(`Pedir ${nextHandPointValue}`)
+        setQuitLabel(intel.isMaoDeOnze? 'Rejeitar' : 'Correr')
         setRaiseDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'RAISE'))
         setAcceptDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'ACCEPT'))
         setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
@@ -227,6 +234,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
         }
     }
 
+
     return (
         <main className='mat-area'>
             <div className='mat'>
@@ -241,9 +249,11 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} inTurn={isPlayerTurn(lastIntel)} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
+                    quitLabel={quitLabel}
                     quitDisabled={quitDisabled}
                     acceptDisabled={acceptDisabled}
                     raiseDisabled={raiseDisabled}
+                    raiseLabel={raiseLabel}
                     handlePointsChange={handlePointsChange}
                 />
                 <Message text={message} />
