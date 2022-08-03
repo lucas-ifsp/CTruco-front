@@ -14,19 +14,21 @@ import './Mat.css'
 
 //SOLVE OPPONENT CARD NOT THROWING BUG
 //EXTRACT API CALLS TO EXTERNAL FILES
+//BUG IN THE RAISE BUTTON FOR TRUCO RESPONSE
 
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
+    const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
     const getPlayer = intel => intel.players.find(aPlayer => aPlayer.uuid === uuid)
     const getOpponent = intel => intel.players.find(aPlayer => aPlayer.uuid !== uuid)
+    const canPerform = (intel, action) =>  intel.currentPlayerUuid === uuid && intel.possibleActions.includes(action)
 
     let player = getPlayer(initialIntel)
     let opponent = getOpponent(initialIntel)
 
-    const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
 
     const [lastIntel, setLastIntel] = useState(initialIntel)
     const [missingIntel, setMissingIntel] = useState([initialIntel])
@@ -95,18 +97,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         }
         return timeline.get()  
     }
-    
-    function updateButtons(intel) {
-        const nextHandPointValue = intel.HandPointsProposal ? nextScoreAsString[`${intel.handPointsProposal}`] : nextScoreAsString[`${intel.handPoints}`]
-        setRaiseLabel(`Pedir ${nextHandPointValue}`)
-        setQuitLabel(intel.isMaoDeOnze? 'Rejeitar' : 'Correr')
-        setRaiseDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'RAISE'))
-        setAcceptDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'ACCEPT'))
-        setQuitDisabled(!isPlayerTurn(intel) || !canPerform(intel, 'QUIT'))
-    }
-
-    const isPlayerTurn = intel => intel.currentPlayerUuid === uuid
-    const canPerform = (intel, action) => isPlayerTurn(intel) && intel.possibleActions.includes(action)
 
     function prepareNewHand(intel){
         setHandPoints(1)
@@ -150,6 +140,15 @@ const Mat = ({ initialIntel, uuid, token }) => {
         const cardAsString = toCardString(lastPlayedCard)
         if(intel.eventPlayerUUID === uuid) setPlayerCard(cardAsString)
         else setOpponentCard(cardAsString)
+    }
+
+    function updateButtons(intel) {
+        const nextHandPointValue = intel.handPointsProposal ? nextScoreAsString[`${intel.handPointsProposal}`] : nextScoreAsString[`${intel.handPoints}`]
+        setRaiseLabel(`Pedir ${nextHandPointValue}`)
+        setQuitLabel(intel.isMaoDeOnze? 'Rejeitar' : 'Correr')
+        setRaiseDisabled(!canPerform(intel, 'RAISE'))
+        setAcceptDisabled(!canPerform(intel, 'ACCEPT'))
+        setQuitDisabled(!canPerform(intel, 'QUIT'))
     }
 
     function updateMessage(intel) {
@@ -214,7 +213,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 </div>
                 <OpponentHand cards={opponentHand} />
                 <OpenCards vira={vira} playerCard={playerCard} opponentCard={opponentCard} />
-                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={isPlayerTurn(lastIntel) && canPerform(lastIntel, 'PLAY')} />
+                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={canPerform(lastIntel, 'PLAY')} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
                     quitLabel={quitLabel}
