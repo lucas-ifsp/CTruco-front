@@ -5,6 +5,7 @@ import OpponentHand from '../cards/OpponentHand'
 import PlayerHand from '../cards/PlayerHand'
 import Commands from '../commands/Commands'
 import Message from './Message'
+import { createMessage } from './MessageFactory'
 import Rounds from './Rounds'
 import Score from './Score'
 import Timeline from './Timeline'
@@ -13,8 +14,6 @@ import './Mat.css'
 
 //SOLVE OPPONENT CARD NOT THROWING BUG
 //EXTRACT API CALLS TO EXTERNAL FILES
-
- // TEST IF GAME RESULT AND WINNER SCORE HAS BEEN FIXED
 
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
@@ -27,7 +26,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
     let player = getPlayer(initialIntel)
     let opponent = getOpponent(initialIntel)
 
-    const scoreToString = {3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze'}
     const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
 
     const [lastIntel, setLastIntel] = useState(initialIntel)
@@ -53,7 +51,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
     const [raiseLabel, setRaiseLabel] = useState('Pedir truco')
     const [quitLabel, setQuitLabel] = useState('Correr')
 
-
+    //TRY TO BREAK ANIMATION INTO TWO PARTS, ONE BEFORE AND THE OTHER AFTER NEW HAND
     useEffect(() => {
         if(!missingIntel) return
         const timeline = buildTimeline(missingIntel)
@@ -74,7 +72,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
             } else if(currentIntel.event === 'GAME_OVER'){
                 timeline.addEvent(DELAY_UNIT, async () => setPlayerScore(getPlayer(currentIntel).score))
                 timeline.addEvent(0, async () => setOpponentScore(getOpponent(currentIntel).score))
-            }else {
+            } else {
                 if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) 
                     timeline.addEvent(DELAY_UNIT * 3, async () => setHandPoints(currentIntel.handPoints))
 
@@ -155,38 +153,9 @@ const Mat = ({ initialIntel, uuid, token }) => {
     }
 
     function updateMessage(intel) {
-        const description = {
-            QUIT: 'correu!',
-            QUIT_HAND: 'não aceitou a mão!',
-            ACCEPT: 'aceitou!',
-        }
-        const event = description[intel.event]
-        const isOpponentEvent = !!intel.eventPlayerUUID && intel.eventPlayerUUID !== uuid
-
-        if (intel.event === 'GAME_OVER') {
-            const result = intel.gameWinner === uuid? 'Venceu!' : 'Perdeu.'
-            setMessage(`Game Over - Você ${result}`)
-            return
-        }
-        if (isOpponentEvent && description.hasOwnProperty(intel.event)) {
-            setMessage(`${getOpponent(intel).username} ${event}`)
-            return
-        }
-        if(isPlayerTurn(intel)){
-            if (canPerform(intel, 'PLAY')) {
-                setMessage('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
-                return
-            }
-            if (intel.handPointsProposal) {
-                setMessage(`${getOpponent(intel).username} está pedindo ${scoreToString[intel.handPointsProposal]}`)
-                return
-            }
-            if (intel.isMaoDeOnze && intel.handPoints === 1) {
-                setMessage('Mão de Onze! Escolha se você aceita ou corre.')
-                return
-            }
-        }
-        setMessage('')
+        const message = createMessage(intel, uuid)
+        console.log(message)
+        setMessage(message)
     }
 
     async function updateIntel() {
@@ -234,7 +203,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         }
     }
 
-
     return (
         <main className='mat-area'>
             <div className='mat'>
@@ -246,7 +214,7 @@ const Mat = ({ initialIntel, uuid, token }) => {
                 </div>
                 <OpponentHand cards={opponentHand} />
                 <OpenCards vira={vira} playerCard={playerCard} opponentCard={opponentCard} />
-                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} inTurn={isPlayerTurn(lastIntel)} />
+                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={isPlayerTurn(lastIntel) && canPerform(lastIntel, 'PLAY')} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
                     quitLabel={quitLabel}
