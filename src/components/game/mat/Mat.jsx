@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/TrucoApi'
 import OpenCards from '../cards/OpenCards'
 import OpponentHand from '../cards/OpponentHand'
 import PlayerHand from '../cards/PlayerHand'
@@ -13,8 +13,6 @@ import Timeline from './Timeline'
 import './Mat.css'
 
 //SOLVE OPPONENT CARD NOT THROWING BUG
-//EXTRACT API CALLS TO EXTERNAL FILES
-//BUG IN THE RAISE BUTTON FOR TRUCO RESPONSE
 
 const Mat = ({ initialIntel, uuid, token }) => {
     const endpoint = 'http://localhost:8080'
@@ -157,51 +155,25 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setMessage(message)
     }
 
-    async function updateIntel() {
-        const url = `${endpoint}/api/v1/games/players/${uuid}/intel-since/${lastIntel.timestamp}`
-        const headers = {
-            'Content-Type': 'application/json',
-            Authorization: token,
-        }
-        try {
-            const {data: { intelSinceBaseTimestamp }} = await axios.get(url, { headers: headers })
-            if (intelSinceBaseTimestamp.length === 0) return
-            setMissingIntel([lastIntel, ...intelSinceBaseTimestamp])
-            const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
-            setLastIntel(lastMissingIntel)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     const handleCardPlay = async (card, action) => {
-        const url = `${endpoint}/api/v1/games/players/${uuid}/cards/${action}`
-        const payload = { rank: card.rank, suit: card.suit }
-        const headers = {
-            'Content-Type': 'application/json',
-            Authorization: token,
-        }
-        try {
-            await axios.post(url, payload, { headers: headers })
-            updateIntel()
-        } catch (error) {
-            console.error(error)
-        }
+        await postThrowingCard({token, uuid, card, action})
+        updateIntel()
     }
 
     const handlePointsChange = async action => {
-        const url = `${endpoint}/api/v1/games/players/${uuid}/${action}`
-        const headers = {
-            Authorization: token,
-        }
-        try {
-            await axios.post(url, undefined, { headers: headers })
-            updateIntel()
-        } catch (error) {
-            console.error(error)
-        }
+        await postPointsDecision({token, uuid, action})
+        updateIntel()
     }
 
+    async function updateIntel() {
+        const intelSinceBaseTimestamp = await getMissingIntel({token, uuid, lastIntelTimestamp : lastIntel.timestamp})
+        console.log(intelSinceBaseTimestamp)
+        if (intelSinceBaseTimestamp.length === 0) return
+        setMissingIntel([lastIntel, ...intelSinceBaseTimestamp])
+        const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
+        setLastIntel(lastMissingIntel)
+    }
+    
     return (
         <main className='mat-area'>
             <div className='mat'>
