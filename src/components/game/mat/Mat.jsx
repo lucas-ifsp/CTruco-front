@@ -15,6 +15,7 @@ import './Mat.css'
 
 const Mat = ({ initialIntel, uuid, token }) => {
     const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
+    const DELAY_UNIT = 120;
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
@@ -51,21 +52,10 @@ const Mat = ({ initialIntel, uuid, token }) => {
 
     useEffect(() => {
         if(!missingIntel || missingIntel.length === 0) return
-        //console.log('-------')
-        //console.log('Animating single hand')
         animate()
     }, [missingIntel])
 
-    useEffect(() => {
-        console.log('Updated opponent hand use effect: ' + new Date().getTime())
-        console.log(opponentHand)
-    }, [opponentHand])
-
-
     async function animate(){
-       // const delay = ms => new Promise(res => setTimeout(res, ms))
-        const DELAY_UNIT = 120;
-
         if(missingIntel.length === 1){
             setMissingIntel([])
             return
@@ -88,20 +78,18 @@ const Mat = ({ initialIntel, uuid, token }) => {
             }
             if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 5)
-                console.log('Opponent hand state before animate ' +  new Date().getTime())
-                console.log(opponentHand)
-                updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand, true) // remove boolean after finding the bug
+                updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand) 
             }
             if(hasChangedPlayerProperty('cards', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 3)
-                updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand, false)  // remove boolean after finding the bug
+                updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand)  
             }
             if(hasChangedMatchProperty('openCards', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 3)
                 updateOpenCards(currentIntel)
             }
             if(hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)){
-                await delay(DELAY_UNIT * 3)
+                await delay(DELAY_UNIT * 5)
                 setRounds(currentIntel.roundWinnersUsernames)
                 await delay(DELAY_UNIT * 30)
                 clearOpenCards()
@@ -179,9 +167,6 @@ const Mat = ({ initialIntel, uuid, token }) => {
         setPlayerScore(getPlayer(intel).score)
         setOpponentScore(getOpponent(intel).score)
         setVira(toCardString(intel.vira))
-        console.log('------- ' + new Date().getTime())
-        console.log('New hand')
-        console.log(intel)
         setPlayerHand(getCardsAsStrings(getPlayer(intel).cards))
         setOpponentHand(getCardsAsStrings(getOpponent(intel).cards))
         setRounds(intel.roundWinnersUsernames)
@@ -213,16 +198,11 @@ const Mat = ({ initialIntel, uuid, token }) => {
     //     return updateHand
     // }
 
-    function updateHand(cards, cardState, setCardStateFunction, bot) {
+    function updateHand(cards, cardState, setCardStateFunction) {
         const getSameFromIntelOrNull = (handFromIntel, someCard) => handFromIntel.find(card => card === someCard) || null
         const getUpdatedHand = (receivedHand, handFromIntel) => receivedHand.map(card => getSameFromIntelOrNull(handFromIntel, card))
         const cardsFromIntel = getCardsAsStrings(cards)
         const updateHand = getUpdatedHand(cardState, cardsFromIntel)
-        
-        if(bot) {
-            console.log('------- ' +  new Date().getTime())
-            console.log(`Cards before: ${cardState} | Intel cards: ${cardsFromIntel} | Cards after: ${updateHand} `)
-        }
         setCardStateFunction(updateHand)
     }
 
