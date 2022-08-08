@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/TrucoApi'
-import OpenCards from '../cards/OpenCards'
-import OpponentHand from '../cards/OpponentHand'
-import PlayerHand from '../cards/PlayerHand'
-import Commands from '../commands/Commands'
+import { getMissingIntel, postPointsDecision, postThrowingCard } from '../api/TrucoApi'
+import OpenCards from '../components/game/cards/OpenCards'
+import OpponentHand from '../components/game/cards/OpponentHand'
+import PlayerHand from '../components/game/cards/PlayerHand'
+import Commands from '../components/game/commands/Commands'
+import Message from '../components/game/mat/Message'
+import { createMessage } from '../components/game/mat/MessageFactory'
+import Rounds from '../components/game/mat/Rounds'
+import Score from '../components/game/mat/Score'
 import './Mat.css'
-import Message from './Message'
-import { createMessage } from './MessageFactory'
-import Rounds from './Rounds'
-import Score from './Score'
 
 const Mat = ({ initialIntel, uuid, token }) => {
     const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
