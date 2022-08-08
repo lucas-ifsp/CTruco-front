@@ -1,0 +1,14 @@
+.registration {
+    display: flex;
+    height: 100vh;
+    background-image: linear-gradient(to right bottom, #363636, #434243, #504f50, #5f5c5d, #6d6a6a);
+    justify-content: center;
+    align-items: center;
+}
+
+.registration form {
+    width: 400px;
+    background-color: white;
+    padding: 30px 30px 10px 30px;
+    border-radius: 5px;
+}
