@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../api/Registration";
 import "./Registration.css";
 
 
@@ -10,12 +11,15 @@ const Registration = props => {
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-        console.log(username)
-        console.log(email)
-        console.log(password)
-        console.log(passwordConfirmation)
+        const signUpPayload = {
+            username,
+            email,
+            password
+        }
+        const uuid = await register(signUpPayload)
+        console.log(uuid)
         navigate('/login')
     }
 
