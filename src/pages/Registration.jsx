@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../api/Registration";
+import { register } from "../api/RegistrationApi";
 import "./Registration.css";
 
 
@@ -13,12 +13,12 @@ const Registration = props => {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        const signUpPayload = {
+        const payload = {
             username,
             email,
             password
         }
-        const uuid = await register(signUpPayload)
+        const uuid = await register(payload)
         console.log(uuid)
         navigate('/login')
     }

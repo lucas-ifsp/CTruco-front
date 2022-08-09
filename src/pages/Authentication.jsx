@@ -1,19 +1,37 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./SignIn.css";
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { authenticate } from '../api/AuthenticationApi';
+import UserContext from "../contexts/UserContext";
+import "./Authentication.css";
 
 
-const SignIn = () => {
+const Authentication = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate();
 
-    const handleSubmit = event => {
+    const {setToken, setUsername : setContextUsername, setUuid} = useContext(UserContext)
+
+    const handleSubmit = async event => {
         event.preventDefault();
-        console.log(username)
-        console.log(password)
+        const requestPayload = {username, password}
+        const token = await authenticate(requestPayload)
+        const tokenPayload = parseJwt(token)
+        setToken(token)
+        setContextUsername(tokenPayload.username)
+        setUuid(tokenPayload.userId)
         navigate('/')
     }
+
+    function parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+    };
 
     return (
         <main className="registration">
@@ -55,4 +73,4 @@ const SignIn = () => {
     );
 }
 
-export default SignIn
+export default Authentication
