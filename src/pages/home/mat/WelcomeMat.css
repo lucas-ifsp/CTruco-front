@@ -1,0 +1,15 @@
+main.mat-area {
+    background-color: var(--mat-bg-color);
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+div.centered {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}

@@ -1,21 +1,20 @@
-
 header.header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     background-color: var(--bg-color);
     overflow: hidden;
-    white-space: nowrap;   
+    white-space: nowrap;
 }
 
-header.header h1{
+header.header h1 {
     padding-left: 50px;
     color: var(--font-color);
-    font-size: 1.7em;
+    font-size: 1.9em;
     font-family: "Righteous", cursive;
 }
 
-.logo img{
+.logo img {
     padding: 5px 35px 0px 35px;
     height: 100px;
 }

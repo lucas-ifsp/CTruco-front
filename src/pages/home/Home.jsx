@@ -3,9 +3,9 @@ import Footer from '../../components/templates/Footer';
 import Header from '../../components/templates/Header';
 import Menu from '../../components/templates/Menu';
 import UserContext from "../../contexts/UserContext";
-import Mat from './mat/GameMat';
 
 import './Home.css';
+import StartGameMat from './mat/StartGameMat';
 
 const Home = () => {
 
@@ -51,13 +51,22 @@ const Home = () => {
     //     setGameState(initialState)
     // }
 
+    // return (
+    //     <div className='app'>
+    //         <Header/>
+    //         <Menu/>
+    //         {gameState === defaultGameState ? 
+    //             (<h1> Loading Game... </h1>) : 
+    //             (<Mat initialIntel = {gameState.initialIntel} uuid = {gameState.uuid} token={gameState.token}/>)}
+    //         <Footer/>
+    //     </div>
+    // )
+
     return (
         <div className='app'>
             <Header/>
             <Menu/>
-            {gameState === defaultGameState ? 
-                (<h1> Loading Game... </h1>) : 
-                (<Mat initialIntel = {gameState.initialIntel} uuid = {gameState.uuid} token={gameState.token}/>)}
+            <StartGameMat/>
             <Footer/>
         </div>
     )
