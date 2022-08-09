@@ -1,51 +1,50 @@
-
-main.mat-area{
+main.mat-area {
     background-color: var(--mat-bg-color);
     display: flex;
     justify-content: stretch;
     align-items: stretch;
 }
 
-div.mat{
+div.mat {
     width: 100%;
     display: grid;
     grid-template-columns: 200px 1fr 200px;
     grid-template-rows: 1fr 1fr 1fr 80px;
-    grid-template-areas: 
+    grid-template-areas:
         "opponent-score opponent-cards rounds"
         "open-cards open-cards open-cards"
         "player-score player-cards commands"
         "player-score message commands";
 }
 
-div.opponent-score{
+div.opponent-score {
     grid-area: opponent-score;
 }
 
-div.player-score{
+div.player-score {
     grid-area: player-score;
 }
 
-div.opponent-hand{
+div.opponent-hand {
     grid-area: opponent-cards;
 }
 
-div.player-hand{
+div.player-hand {
     grid-area: player-cards;
 }
 
-div.open-cards{
+div.open-cards {
     grid-area: open-cards;
 }
 
-div.rounds{
+div.rounds {
     grid-area: rounds;
 }
 
-div.commands{
+div.commands {
     grid-area: commands;
 }
 
-div.message{
+div.message {
     grid-area: message;
 }

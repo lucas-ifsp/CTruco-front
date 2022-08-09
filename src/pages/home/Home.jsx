@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import Footer from '../components/templates/Footer';
-import Header from '../components/templates/Header';
-import Menu from '../components/templates/Menu';
-import UserContext from "../contexts/UserContext";
-import Mat from './Mat';
+import Footer from '../../components/templates/Footer';
+import Header from '../../components/templates/Header';
+import Menu from '../../components/templates/Menu';
+import UserContext from "../../contexts/UserContext";
+import Mat from './mat/GameMat';
 
 import './Home.css';
 

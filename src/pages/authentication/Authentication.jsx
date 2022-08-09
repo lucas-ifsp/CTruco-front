@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authenticate } from '../api/AuthenticationApi';
-import UserContext from "../contexts/UserContext";
+import { authenticate } from '../../api/AuthenticationApi';
+import UserContext from "../../contexts/UserContext";
 import "./Authentication.css";
 
 
