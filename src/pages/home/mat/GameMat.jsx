@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/HandApi'
 import OpenCards from '../../../components/game/cards/OpenCards'
 import OpponentHand from '../../../components/game/cards/OpponentHand'
@@ -8,11 +8,18 @@ import Message from '../../../components/game/mat/Message'
 import { createMessage } from '../../../components/game/mat/MessageFactory'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
+
+import GameContext from '../../../contexts/GameContext'
+import UserContext from '../../../contexts/UserContext'
+
 import './GameMat.css'
 
-const Mat = ({ initialIntel, uuid, token }) => {
+const Mat = () => {
     const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
     const DELAY_UNIT = 120;
+
+    const {initialIntel, setInitialIntel} = useContext(GameContext)
+    const {uuid, token} = useContext(UserContext)
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
@@ -68,6 +75,8 @@ const Mat = ({ initialIntel, uuid, token }) => {
             await delay(DELAY_UNIT)
             setPlayerScore(getPlayer(currentIntel).score)
             setOpponentScore(getOpponent(currentIntel).score)
+            await delay(DELAY_UNIT * 30)
+            setInitialIntel(null)
         } else {
             if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 15)

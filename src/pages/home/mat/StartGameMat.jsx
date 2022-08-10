@@ -6,18 +6,14 @@ import "./StartGameMat.css";
 
 
 const StartGameMat = () => {
-    const {setInitialIntel, isGameActive} = useContext(GameContext)
+    const {setInitialIntel} = useContext(GameContext)
     const {uuid, token} = useContext(UserContext)
     const [botName, setBotName] = useState("MineiroByBueno")
 
     const handleSubmit = async event => {
         event.preventDefault();
         const payload = {userUuid: uuid, botName}
-        console.log(token)
-        console.log(payload)
         const initialIntel = await createGameForUserAndBot(token, payload) 
-        console.log(initialIntel)
-        console.log(isGameActive())
         setInitialIntel(initialIntel)
     }
 
