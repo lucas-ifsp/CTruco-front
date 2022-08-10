@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { createGameForUserAndBot } from '../../../api/GameApi';
+import GameContext from '../../../contexts/GameContext';
+import UserContext from '../../../contexts/UserContext';
 import "./StartGameMat.css";
 
 
 const StartGameMat = () => {
-    //const navigate = useNavigate();
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const {setInitialIntel, isGameActive} = useContext(GameContext)
+    const {uuid, token} = useContext(UserContext)
+    const [botName, setBotName] = useState("MineiroByBueno")
 
-    //const {setToken, setUsername : setContextUsername, setUuid} = useContext(UserContext)
+    const handleSubmit = async event => {
+        event.preventDefault();
+        const payload = {userUuid: uuid, botName}
+        console.log(token)
+        console.log(payload)
+        const initialIntel = await createGameForUserAndBot(token, payload) 
+        console.log(initialIntel)
+        console.log(isGameActive())
+        setInitialIntel(initialIntel)
+    }
 
     return (
         <main className="choose-opponent">
@@ -17,16 +29,14 @@ const StartGameMat = () => {
                 </p>
                 <div className="mb-3 mt-4">
                     <label htmlFor="inputOpponent" className="form-label">Oponente: </label>
-                    <select className="form-select mb-3">
-                        <option value="1">MineiroByBueno</option>
-                        <option value="2">DummyBot</option>
+                    <select className="form-select mb-3" value={botName} onChange={e => setBotName(e.target.value)}>
+                        <option value="MineiroByBueno">MineiroByBueno</option>
+                        <option value="DummyBot">DummyBot</option>
                     </select>
                 </div>
-                <button 
-                    type="submit" 
-                    className="btn w-100 btn-dark mt-3 mb-3">
+                <button type="submit" className="btn w-100 btn-dark mt-3 mb-3" onClick={handleSubmit}>
                         Começar
-                    </button>
+                </button>
             </form>
         </main>
     );

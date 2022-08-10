@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/GameApi'
+import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/HandApi'
 import OpenCards from '../../../components/game/cards/OpenCards'
 import OpponentHand from '../../../components/game/cards/OpponentHand'
 import PlayerHand from '../../../components/game/cards/PlayerHand'

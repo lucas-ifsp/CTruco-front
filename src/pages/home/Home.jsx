@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Footer from '../../components/templates/Footer';
 import Header from '../../components/templates/Header';
 import Menu from '../../components/templates/Menu';
-import UserContext from "../../contexts/UserContext";
+import { GameContextProvider } from "../../contexts/GameContext";
 
 import './Home.css';
 import StartGameMat from './mat/StartGameMat';
@@ -15,16 +15,8 @@ const Home = () => {
     // const password = '123123'
     // const botName = 'MineiroByBueno'
 
-    const {isAuthenticated} = useContext(UserContext)
-    console.log(!isAuthenticated ? 'Not authenticated' : 'authenticated')    
 
-    const defaultGameState = {
-        uuid: null, 
-        token: null,
-        initialIntel: {}
-    }
-
-    const [gameState, setGameState] = useState(defaultGameState)
+    //const [gameState, setGameState] = useState(defaultGameState)
 
     // useEffect(() => {createGame()}, [])
 
@@ -63,12 +55,14 @@ const Home = () => {
     // )
 
     return (
-        <div className='app'>
-            <Header/>
-            <Menu/>
-            <StartGameMat/>
-            <Footer/>
-        </div>
+        <GameContextProvider>
+            <div className='app'>
+                <Header/>
+                <Menu/>
+                <StartGameMat/>
+                <Footer/>
+            </div>
+        </GameContextProvider>
     )
 }
 export default Home
