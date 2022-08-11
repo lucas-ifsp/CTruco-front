@@ -18,8 +18,7 @@ const Registration = props => {
             email,
             password
         }
-        const uuid = await register(payload)
-        console.log(uuid)
+        await register(payload)
         navigate('/login')
     }
 

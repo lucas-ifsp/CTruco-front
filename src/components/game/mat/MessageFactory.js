@@ -1,4 +1,6 @@
 export function createMessage(intel, uuid) {
+    if (!intel) return ''
+
     const scoreToString = { 3: 'truco', 6: 'seis', 9: 'nove', 12: 'doze' }
     const description = {
         QUIT: 'correu!',

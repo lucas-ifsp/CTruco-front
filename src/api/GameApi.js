@@ -13,6 +13,17 @@ export const createGameForUserAndBot = async (authorization, payload) => {
         return initialIntel
     }
     catch (error) {
-        console.error(error)
+        console.error(JSON.stringify(error.response.data, null, '  '))
+    }
+}
+
+export const deleteConcludedGame = async (authorization, uuid) => {
+    const url = `${ENDPOINT}/api/v1/games/players/${uuid}`
+    const headers = { Authorization: authorization }
+    try {
+        await axios.delete(url, { headers: headers })
+    }
+    catch (error) {
+        console.error(JSON.stringify(error.response.data, null, '  '))
     }
 }

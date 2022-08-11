@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { deleteConcludedGame } from '../../../api/GameApi'
 import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/HandApi'
 import OpenCards from '../../../components/game/cards/OpenCards'
 import OpponentHand from '../../../components/game/cards/OpponentHand'
@@ -72,14 +73,16 @@ const Mat = () => {
             await delay(DELAY_UNIT * 15)
             prepareNewHand(currentIntel)
         } else if(currentIntel.event === 'GAME_OVER'){
-            await delay(DELAY_UNIT)
+            await delay(DELAY_UNIT * 3)
             setPlayerScore(getPlayer(currentIntel).score)
             setOpponentScore(getOpponent(currentIntel).score)
+            updateButtons(currentIntel)
+            updateMessage(currentIntel)
             await delay(DELAY_UNIT * 30)
-            setInitialIntel(null)
+            handleGameEnding()
         } else {
             if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
-                await delay(DELAY_UNIT * 15)
+                await delay(DELAY_UNIT * 3)
                 setHandPoints(currentIntel.handPoints)
             }
             if(hasChangedOpponentProperty('cards', currentIntel, prevIntel)) {
@@ -100,10 +103,15 @@ const Mat = () => {
                 await delay(DELAY_UNIT * 30)
                 clearOpenCards()
             } 
-            await delay(DELAY_UNIT * 3)
-            updateButtons(currentIntel)
-            await delay(DELAY_UNIT * 2)
-            updateMessage(currentIntel)
+        }
+        await delay(DELAY_UNIT * 3)
+        updateButtons(currentIntel)
+        await delay(DELAY_UNIT * 2)
+        updateMessage(currentIntel)
+            
+        if(message !== ''){
+            await delay(DELAY_UNIT * 15)
+            updateMessage()
         }
         const remainingIntel = missingIntel.slice(1, missingIntel.length)
         setMissingIntel(remainingIntel)
@@ -164,6 +172,11 @@ const Mat = () => {
 
     function updateMessage(intel) {
         setMessage(createMessage(intel, uuid))
+    }
+
+    const handleGameEnding = async () => { 
+        await deleteConcludedGame(token, uuid)
+        setInitialIntel(null)
     }
 
     const handleCardPlay = async (card, action) => {
