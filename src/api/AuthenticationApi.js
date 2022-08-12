@@ -7,7 +7,9 @@ export const authenticate = async (payload) => {
         const { headers: { authorization } } = await axios.post(`${ENDPOINT}/login`, payload)
         return authorization
     } catch (error) {
-        console.error(error)
+        if (!error.response) throw Error('Sistema temporariamente indisponível.')
+        if (error.response.status === 403) throw Error('Usuário ou senha inválidos.')
+        throw Error('Algo deu errado.')
     }
 }
 

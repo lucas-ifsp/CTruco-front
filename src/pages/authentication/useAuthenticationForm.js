@@ -25,20 +25,25 @@ const useAuthenticationForm = (validate) => {
     const handleSubmit = async event => {
         event.preventDefault();
         const valitationErrors = validate(values)
-        setErrors(valitationErrors)
+        setErrors(() => valitationErrors)
 
-        if (hasErrors(valitationErrors)) return
+        if (hasInputErrors(valitationErrors)) return
 
-        const requestPayload = { username: values.password, password: values.password }
-        const token = await authenticate(requestPayload)
-        const tokenPayload = parseJwt(token)
-        setToken(token)
-        setContextUsername(tokenPayload.username)
-        setUuid(tokenPayload.userId)
-        navigate('/')
+        try {
+            const requestPayload = { username: values.password, password: values.password }
+            const token = await authenticate(requestPayload)
+            const tokenPayload = parseJwt(token)
+            setToken(token)
+            setContextUsername(tokenPayload.username)
+            setUuid(tokenPayload.userId)
+            navigate('/')
+        } catch (error) {
+            const requestError = { apiError: error.message }
+            setErrors(() => requestError)
+        }
     }
 
-    const hasErrors = valitationErrors => Object.keys(valitationErrors).length !== 0
+    const hasInputErrors = valitationErrors => Object.keys(valitationErrors).length !== 0
 
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
