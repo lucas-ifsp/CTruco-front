@@ -1,73 +1,53 @@
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { authenticate } from '../../api/AuthenticationApi';
-import UserContext from "../../contexts/UserContext";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import "./Authentication.css";
+import useAuthenticationForm from './useAuthenticationForm';
+import validate from './validateAuthenticationInfo';
 
 
 const Authentication = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-
-    const {setToken, setUsername : setContextUsername, setUuid} = useContext(UserContext)
-
-    const handleSubmit = async event => {
-        event.preventDefault();
-        const requestPayload = {username, password}
-        const token = await authenticate(requestPayload)
-        const tokenPayload = parseJwt(token)
-        setToken(token)
-        setContextUsername(tokenPayload.username)
-        setUuid(tokenPayload.userId)
-        navigate('/')
-    }
-
-    function parseJwt (token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
     
-        return JSON.parse(jsonPayload);
-    };
+    const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)
 
     return (
-        <main className="registration">
+        <main className="authentication">
             <form>
-                <p className="title fs-3 mb-3 fw-bold text-center">
+                <p className="title fs-4 mb-3 fw-bold text-center">
                     <i className="bi bi-suit-club-fill"/>  Entrar no CTruco <i className="bi bi-suit-club-fill"/>
                 </p>
-                <div className="mb-3 mt-4">
+                <div className="mb-4 mt-4">
                     <label htmlFor="inputUsername" className="form-label">Usuário</label>
                     <input 
                         type="text" 
+                        name="username"
                         className="form-control" 
                         id="inputUsername" 
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={values.username}
+                        onChange={handleChange}
                     />
+                    {errors.username && <p className="input-error">{errors.username}</p>}
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                     <label htmlFor="inputPassword" className="form-label">Senha</label>
                     <input 
                         type="password" 
+                        name="password"
                         className="form-control" 
                         id="inputPassword"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        value={values.password}
+                        onChange={handleChange}
                     />
+                    {errors.password && <p className="input-error">{errors.password}</p>}
                 </div>
                 <button 
                     type="submit" 
-                    className="btn w-100 btn-lg btn-dark mt-3 mb-3"
+                    className="btn w-100 btn-dark mt-3 mb-3"
                     onClick={handleSubmit}>
                         Autenticar
-                    </button>
-                <div className="mb-3 mt-3 text-center">
-                    <Link to="/register" className="link-dark">Novo aqui? Registre-se.</Link>
-                </div>
+                </button>
+                <p className="mb-3 text-center">
+                    Novo aqui? <Link to="/register" className="link-dark">Registre-se.</Link>
+                </p>
             </form>
         </main>
     );

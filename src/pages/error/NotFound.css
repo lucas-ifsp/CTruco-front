@@ -1,0 +1,16 @@
+.not-found {
+    display: flex;
+    height: 100vh;
+    background-image: linear-gradient(to right bottom, #363636, #434243, #504f50, #5f5c5d, #6d6a6a);
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}

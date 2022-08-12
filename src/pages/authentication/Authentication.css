@@ -1,4 +1,4 @@
-.registration {
+.authentication {
     display: flex;
     height: 100vh;
     background-image: linear-gradient(to right bottom, #363636, #434243, #504f50, #5f5c5d, #6d6a6a);
@@ -6,18 +6,18 @@
     align-items: center;
 }
 
-.registration form {
+.authentication form {
     box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, .4);
-    width: 400px;
+    width: 380px;
     background-color: white;
     padding: 30px 30px 10px 30px;
     border-radius: 5px;
 }
 
 .link-dark {
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .link-dark:hover {
-    text-decoration: underline;
+    color: #6d6a6a;
 }
