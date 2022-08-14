@@ -15,24 +15,38 @@ const useRegistrationForm = (validate) => {
         const { name, value } = e.target;
         setValues({
             ...values,
-            [name]: value
+            [name]: value.trim()
         })
     }
 
     const handleSubmit = async event => {
         event.preventDefault()
-        const valitationErrors = validate(values)
-        setErrors(valitationErrors)
+        const validationErrors = validate(values)
+        setErrors(() => validationErrors)
 
-        if (hasErrors(valitationErrors)) return
+        if (hasErrors(validationErrors)) return
 
-        const payload = {
-            username: values.username,
-            email: values.email,
-            password: values.password
+        try {
+            const payload = {
+                username: values.username,
+                email: values.email,
+                password: values.password
+            }
+            await register(payload)
+            navigate('/login')
+        } catch (error) {
+            const message = error.message
+            if (message.includes('usuário') || message.includes('e-mail')) {
+                const messageParts = message.split('|')
+
+                messageParts.forEach((part) => {
+                    if (part.includes('usuário')) setErrors(prevState => ({ ...prevState, username: part }))
+                    if (part.includes('e-mail')) setErrors(prevState => ({ ...prevState, email: part }))
+                })
+            } else {
+                setErrors(() => ({ apiError: error.message }))
+            }
         }
-        await register(payload)
-        navigate('/login')
     }
 
     const hasErrors = valitationErrors => Object.keys(valitationErrors).length !== 0

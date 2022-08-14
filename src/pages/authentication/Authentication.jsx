@@ -7,7 +7,7 @@ import validate from './validateAuthenticationInfo';
 
 const Authentication = () => {
     
-    const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)
+    const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)    
 
     return (
         <main className="authentication">

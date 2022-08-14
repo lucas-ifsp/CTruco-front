@@ -62,6 +62,7 @@ const Registration = () => {
                         </button>
                     </div>
                     {errors.password && <p className="input-error">{errors.password}</p>}
+                    {errors.apiError && <p className="input-error">{errors.apiError}</p>}
                 </div>
                 <button 
                     type="submit" 

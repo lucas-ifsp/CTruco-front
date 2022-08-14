@@ -18,7 +18,7 @@ const useAuthenticationForm = (validate) => {
         const { name, value } = e.target;
         setValues({
             ...values,
-            [name]: value
+            [name]: value.trim()
         })
     }
 
@@ -30,7 +30,7 @@ const useAuthenticationForm = (validate) => {
         if (hasInputErrors(valitationErrors)) return
 
         try {
-            const requestPayload = { username: values.password, password: values.password }
+            const requestPayload = { username: values.username, password: values.password }
             const token = await authenticate(requestPayload)
             const tokenPayload = parseJwt(token)
             setToken(token)
@@ -54,18 +54,6 @@ const useAuthenticationForm = (validate) => {
 
         return JSON.parse(jsonPayload);
     };
-
-    // const handleSubmit = async event => {
-    //     event.preventDefault();
-    //     setErrors(validate(values))
-    //     // const payload = {
-    //     //     username: values.username,
-    //     //     email: values.email,
-    //     //     password: values.password
-    //     // }
-    //     // await register(payload)
-    //     // navigate('/login')
-    // }
 
     return { values, errors, handleChange, handleSubmit }
 }

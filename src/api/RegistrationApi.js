@@ -7,6 +7,18 @@ export const register = async (payload) => {
         const { data: { uuid } } = await axios.post(`${ENDPOINT}/register`, payload)
         return uuid
     } catch (error) {
-        console.error(error)
+        if (!error.response) throw Error('Sistema temporariamente indisponível.')
+
+        const message = error.response.data.message
+        const code = error.response.status
+
+        if (code === 409) {
+            let errorMessage = ''
+            if (message.includes('username')) errorMessage += 'O nome de usuário já existe no sistema.|'
+            if (message.includes('email')) errorMessage += 'O e-mail já existe no sistema.'
+            throw Error(errorMessage)
+        }
+
+        throw Error('Algo deu errado.')
     }
 }
