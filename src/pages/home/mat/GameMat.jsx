@@ -8,9 +8,9 @@ import { createMessage } from '../../../components/game/mat/MessageFactory'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
 import useDeleteGame from '../../../hooks/api/useDeleteGame'
-import useGetIntel from '../../../hooks/api/useGetIntel'
 import usePoints from '../../../hooks/api/usePoints'
 import useThrowCard from '../../../hooks/api/useThrowCard'
+import useFetchIntel from '../../../hooks/api/useUpdateIntel'
 import useAuth from '../../../hooks/context/useAuth'
 import useIntel from '../../../hooks/context/useIntel'
 
@@ -28,7 +28,7 @@ const Mat = () => {
 
     const throwCardAs = useThrowCard()
     const decideTo = usePoints()
-    const getSince = useGetIntel()
+    const fetchSince = useFetchIntel()
     const deleteConcluded = useDeleteGame()
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
@@ -184,8 +184,6 @@ const Mat = () => {
     }
 
     const handleGameEnding = async () => { 
-        // await deleteConcludedGame(auth.token, uuid)
-        // setIntel(null)
         await deleteConcluded()
     }
 
@@ -200,7 +198,7 @@ const Mat = () => {
     }
 
     async function updateIntel() {
-        const intelSinceBaseTimestamp = await getSince(lastIntel)
+        const intelSinceBaseTimestamp = await fetchSince(lastIntel)
         if (intelSinceBaseTimestamp.length === 0) return
         setMissingIntel([lastIntel, ...intelSinceBaseTimestamp])
         const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]

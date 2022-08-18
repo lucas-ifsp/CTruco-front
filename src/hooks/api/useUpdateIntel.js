@@ -1,16 +1,16 @@
 import useAuth from '../context/useAuth'
 import useAxiosPrivate from './useAxiosPrivate'
 
-const useGetIntel = () => {
+const useFetchIntel = () => {
     const axiosPrivate = useAxiosPrivate()
     const { auth: { uuid } } = useAuth()
 
-    const getSince = async (lastIntel) => {
+    const fetchSince = async (lastIntel) => {
         const url = `/api/v1/games/players/${uuid}/intel-since/${lastIntel.timestamp}`
         const { data: { intelSinceBaseTimestamp } } = await axiosPrivate.get(url)
         return intelSinceBaseTimestamp
     }
-    return getSince
+    return fetchSince
 }
 
-export default useGetIntel
+export default useFetchIntel
