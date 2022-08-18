@@ -7,12 +7,12 @@ const useDeleteGame = () => {
     const { auth: { uuid } } = useAuth()
     const { setIntel } = useIntel()
 
-    const deleteConcluded = async () => {
+    const deleteConcludedGame = async () => {
         const url = `/api/v1/games/players/${uuid}`
         await axiosPrivate.delete(url)
         setIntel(null)
     }
-    return deleteConcluded
+    return deleteConcludedGame
 }
 
 export default useDeleteGame

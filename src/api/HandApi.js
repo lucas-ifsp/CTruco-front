@@ -2,7 +2,6 @@ import axios from "axios"
 
 const ENDPOINT = 'http://localhost:8080'
 
-
 export const getMissingIntel = async ({ token, uuid, lastIntelTimestamp }) => {
     const url = `${ENDPOINT}/api/v1/games/players/${uuid}/intel-since/${lastIntelTimestamp}`
     const headers = {

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import useThrowCard from '../../../hooks/api/useThrowCard'
 import Card from './Card'
 import './PlayerHand.css'
 
-const PlayerHand = ({cards, canPlay, handleCardPlay}) => {
+
+const PlayerHand = ({cards, canPlay}) => {
     let baseLeft = cards[0] 
     let baseCenter = cards[1]
     let baseRight = cards[2]
@@ -10,6 +12,7 @@ const PlayerHand = ({cards, canPlay, handleCardPlay}) => {
     const [left, setLeft] = useState(baseLeft)
     const [center, setCenter] = useState(baseCenter)
     const [right, setRight] = useState(baseRight)
+    const throwCardAs = useThrowCard()
 
     useEffect(() => {
         baseLeft = cards[0] || 'none'
@@ -23,7 +26,7 @@ const PlayerHand = ({cards, canPlay, handleCardPlay}) => {
 
     const shouldUpdate = (currentState, newState) => currentState !== 'back' || newState === 'none'
 
-    const flipOrThrow = (e, currentState, setNextState, baseState) => {
+    const flipOrThrow = async (e, currentState, setNextState, baseState) => {
         if(!canPlay || !baseState || baseState === 'none') return
         if(e.altKey){
             const nextState = currentState === baseState ? 'back' : baseState
@@ -35,7 +38,7 @@ const PlayerHand = ({cards, canPlay, handleCardPlay}) => {
             rank: baseState.charAt(0),
             suit: baseState.charAt(1)
         }
-        handleCardPlay(card, action)
+        await throwCardAs(card, action)
     }
     
     return (

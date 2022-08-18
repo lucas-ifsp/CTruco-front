@@ -1,6 +1,9 @@
+import usePoints from '../../../hooks/api/usePoints'
 import './Commands.css'
 
 const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel, handlePointsChange }) => {
+    const decideTo = usePoints()
+    
     const action = {
         raise: 'raised-points',
         accept: 'accepted-bet',
@@ -13,7 +16,7 @@ const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, qui
                 type='button'
                 className='btn btn-secondary'
                 disabled={raiseDisabled}
-                onClick={() => handlePointsChange(action['raise'])}
+                onClick={() => decideTo(action['raise'])}
             >
                 {`${raiseLabel}`}
             </button>
@@ -21,7 +24,7 @@ const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, qui
                 type='button'
                 className='btn btn-secondary'
                 disabled={acceptDisabled}
-                onClick={() => handlePointsChange(action['accept'])}
+                onClick={() => decideTo(action['accept'])}
             >
                 Aceitar
             </button>
@@ -29,7 +32,7 @@ const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, qui
                 type='button'
                 className='btn btn-secondary'
                 disabled={quitDisabled}
-                onClick={() => handlePointsChange(action['quit'])}
+                onClick={() => decideTo(action['quit'])}
             >
                 {`${quitLabel}`}
             </button>

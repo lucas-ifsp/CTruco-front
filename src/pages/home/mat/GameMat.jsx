@@ -8,9 +8,6 @@ import { createMessage } from '../../../components/game/mat/MessageFactory'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
 import useDeleteGame from '../../../hooks/api/useDeleteGame'
-import useFetchIntel from '../../../hooks/api/useFetchIntel'
-import usePoints from '../../../hooks/api/usePoints'
-import useThrowCard from '../../../hooks/api/useThrowCard'
 import useAuth from '../../../hooks/context/useAuth'
 import useIntel from '../../../hooks/context/useIntel'
 
@@ -26,10 +23,7 @@ const Mat = () => {
     const {intel, setIntel} = useIntel()
     const initialIntel = intel.last 
 
-    const throwCardAs = useThrowCard()
-    const decideTo = usePoints()
-    const fetchIntelSince = useFetchIntel()
-    const deleteConcluded = useDeleteGame()
+    const deleteConcludedGame = useDeleteGame()
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
@@ -87,7 +81,7 @@ const Mat = () => {
             updateButtons(currentIntel)
             updateMessage(currentIntel)
             await delay(DELAY_UNIT * 30)
-            handleGameEnding()
+            await deleteConcludedGame()
         } else {
             if(hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 3)
@@ -123,7 +117,6 @@ const Mat = () => {
         }
         const remainingIntel = missingIntel.slice(1, missingIntel.length)
         setIntel(prevState => ({...prevState, missing: remainingIntel}))
-        console.log(intel)
     }
 
     function prepareNewHand(intel){
@@ -182,32 +175,6 @@ const Mat = () => {
     function updateMessage(intel) {
         setMessage(createMessage(intel, uuid))
     }
-
-    const handleGameEnding = async () => { 
-        await deleteConcluded()
-    }
-
-    const handleCardPlay = async (card, action) => {
-        await throwCardAs(card, action)
-        fetchIntelSince()
-        //updateIntel()
-    }
-
-    const handlePointsChange = async action => {
-        await decideTo(action)
-        fetchIntelSince()
-        //updateIntel()
-    }
-
-    // async function updateIntel() {
-    //     const intelSinceBaseTimestamp = await fetchSince(intel.last)
-    //     if (intelSinceBaseTimestamp.length === 0) return
-
-    //     const missing = [intel.last, ...intelSinceBaseTimestamp]
-    //     const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
-
-    //     setIntel({last: lastMissingIntel, missing})
-    // }
     
     return (
         <main className='mat-area'>
@@ -220,7 +187,7 @@ const Mat = () => {
                 </div>
                 <OpponentHand cards={opponentHand} />
                 <OpenCards vira={vira} playerCard={playerCard} opponentCard={opponentCard} />
-                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={canPerform(intel.last, 'PLAY')} />
+                <PlayerHand cards={playerHand} canPlay={canPerform(intel.last, 'PLAY')} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
                     quitLabel={quitLabel}
@@ -228,7 +195,6 @@ const Mat = () => {
                     acceptDisabled={acceptDisabled}
                     raiseDisabled={raiseDisabled}
                     raiseLabel={raiseLabel}
-                    handlePointsChange={handlePointsChange}
                 />
                 <Message text={message} />
             </div>
