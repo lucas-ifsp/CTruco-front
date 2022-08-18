@@ -23,8 +23,11 @@ const Mat = () => {
     const {auth} = useAuth()
     const uuid = auth.uuid
 
-    const {intel} = useIntel()
+    const {intel, setIntel} = useIntel()
     const initialIntel = intel.last 
+
+    //const [lastIntel, setLastIntel] = useState(initialIntel)
+    //const [missingIntel, setMissingIntel] = useState([initialIntel])
 
     const throwCardAs = useThrowCard()
     const decideTo = usePoints()
@@ -40,9 +43,6 @@ const Mat = () => {
 
     let player = getPlayer(initialIntel)
     let opponent = getOpponent(initialIntel)
-
-    const [lastIntel, setLastIntel] = useState(initialIntel)
-    const [missingIntel, setMissingIntel] = useState([initialIntel])
 
     const [vira, setVira] = useState(toCardString(initialIntel.vira))
     const [message, setMessage] = useState('Clique na carta para jogar. Segure o alt e clique na carta para ocultar.')
@@ -65,14 +65,18 @@ const Mat = () => {
     const [quitLabel, setQuitLabel] = useState('Correr')
 
     useEffect(() => {
+        const missingIntel = intel.missing
         if(!missingIntel || missingIntel.length === 0) return
         animate()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [missingIntel])
+    }, [intel])
 
     async function animate(){
+        const missingIntel = intel.missing
         if(missingIntel.length === 1){
-            setMissingIntel([])
+            //setMissingIntel([])
+            setIntel(prevState => ({...prevState, missing: []}))
+            console.log(intel)
             return
         }
         const prevIntel = missingIntel[0]
@@ -123,7 +127,9 @@ const Mat = () => {
             updateMessage()
         }
         const remainingIntel = missingIntel.slice(1, missingIntel.length)
-        setMissingIntel(remainingIntel)
+        setIntel(prevState => ({...prevState, missing: remainingIntel}))
+        console.log(intel)
+        //setMissingIntel(remainingIntel)
     }
 
     function prepareNewHand(intel){
@@ -198,11 +204,15 @@ const Mat = () => {
     }
 
     async function updateIntel() {
-        const intelSinceBaseTimestamp = await fetchSince(lastIntel)
+        const intelSinceBaseTimestamp = await fetchSince(intel.last)
         if (intelSinceBaseTimestamp.length === 0) return
-        setMissingIntel([lastIntel, ...intelSinceBaseTimestamp])
+
+        const missing = [intel.last, ...intelSinceBaseTimestamp]
         const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
-        setLastIntel(lastMissingIntel)
+
+        setIntel({last: lastMissingIntel, missing})
+        //setMissingIntel(missing)
+        //setLastIntel(lastMissingIntel)
     }
     
     return (
@@ -216,7 +226,7 @@ const Mat = () => {
                 </div>
                 <OpponentHand cards={opponentHand} />
                 <OpenCards vira={vira} playerCard={playerCard} opponentCard={opponentCard} />
-                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={canPerform(lastIntel, 'PLAY')} />
+                <PlayerHand cards={playerHand} handleCardPlay={handleCardPlay} canPlay={canPerform(intel.last, 'PLAY')} />
                 <Rounds rounds={rounds} points={handPoints} />
                 <Commands
                     quitLabel={quitLabel}
