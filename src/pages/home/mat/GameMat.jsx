@@ -8,9 +8,9 @@ import { createMessage } from '../../../components/game/mat/MessageFactory'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
 import useDeleteGame from '../../../hooks/api/useDeleteGame'
+import useFetchIntel from '../../../hooks/api/useFetchIntel'
 import usePoints from '../../../hooks/api/usePoints'
 import useThrowCard from '../../../hooks/api/useThrowCard'
-import useFetchIntel from '../../../hooks/api/useUpdateIntel'
 import useAuth from '../../../hooks/context/useAuth'
 import useIntel from '../../../hooks/context/useIntel'
 
@@ -26,12 +26,9 @@ const Mat = () => {
     const {intel, setIntel} = useIntel()
     const initialIntel = intel.last 
 
-    //const [lastIntel, setLastIntel] = useState(initialIntel)
-    //const [missingIntel, setMissingIntel] = useState([initialIntel])
-
     const throwCardAs = useThrowCard()
     const decideTo = usePoints()
-    const fetchSince = useFetchIntel()
+    const fetchIntelSince = useFetchIntel()
     const deleteConcluded = useDeleteGame()
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
@@ -74,9 +71,7 @@ const Mat = () => {
     async function animate(){
         const missingIntel = intel.missing
         if(missingIntel.length === 1){
-            //setMissingIntel([])
             setIntel(prevState => ({...prevState, missing: []}))
-            console.log(intel)
             return
         }
         const prevIntel = missingIntel[0]
@@ -129,7 +124,6 @@ const Mat = () => {
         const remainingIntel = missingIntel.slice(1, missingIntel.length)
         setIntel(prevState => ({...prevState, missing: remainingIntel}))
         console.log(intel)
-        //setMissingIntel(remainingIntel)
     }
 
     function prepareNewHand(intel){
@@ -195,25 +189,25 @@ const Mat = () => {
 
     const handleCardPlay = async (card, action) => {
         await throwCardAs(card, action)
-        updateIntel()
+        fetchIntelSince()
+        //updateIntel()
     }
 
     const handlePointsChange = async action => {
         await decideTo(action)
-        updateIntel()
+        fetchIntelSince()
+        //updateIntel()
     }
 
-    async function updateIntel() {
-        const intelSinceBaseTimestamp = await fetchSince(intel.last)
-        if (intelSinceBaseTimestamp.length === 0) return
+    // async function updateIntel() {
+    //     const intelSinceBaseTimestamp = await fetchSince(intel.last)
+    //     if (intelSinceBaseTimestamp.length === 0) return
 
-        const missing = [intel.last, ...intelSinceBaseTimestamp]
-        const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
+    //     const missing = [intel.last, ...intelSinceBaseTimestamp]
+    //     const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]
 
-        setIntel({last: lastMissingIntel, missing})
-        //setMissingIntel(missing)
-        //setLastIntel(lastMissingIntel)
-    }
+    //     setIntel({last: lastMissingIntel, missing})
+    // }
     
     return (
         <main className='mat-area'>
