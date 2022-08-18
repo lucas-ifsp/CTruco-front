@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { deleteConcludedGame } from '../../../api/GameApi'
-import { getMissingIntel, postPointsDecision, postThrowingCard } from '../../../api/HandApi'
+import { useEffect, useState } from 'react'
 import OpenCards from '../../../components/game/cards/OpenCards'
 import OpponentHand from '../../../components/game/cards/OpponentHand'
 import PlayerHand from '../../../components/game/cards/PlayerHand'
@@ -9,9 +7,12 @@ import Message from '../../../components/game/mat/Message'
 import { createMessage } from '../../../components/game/mat/MessageFactory'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
-
-import GameContext from '../../../contexts/GameContext'
-import UserContext from '../../../contexts/UserContext'
+import useDeleteGame from '../../../hooks/api/useDeleteGame'
+import useGetIntel from '../../../hooks/api/useGetIntel'
+import usePoints from '../../../hooks/api/usePoints'
+import useThrowCard from '../../../hooks/api/useThrowCard'
+import useAuth from '../../../hooks/context/useAuth'
+import useIntel from '../../../hooks/context/useIntel'
 
 import './GameMat.css'
 
@@ -19,8 +20,16 @@ const Mat = () => {
     const nextScoreAsString = {1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze'}
     const DELAY_UNIT = 120;
 
-    const {initialIntel, setInitialIntel} = useContext(GameContext)
-    const {uuid, token} = useContext(UserContext)
+    const {auth} = useAuth()
+    const uuid = auth.uuid
+
+    const {intel} = useIntel()
+    const initialIntel = intel.last 
+
+    const throwCardAs = useThrowCard()
+    const decideTo = usePoints()
+    const getSince = useGetIntel()
+    const deleteConcluded = useDeleteGame()
 
     const toCardString = card => card.rank === 'X' ? 'back' : `${card.rank}${card.suit}`
     const getCardsAsStrings = cards => cards.map(card => toCardString(card))
@@ -175,22 +184,23 @@ const Mat = () => {
     }
 
     const handleGameEnding = async () => { 
-        await deleteConcludedGame(token, uuid)
-        setInitialIntel(null)
+        // await deleteConcludedGame(auth.token, uuid)
+        // setIntel(null)
+        await deleteConcluded()
     }
 
     const handleCardPlay = async (card, action) => {
-        await postThrowingCard({token, uuid, card, action})
+        await throwCardAs(card, action)
         updateIntel()
     }
 
     const handlePointsChange = async action => {
-        await postPointsDecision({token, uuid, action})
+        await decideTo(action)
         updateIntel()
     }
 
     async function updateIntel() {
-        const intelSinceBaseTimestamp = await getMissingIntel({token, uuid, lastIntelTimestamp : lastIntel.timestamp})
+        const intelSinceBaseTimestamp = await getSince(lastIntel)
         if (intelSinceBaseTimestamp.length === 0) return
         setMissingIntel([lastIntel, ...intelSinceBaseTimestamp])
         const lastMissingIntel = intelSinceBaseTimestamp.slice(-1)[0]

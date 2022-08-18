@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import GameContext from "../../contexts/GameContext";
+import React from "react";
+import useIntel from "../../hooks/context/useIntel";
 import "./Menu.css";
 
 const Menu = () => {
-    const {setInitialIntel, isGameActive, isGameWaitingOpponent} = useContext(GameContext)
+    const {intel, setIntel} = useIntel()
 
     const handleNewGameSelection = event => {
         event.preventDefault();
-        if(isGameActive() || isGameWaitingOpponent()) return
-        setInitialIntel({})
+        if(intel) return
+        setIntel({})
     }
 
     return (

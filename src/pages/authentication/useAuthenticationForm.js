@@ -1,8 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../../api/AuthenticationApi';
-import UserContext from "../../contexts/UserContext";
-
+import useAuth from '../../hooks/context/useAuth';
 
 const useAuthenticationForm = (validate) => {
     const navigate = useNavigate();
@@ -11,7 +10,7 @@ const useAuthenticationForm = (validate) => {
         password: ''
     })
     const [errors, setErrors] = useState({})
-    const { setToken, setUsername: setContextUsername, setUuid } = useContext(UserContext)
+    const { setAuth } = useAuth()
 
 
     const handleChange = e => {
@@ -31,11 +30,8 @@ const useAuthenticationForm = (validate) => {
 
         try {
             const requestPayload = { username: values.username, password: values.password }
-            const token = await authenticate(requestPayload)
-            const tokenPayload = parseJwt(token)
-            setToken(token)
-            setContextUsername(tokenPayload.username)
-            setUuid(tokenPayload.userId)
+            const response = await authenticate(requestPayload)
+            setAuth({ ...response, username: values.username })
             navigate('/')
         } catch (error) {
             const requestError = { apiError: error.message }
@@ -44,16 +40,6 @@ const useAuthenticationForm = (validate) => {
     }
 
     const hasInputErrors = valitationErrors => Object.keys(valitationErrors).length !== 0
-
-    function parseJwt(token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        return JSON.parse(jsonPayload);
-    };
 
     return { values, errors, handleChange, handleSubmit }
 }

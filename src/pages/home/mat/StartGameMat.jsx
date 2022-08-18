@@ -1,20 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { createGameForUserAndBot } from '../../../api/GameApi';
-import GameContext from '../../../contexts/GameContext';
-import UserContext from '../../../contexts/UserContext';
+import React, { useState } from 'react';
+import useCreateGame from '../../../hooks/api/useCreateGame';
+
 import "./StartGameMat.css";
 
-
 const StartGameMat = () => {
-    const {setInitialIntel} = useContext(GameContext)
-    const {uuid, token} = useContext(UserContext)
+    const createWithBot = useCreateGame()
     const [botName, setBotName] = useState("MineiroByBueno")
 
     const handleSubmit = async event => {
         event.preventDefault();
-        const payload = {userUuid: uuid, botName}
-        const initialIntel = await createGameForUserAndBot(token, payload) 
-        setInitialIntel(initialIntel)
+        await createWithBot(botName)
     }
 
     return (
