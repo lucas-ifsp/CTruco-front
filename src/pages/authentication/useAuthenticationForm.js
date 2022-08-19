@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authenticate } from '../../api/AuthenticationApi';
-import useAuth from '../../hooks/context/useAuth';
+import useSignIn from '../../hooks/api/useSignIn';
 
 const useAuthenticationForm = (validate) => {
     const navigate = useNavigate();
@@ -10,8 +9,16 @@ const useAuthenticationForm = (validate) => {
         password: ''
     })
     const [errors, setErrors] = useState({})
-    const { setAuth } = useAuth()
+    const [signIn, success, apiError] = useSignIn()
 
+    useEffect(() => {
+        setErrors(prevState => ({ ...prevState, apiError }))
+    }, [apiError])
+
+    useEffect(() => {
+        if (!success) return
+        navigate('/')
+    }, [success, navigate])
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -28,15 +35,7 @@ const useAuthenticationForm = (validate) => {
 
         if (hasInputErrors(valitationErrors)) return
 
-        try {
-            const requestPayload = { username: values.username, password: values.password }
-            const response = await authenticate(requestPayload)
-            setAuth({ ...response, username: values.username })
-            navigate('/')
-        } catch (error) {
-            const requestError = { apiError: error.message }
-            setErrors(() => requestError)
-        }
+        signIn({ username: values.username, password: values.password })
     }
 
     const hasInputErrors = valitationErrors => Object.keys(valitationErrors).length !== 0
