@@ -9,7 +9,7 @@ const useSignIn = () => {
 
     const signIn = async (payload) => {
         try {
-            setError(false)
+            setError(null)
             const { headers: { authorization: token }, data: { refreshToken, uuid } } = await axios.post(`/login`, payload)
             setAuth({ token, uuid, refreshToken, username: payload.username })
             setSuccess(true)

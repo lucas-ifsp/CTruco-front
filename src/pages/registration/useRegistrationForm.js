@@ -1,15 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../../api/RegistrationApi';
+import useSignUp from '../../hooks/api/useSignUp';
 
 const useRegistrationForm = (validate) => {
     const navigate = useNavigate();
+    const [signUp, success, apiErrors] = useSignUp();
+    const [errors, setErrors] = useState({})
+
     const [values, setValues] = useState({
         username: '',
         email: '',
         password: ''
     })
-    const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        if (apiErrors.length === 0) return
+
+        const errorTypes = {}
+
+        const userError = apiErrors.find(error => error.includes('usuário'))
+        if (userError)
+            errorTypes.username = userError
+
+        const emailError = apiErrors.find(error => error.includes('e-mail'))
+        if (emailError)
+            errorTypes.email = emailError
+
+        const otherError = apiErrors.find(error => !error.includes('usuário') && !error.includes('e-mail'))
+
+        if (otherError)
+            errorTypes.apiError = otherError
+
+        setErrors(errorTypes)
+
+    }, [apiErrors])
+
+    useEffect(() => {
+        if (!success) return
+        navigate('/login')
+    }, [success, navigate])
+
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -26,27 +56,12 @@ const useRegistrationForm = (validate) => {
 
         if (hasErrors(validationErrors)) return
 
-        try {
-            const payload = {
-                username: values.username,
-                email: values.email,
-                password: values.password
-            }
-            await register(payload)
-            navigate('/login')
-        } catch (error) {
-            const message = error.message
-            if (message.includes('usuário') || message.includes('e-mail')) {
-                const messageParts = message.split('|')
-
-                messageParts.forEach((part) => {
-                    if (part.includes('usuário')) setErrors(prevState => ({ ...prevState, username: part }))
-                    if (part.includes('e-mail')) setErrors(prevState => ({ ...prevState, email: part }))
-                })
-            } else {
-                setErrors(() => ({ apiError: error.message }))
-            }
+        const payload = {
+            username: values.username,
+            email: values.email,
+            password: values.password
         }
+        await signUp(payload)
     }
 
     const hasErrors = valitationErrors => Object.keys(valitationErrors).length !== 0
