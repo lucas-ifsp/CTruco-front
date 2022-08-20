@@ -1,8 +1,8 @@
-import usePoints from '../../../hooks/api/usePoints'
+import useDecidePoints from '../../../hooks/api/useDecidePoints'
 import './Commands.css'
 
 const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel, handlePointsChange }) => {
-    const decideTo = usePoints()
+    const decideTo = useDecidePoints()
     
     const action = {
         raise: 'raised-points',

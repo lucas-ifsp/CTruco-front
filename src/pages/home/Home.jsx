@@ -9,18 +9,7 @@ import StartGameMat from './mat/StartGameMat';
 import WelcomeMat from './mat/WelcomeMat';
 
 const Home = () => {
-
     const {intel} = useIntel()
-    // const {isGameWaitingOpponent, isGameActive} = useContext(GameContext)
-
-    // const selectMatComponent = () => {
-    //     if(isGameActive()) return <GameMat/>
-    //     if(isGameWaitingOpponent()) return <StartGameMat/>
-    //     return <WelcomeMat/>
-    // }
-
-
-
     return (
         <div className='app'>
             <Header/>

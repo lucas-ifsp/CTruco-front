@@ -2,7 +2,7 @@ import useAuth from '../context/useAuth'
 import useAxiosPrivate from './useAxiosPrivate'
 import useFetchIntel from './useFetchIntel'
 
-const usePoints = () => {
+const useDecidePoints = () => {
     const axiosPrivate = useAxiosPrivate()
     const { auth: { uuid } } = useAuth()
     const fetchIntelSince = useFetchIntel()
@@ -15,4 +15,4 @@ const usePoints = () => {
     return decideTo
 }
 
-export default usePoints
+export default useDecidePoints

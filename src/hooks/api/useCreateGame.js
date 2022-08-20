@@ -11,7 +11,7 @@ const useCreateGame = () => {
         const url = `/api/v1/games/user-bot/`
         const data = { userUuid: auth.uuid, botName }
         const { data: initialIntel } = await axiosPrivate.post(url, data)
-        setIntel({ last: initialIntel })
+        setIntel({ last: initialIntel, opponentName: botName })
         return initialIntel;
     }
     return withBot

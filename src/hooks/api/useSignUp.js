@@ -15,16 +15,12 @@ const useSignUp = () => {
             if (!error.response) {
                 setErrors('Sistema temporariamente indisponível.')
             }
-
             if (error.response.status === 409) {
                 const message = error.response.data.message
-
                 if (message.includes('username'))
                     setErrors(prevState => ([...prevState, 'O nome de usuário já existe no sistema.']))
-
                 if (message.includes('email'))
                     setErrors(prevState => ([...prevState, 'O e-mail já existe no sistema.']))
-
                 return
             }
             else setErrors('Algo deu errado.')

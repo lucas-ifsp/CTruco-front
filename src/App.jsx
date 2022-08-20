@@ -26,3 +26,4 @@ const App = () =>
     </AuthContextProvider>
 
 export default App
+

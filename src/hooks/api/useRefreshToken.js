@@ -5,13 +5,9 @@ const useRefreshToken = () => {
     const { setAuth, auth } = useAuth();
 
     const refresh = async () => {
-        const headers = {
-            Authorization: `Bearer ${auth?.refreshToken}`
-        }
+        const headers = { Authorization: `Bearer ${auth?.refreshToken}` }
         const { headers: { authorization: accessToken } } = await axios.get('/refresh-token', { headers: headers })
-        setAuth(prev => {
-            return { ...prev, token: accessToken }
-        });
+        setAuth(prev => ({ ...prev, token: accessToken }));
         return accessToken;
     }
     return refresh;
