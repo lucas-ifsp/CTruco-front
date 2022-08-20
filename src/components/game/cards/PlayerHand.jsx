@@ -7,13 +7,9 @@ import './PlayerHand.css'
 
 
 const PlayerHand = ({cards}) => {
-    let baseLeft = cards[0] 
-    let baseCenter = cards[1]
-    let baseRight = cards[2]
-
-    const [left, setLeft] = useState(baseLeft)
-    const [center, setCenter] = useState(baseCenter)
-    const [right, setRight] = useState(baseRight)
+    const [left, setLeft] = useState(cards[0])
+    const [center, setCenter] = useState(cards[1])
+    const [right, setRight] = useState(cards[2])
 
     const throwCardAs = useThrowCard()
     const { auth: {uuid}} = useAuth()
@@ -21,16 +17,12 @@ const PlayerHand = ({cards}) => {
 
 
     useEffect(() => {
-        baseLeft = cards[0] || 'none'
-        baseCenter = cards[1] || 'none'
-        baseRight = cards[2] || 'none'
+        const shouldUpdate = (currentState, newState) => newState === 'none' || currentState !== 'back' 
+        if(shouldUpdate(left, cards[0])) setLeft(cards[0]) 
+        if(shouldUpdate(center, cards[1])) setCenter(cards[1]) 
+        if(shouldUpdate(right, cards[2])) setRight(cards[2]) 
+    }, [cards, left, center, right])
 
-        if(shouldUpdate(left, baseLeft)) setLeft(baseLeft) 
-        if(shouldUpdate(center, baseCenter)) setCenter(baseCenter) 
-        if(shouldUpdate(right, baseRight)) setRight(baseRight) 
-    }, cards)
-
-    const shouldUpdate = (currentState, newState) => currentState !== 'back' || newState === 'none'
 
     const flipOrThrow = async (e, currentState, setNextState, baseState) => {
         const canPlay = intel.last.currentPlayerUuid === uuid && intel.last.possibleActions.includes('PLAY')
@@ -51,9 +43,9 @@ const PlayerHand = ({cards}) => {
     
     return (
         <div className='player-hand'> 
-            <div className='player-left' onClick={(e) => flipOrThrow (e, left, setLeft, baseLeft)} ><Card name={left}/></div>
-            <div className='player-center' onClick={(e) => flipOrThrow (e, center, setCenter, baseCenter)} ><Card name={center}/></div>
-            <div className='player-right' onClick={(e) => flipOrThrow (e, right, setRight, baseRight)}><Card name={right}/></div>
+            <div className='player-left' onClick={(e) => flipOrThrow (e, left, setLeft, cards[0])} ><Card name={left}/></div>
+            <div className='player-center' onClick={(e) => flipOrThrow (e, center, setCenter, cards[1])} ><Card name={center}/></div>
+            <div className='player-right' onClick={(e) => flipOrThrow (e, right, setRight, cards[2])}><Card name={right}/></div>
         </div>
     )
 }

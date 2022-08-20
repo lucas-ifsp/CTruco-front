@@ -17,7 +17,7 @@ const useFetchIntel = () => {
         const missing = [lastIntel, ...intelSince]
         const mostRecent = intelSince.slice(-1)[0]
 
-        setIntel({ last: mostRecent, missing })
+        setIntel(prevState => ({ ...prevState, last: mostRecent, missing }))
     }
     return fetchIntelSince
 }

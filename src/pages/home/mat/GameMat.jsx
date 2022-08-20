@@ -5,7 +5,7 @@ import Commands from '../../../components/game/commands/Commands'
 import Message from '../../../components/game/mat/Message'
 import Rounds from '../../../components/game/mat/Rounds'
 import Score from '../../../components/game/mat/Score'
-import useAnimation from '../../../hooks/api/useAnimation'
+import useAnimation from './useAnimation'
 
 import './GameMat.css'
 

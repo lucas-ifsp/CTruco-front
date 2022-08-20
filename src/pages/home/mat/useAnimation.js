@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { createMessage } from '../../components/game/mat/MessageFactory'
-import useDeleteGame from '../../hooks/api/useDeleteGame'
-import useAuth from '../context/useAuth'
-import useIntel from '../context/useIntel'
+import { createMessage } from '../../../components/game/mat/MessageFactory'
+import useDeleteGame from '../../../hooks/api/useDeleteGame'
+import useAuth from '../../../hooks/context/useAuth'
+import useIntel from '../../../hooks/context/useIntel'
 
 const useAnimation = () => {
     const nextScoreAsString = { 1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze' }
@@ -47,65 +47,66 @@ const useAnimation = () => {
     useEffect(() => {
         const missingIntel = intel.missing
         if (!missingIntel || missingIntel.length === 0) return
-
-        const animate = async () => {
-            const missingIntel = intel.missing
-            if (missingIntel.length === 1) {
-                setIntel(prevState => ({ ...prevState, missing: [] }))
-                return
-            }
-            const prevIntel = missingIntel[0]
-            const currentIntel = missingIntel[1]
-
-            if (currentIntel.event === 'HAND_START') {
-                await delay(DELAY_UNIT * 15)
-                prepareNewHand(currentIntel)
-            } else if (currentIntel.event === 'GAME_OVER') {
-                await delay(DELAY_UNIT * 3)
-                setPlayerScore(getPlayer(currentIntel).score)
-                setOpponentScore(getOpponent(currentIntel).score)
-                updateButtons(currentIntel)
-                updateMessage(currentIntel)
-                await delay(DELAY_UNIT * 30)
-                await deleteConcludedGame()
-            } else {
-                if (hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
-                    await delay(DELAY_UNIT * 3)
-                    setHandPoints(currentIntel.handPoints)
-                }
-                if (hasChangedOpponentProperty('cards', currentIntel, prevIntel)) {
-                    await delay(DELAY_UNIT * 5)
-                    updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand)
-                }
-                if (hasChangedPlayerProperty('cards', currentIntel, prevIntel)) {
-                    await delay(DELAY_UNIT * 3)
-                    updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand)
-                }
-                if (hasChangedMatchProperty('openCards', currentIntel, prevIntel)) {
-                    await delay(DELAY_UNIT * 3)
-                    updateOpenCards(currentIntel)
-                }
-                if (hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)) {
-                    await delay(DELAY_UNIT * 5)
-                    setRounds(currentIntel.roundWinnersUsernames)
-                    await delay(DELAY_UNIT * 30)
-                    clearOpenCards()
-                }
-            }
-            await delay(DELAY_UNIT * 3)
-            updateButtons(currentIntel)
-            await delay(DELAY_UNIT * 2)
-            updateMessage(currentIntel)
-
-            if (message !== '') {
-                await delay(DELAY_UNIT * 15)
-                updateMessage()
-            }
-            const remainingIntel = missingIntel.slice(1, missingIntel.length)
-            setIntel(prevState => ({ ...prevState, missing: remainingIntel }))
-        }
         animate()
+        //eslint-disable-next-line 
     }, [intel])
+
+    async function animate() {
+        const missingIntel = intel.missing
+        if (missingIntel.length === 1) {
+            setIntel(prevState => ({ ...prevState, missing: [] }))
+            return
+        }
+        const prevIntel = missingIntel[0]
+        const currentIntel = missingIntel[1]
+
+        if (currentIntel.event === 'HAND_START') {
+            await delay(DELAY_UNIT * 15)
+            prepareNewHand(currentIntel)
+        } else if (currentIntel.event === 'GAME_OVER') {
+            await delay(DELAY_UNIT * 3)
+            setPlayerScore(getPlayer(currentIntel).score)
+            setOpponentScore(getOpponent(currentIntel).score)
+            updateButtons(currentIntel)
+            updateMessage(currentIntel)
+            await delay(DELAY_UNIT * 30)
+            await deleteConcludedGame()
+        } else {
+            if (hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
+                await delay(DELAY_UNIT * 3)
+                setHandPoints(currentIntel.handPoints)
+            }
+            if (hasChangedOpponentProperty('cards', currentIntel, prevIntel)) {
+                await delay(DELAY_UNIT * 5)
+                updateHand(getOpponent(currentIntel).cards, opponentHand, setOpponentHand)
+            }
+            if (hasChangedPlayerProperty('cards', currentIntel, prevIntel)) {
+                await delay(DELAY_UNIT * 3)
+                updateHand(getPlayer(currentIntel).cards, playerHand, setPlayerHand)
+            }
+            if (hasChangedMatchProperty('openCards', currentIntel, prevIntel)) {
+                await delay(DELAY_UNIT * 3)
+                updateOpenCards(currentIntel)
+            }
+            if (hasChangedMatchProperty('roundWinnersUsernames', currentIntel, prevIntel)) {
+                await delay(DELAY_UNIT * 5)
+                setRounds(currentIntel.roundWinnersUsernames)
+                await delay(DELAY_UNIT * 30)
+                clearOpenCards()
+            }
+        }
+        await delay(DELAY_UNIT * 3)
+        updateButtons(currentIntel)
+        await delay(DELAY_UNIT * 2)
+        updateMessage(currentIntel)
+
+        if (message !== '') {
+            await delay(DELAY_UNIT * 15)
+            updateMessage()
+        }
+        const remainingIntel = missingIntel.slice(1, missingIntel.length)
+        setIntel(prevState => ({ ...prevState, missing: remainingIntel }))
+    }
 
     function prepareNewHand(intel) {
         setHandPoints(1)
@@ -136,8 +137,8 @@ const useAnimation = () => {
     }
 
     function updateHand(cards, cardState, setCardStateFunction) {
-        const getSameFromIntelOrNull = (handFromIntel, someCard) => handFromIntel.find(card => card === someCard) || null
-        const getUpdatedHand = (receivedHand, handFromIntel) => receivedHand.map(card => getSameFromIntelOrNull(handFromIntel, card))
+        const getSameFromIntelOrNone = (handFromIntel, someCard) => handFromIntel.find(card => card === someCard) || 'none'
+        const getUpdatedHand = (receivedHand, handFromIntel) => receivedHand.map(card => getSameFromIntelOrNone(handFromIntel, card))
         const cardsFromIntel = getCardsAsStrings(cards)
         const updateHand = getUpdatedHand(cardState, cardsFromIntel)
         setCardStateFunction(updateHand)
