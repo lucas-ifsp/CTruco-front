@@ -9,7 +9,13 @@ const useRefreshToken = () => {
         setAuth(prev => ({ ...prev, token: accessToken }))
         return accessToken
     }
-    return refresh
-};
+
+    const deleteTokens = async () => {
+        await axiosPrivate.delete('/refresh-token')
+        setAuth(null)
+    }
+
+    return { refresh, deleteTokens }
+}
 
 export default useRefreshToken

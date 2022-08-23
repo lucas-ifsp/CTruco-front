@@ -16,8 +16,7 @@ const useSilentAuthentication = () => {
             console.log('auth')
             return true
         } catch (error) {
-            console.log(error)
-            console.log('Refresh token not available')
+            console.log('Logged out. Please sign in.')
             return false
         }
     }

@@ -9,6 +9,15 @@ import Home from './pages/home/Home';
 import Layout from './pages/main/Layout';
 import Registration from './pages/registration/Registration';
 
+// TODO 
+// 1. Solve opponent card showing covered before unveiled. 
+// 2. Implement feature to notify player about leaving active game
+// 3. Implement feature to remove active game if player leaves 
+// 4. Solve problem of overflow in long usernames and put a limit in name length
+// 5. Implement responsive layout
+// 6. Implement microstream to handle active games
+// 7. Implement hall of fame
+// 8. Implement player history
 const App = () => 
     <AuthContextProvider>
     <IntelContextProvider>

@@ -5,9 +5,6 @@ import useAuthenticationForm from './useAuthenticationForm';
 import useSilentAuthentication from './useSilentAuthentication';
 import validate from './validateAuthenticationInfo';
 
-
-//TODO PASS GAME INFO TO STATE 
-//IMPLEMENT LOGOUT
 const Authentication = () => {
     
     const [authenticated, setAuthenticated] = useState(false)
@@ -20,7 +17,8 @@ const Authentication = () => {
             if(isAuthenticated) setAuthenticated(true)
         }
         silentlyLogin()
-    }, [silentlyAuthenticate])
+        // eslint-disable-next-line
+    }, [])
     
     
     return (

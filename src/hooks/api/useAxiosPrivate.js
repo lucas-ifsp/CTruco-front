@@ -5,11 +5,10 @@ import useAuth from "../context/useAuth";
 import useRefreshToken from "./useRefreshToken";
 
 const useAxiosPrivate = () => {
-    const refresh = useRefreshToken()
+    const { refresh } = useRefreshToken()
     const { auth } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
-    const from = location?.state?.from?.pathname || '/'
 
     useEffect(() => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
@@ -46,7 +45,7 @@ const useAxiosPrivate = () => {
             axiosPrivate.interceptors.request.eject(requestIntercept);
             axiosPrivate.interceptors.response.eject(responseIntercept);
         }
-    }, [auth, refresh])
+    }, [auth, refresh, location, navigate])
 
     return axiosPrivate;
 }
