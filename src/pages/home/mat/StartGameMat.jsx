@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useCreateGame from '../../../hooks/api/useCreateGame';
 
 import "./StartGameMat.css";
 
 const StartGameMat = () => {
     const createWithBot = useCreateGame()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
     const [botName, setBotName] = useState("MineiroByBueno")
 
     const handleSubmit = async event => {
-        event.preventDefault();
+        event.preventDefault()
         await createWithBot(botName)
     }
 

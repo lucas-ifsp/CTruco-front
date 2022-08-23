@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from '../../api/axios'
+import { axiosPrivate } from '../../api/axios'
 import useAuth from '../context/useAuth'
 
 const useSignIn = () => {
@@ -10,7 +10,7 @@ const useSignIn = () => {
     const signIn = async (payload) => {
         try {
             setError(null)
-            const { headers: { authorization: token }, data: { refreshToken, uuid } } = await axios.post(`/login`, payload)
+            const { headers: { authorization: token }, data: { refreshToken, uuid } } = await axiosPrivate.post(`/login`, payload)
             setAuth({ token, uuid, refreshToken, username: payload.username })
             setSuccess(true)
         } catch (error) {

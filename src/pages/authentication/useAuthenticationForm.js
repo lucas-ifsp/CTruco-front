@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useSignIn from '../../hooks/api/useSignIn';
 
 const useAuthenticationForm = (validate) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
     const [values, setValues] = useState({
         username: '',
         password: ''
@@ -17,8 +20,8 @@ const useAuthenticationForm = (validate) => {
 
     useEffect(() => {
         if (!success) return
-        navigate('/')
-    }, [success, navigate])
+        navigate(from, { replace: true })
+    }, [success, navigate, from])
 
     const handleChange = e => {
         const { name, value } = e.target;

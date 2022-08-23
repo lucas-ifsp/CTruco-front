@@ -8,9 +8,14 @@ const useDeleteGame = () => {
     const { setIntel } = useIntel()
 
     const deleteConcludedGame = async () => {
-        const url = `/api/v1/games/players/${uuid}`
-        await axiosPrivate.delete(url)
-        setIntel(null)
+        try {
+            const url = `/api/v1/games/players/${uuid}`
+            await axiosPrivate.delete(url)
+            setIntel(null)
+        }
+        catch (error) {
+            console.log(error.response.headers.authorization)
+        }
     }
     return deleteConcludedGame
 }

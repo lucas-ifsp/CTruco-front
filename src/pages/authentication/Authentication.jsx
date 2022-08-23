@@ -1,15 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import "./Authentication.css";
 import useAuthenticationForm from './useAuthenticationForm';
+import useSilentAuthentication from './useSilentAuthentication';
 import validate from './validateAuthenticationInfo';
 
 
+//TODO PASS GAME INFO TO STATE 
+//IMPLEMENT LOGOUT
 const Authentication = () => {
     
+    const [authenticated, setAuthenticated] = useState(false)
     const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)    
+    const silentlyAuthenticate = useSilentAuthentication()
 
+    useEffect(() => {
+        const silentlyLogin = async () => {
+            const isAuthenticated = await silentlyAuthenticate()
+            if(isAuthenticated) setAuthenticated(true)
+        }
+        silentlyLogin()
+    }, [silentlyAuthenticate])
+    
+    
     return (
+        authenticated ? <Navigate to='/'/> :
         <main className="authentication">
             <form>
                 <p className="title fs-4 mb-3 fw-bold text-center">

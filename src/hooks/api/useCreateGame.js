@@ -8,11 +8,16 @@ const useCreateGame = () => {
     const { setIntel } = useIntel()
 
     const withBot = async (botName) => {
-        const url = `/api/v1/games/user-bot/`
-        const data = { userUuid: auth.uuid, botName }
-        const { data: initialIntel } = await axiosPrivate.post(url, data)
-        setIntel({ last: initialIntel, opponentName: botName })
-        return initialIntel;
+        try {
+            const url = `/api/v1/games/user-bot/`
+            const data = { userUuid: auth.uuid, botName }
+            const { data: initialIntel } = await axiosPrivate.post(url, data)
+            setIntel({ last: initialIntel, opponentName: botName })
+            return initialIntel;
+        }
+        catch (error) {
+            console.log(error.response.headers.authorization)
+        }
     }
     return withBot
 }

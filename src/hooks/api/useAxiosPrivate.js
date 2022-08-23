@@ -1,43 +1,54 @@
 import { useEffect } from "react";
-import axios from "../../api/axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { axiosPrivate } from "../../api/axios";
 import useAuth from "../context/useAuth";
 import useRefreshToken from "./useRefreshToken";
 
 const useAxiosPrivate = () => {
-    const refresh = useRefreshToken();
-    const { auth } = useAuth();
+    const refresh = useRefreshToken()
+    const { auth } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location?.state?.from?.pathname || '/'
 
     useEffect(() => {
-        const requestIntercept = axios.interceptors.request.use(
+        const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (!config.headers['Authorization']) {
-                    config.headers['Authorization'] = auth?.token;
+                    config.headers['Authorization'] = auth?.token
                 }
                 return config;
             }, (error) => Promise.reject(error)
-        );
+        )
 
-        const responseIntercept = axios.interceptors.response.use(
+        const responseIntercept = axiosPrivate.interceptors.response.use(
             response => response,
             async (error) => {
-                const prevRequest = error?.config;
+                const prevRequest = error?.config
+                const isRequestTokenRequest = prevRequest?.url === '/refresh-token'
+
+                if (isRequestTokenRequest) {
+                    navigate('/login', { state: { from: location }, replace: true })
+                    return Promise.reject(error);
+                }
+
                 if (error?.response?.status === 401 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = newAccessToken;
-                    return await axios(prevRequest);
+                    return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);
             }
         );
 
         return () => {
-            axios.interceptors.request.eject(requestIntercept);
-            axios.interceptors.response.eject(responseIntercept);
+            axiosPrivate.interceptors.request.eject(requestIntercept);
+            axiosPrivate.interceptors.response.eject(responseIntercept);
         }
     }, [auth, refresh])
 
-    return axios;
+    return axiosPrivate;
 }
 
 export default useAxiosPrivate;

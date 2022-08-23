@@ -8,9 +8,14 @@ const useDecidePoints = () => {
     const fetchIntelSince = useFetchIntel()
 
     const decideTo = async (action) => {
-        const url = `/api/v1/games/players/${uuid}/${action}`
-        await axiosPrivate.post(url)
-        fetchIntelSince()
+        try {
+            const url = `/api/v1/games/players/${uuid}/${action}`
+            await axiosPrivate.post(url)
+            fetchIntelSince()
+        }
+        catch (error) {
+            console.log(error.response.headers.authorization)
+        }
     }
     return decideTo
 }

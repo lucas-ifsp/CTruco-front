@@ -8,9 +8,14 @@ const useThrowCard = () => {
     const fetchIntelSince = useFetchIntel()
 
     const throwCardAs = async (card, action) => {
-        const url = `/api/v1/games/players/${uuid}/cards/${action}`
-        await axiosPrivate.post(url, card)
-        fetchIntelSince()
+        try {
+            const url = `/api/v1/games/players/${uuid}/cards/${action}`
+            await axiosPrivate.post(url, card)
+            fetchIntelSince()
+        }
+        catch (error) {
+            console.log(error.response.headers.authorization)
+        }
     }
     return throwCardAs
 }

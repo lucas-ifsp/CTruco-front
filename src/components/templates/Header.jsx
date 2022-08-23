@@ -1,12 +1,10 @@
-import React  from "react";
-import "./Header.css"
-import logo from "../../assets/images/logo.png"
+import React from "react";
+import logo from "../../assets/images/logo.png";
+import "./Header.css";
 
-const Header = props => 
+const Header = () => 
     <header className="header">
-        <a href="/" className="logo">
-            <img src={logo} alt="logo" />
-        </a>
+        <img className="logo" src={logo} alt="logo" />
         <h1>CTruco - Truco for didactic purposes</h1>
     </header>
 
