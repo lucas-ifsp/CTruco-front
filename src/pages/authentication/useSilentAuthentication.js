@@ -13,7 +13,6 @@ const useSilentAuthentication = () => {
             const uuid = response.data.uuid
             const username = response.data.username
             setAuth(prev => ({ ...prev, token, uuid, username }))
-            console.log('auth')
             return true
         } catch (error) {
             console.log('Logged out. Please sign in.')

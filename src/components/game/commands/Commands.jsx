@@ -1,8 +1,10 @@
 import useDecidePoints from '../../../hooks/api/useDecidePoints'
+import useDeleteGame from '../../../hooks/api/useDeleteGame'
 import './Commands.css'
 
-const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel, handlePointsChange }) => {
+const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel }) => {
     const decideTo = useDecidePoints()
+    const deleteConcludedGame = useDeleteGame()
     
     const action = {
         raise: 'raised-points',
@@ -35,6 +37,13 @@ const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, qui
                 onClick={() => decideTo(action['quit'])}
             >
                 {`${quitLabel}`}
+            </button>
+            <button
+                type='button'
+                className='btn btn-danger'
+                onClick={() => deleteConcludedGame()}
+            >
+                Abandonar
             </button>
         </div>
     )
