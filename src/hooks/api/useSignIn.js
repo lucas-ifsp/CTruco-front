@@ -10,8 +10,8 @@ const useSignIn = () => {
     const signIn = async (payload) => {
         try {
             setError(null)
-            const { headers: { authorization: token }, data: { refreshToken, uuid } } = await axiosPrivate.post(`/login`, payload)
-            setAuth({ token, uuid, refreshToken, username: payload.username })
+            const { headers: { authorization: token }, data: { uuid } } = await axiosPrivate.post(`/login`, payload)
+            setAuth({ token, uuid, username: payload.username })
             setSuccess(true)
         } catch (error) {
             console.log(error.message)

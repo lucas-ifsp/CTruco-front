@@ -18,13 +18,14 @@ import Registration from './pages/registration/Registration';
 // 6. Implement microstream to handle active games
 // 7. Implement hall of fame
 // 8. Implement player history
+
 const App = () => 
     <AuthContextProvider>
     <IntelContextProvider>
        <Routes>
             <Route path="/" element={<Layout />}>
-                <Route path="login" element={<Authentication />} />
-                <Route path="register" element={<Registration />} />
+            <Route path="login" element={<Authentication />} />
+            <Route path="register" element={<Registration />} />
                 <Route element={<RequireAuth />}>
                     <Route path="/" element={<Home />} />
                 </Route>

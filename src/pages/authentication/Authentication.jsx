@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import useSilentSignIn from '../../hooks/api/useSilentSignIn';
 import "./Authentication.css";
 import useAuthenticationForm from './useAuthenticationForm';
-import useSilentAuthentication from './useSilentAuthentication';
 import validate from './validateAuthenticationInfo';
 
 const Authentication = () => {
     
     const [authenticated, setAuthenticated] = useState(false)
     const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)    
-    const silentlyAuthenticate = useSilentAuthentication()
+    const silentlySignIn = useSilentSignIn()
 
     useEffect(() => {
         const silentlyLogin = async () => {
-            const isAuthenticated = await silentlyAuthenticate()
+            const isAuthenticated = await silentlySignIn()
             if(isAuthenticated) setAuthenticated(true)
         }
         silentlyLogin()
         // eslint-disable-next-line
     }, [])
-    
     
     return (
         authenticated ? <Navigate to='/'/> :

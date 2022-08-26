@@ -1,11 +1,11 @@
 import { axiosPrivate } from '../../api/axios';
-import useAuth from '../../hooks/context/useAuth';
+import useAuth from '../context/useAuth';
 
 
-const useSilentAuthentication = () => {
+const useSilentSignIn = () => {
     const { auth, setAuth } = useAuth()
 
-    const silentlyAuthenticate = async () => {
+    const silentlySignIn = async () => {
         try {
             if (auth?.uuid) return false
             const response = await axiosPrivate.get('/refresh-token')
@@ -19,7 +19,7 @@ const useSilentAuthentication = () => {
             return false
         }
     }
-    return silentlyAuthenticate
+    return silentlySignIn
 }
 
-export default useSilentAuthentication
+export default useSilentSignIn

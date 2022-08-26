@@ -6,7 +6,7 @@ const OpenCards = props => {
     const vira = props.vira || "none";
     const opponentCard = props.opponentCard || "none";
     const playerCard = props.playerCard || "none";
-
+    
     return (
         <div className="open-cards"> 
             <div className="vira"><Card name={vira}/></div>
