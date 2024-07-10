@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useCreateGame from '../../../hooks/api/useCreateGame';
+import SelectBots from './SelectBots';
 
 import "./StartGameMat.css";
 
 const StartGameMat = () => {
     const createWithBot = useCreateGame()
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation(); 
     const from = location?.state?.from?.pathname || '/';
 
     const [botName, setBotName] = useState("MineiroByBueno")
@@ -25,10 +26,7 @@ const StartGameMat = () => {
                 </p>
                 <div className="mb-3 mt-4">
                     <label htmlFor="inputOpponent" className="form-label">Oponente: </label>
-                    <select className="form-select mb-3" value={botName} onChange={e => setBotName(e.target.value)}>
-                        <option value="MineiroByBueno">MineiroByBueno</option>
-                        <option value="DummyBot">DummyBot</option>
-                    </select>
+        	        <SelectBots botName={botName} setBotName={setBotName}></SelectBots>
                 </div>
                 <button type="submit" className="btn w-100 btn-dark mt-3 mb-3" onClick={handleSubmit}>
                         Começar

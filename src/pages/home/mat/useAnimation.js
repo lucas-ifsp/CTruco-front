@@ -148,7 +148,7 @@ const useAnimation = () => {
         if (intel.event !== 'PLAY') return
         const lastPlayedCard = intel.openCards.slice(-1)[0]
         const cardAsString = toCardString(lastPlayedCard)
-        if (intel.eventPlayerUUID === uuid) setPlayerCard(cardAsString)
+        if (intel.eventPlayerUuid === uuid) setPlayerCard(cardAsString)
         else setOpponentCard(cardAsString)
     }
 
