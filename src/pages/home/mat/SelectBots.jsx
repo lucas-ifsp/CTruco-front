@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import useGetBotNames from "../../../hooks/api/useGetBotNames";
 
@@ -9,13 +9,19 @@ const SelectBots = ({ botName, setBotName }) => {
     "LazyBot",
     "VapoBot",
   ]);
+
   const fetchBotNames = useGetBotNames();
-  const listBots = () => {
-    fetchBotNames().then((response) => {
-      setBotsList(response.data.sort());
-    });
+  const updateBotsList = async () => {
+    const response = await fetchBotNames();
+    console.log(response);
+    const data = await response.data.sort();
+    setBotsList(data);
   };
-  listBots();
+
+  useEffect(() => {
+    updateBotsList();
+  }, []);
+
   return (
     <select
       className="form-select mb-3"
