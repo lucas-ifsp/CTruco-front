@@ -32,6 +32,7 @@ const Menu = () => {
             <a href="/" onClick={handleNewGameSelection}><i className="bi bi-suit-club-fill"/> Nova Partida </a>
             <a href="/" ><i className="bi bi-suit-spade-fill" /> Histórico de Partidas </a>
             <a href="/" ><i className="bi bi-suit-heart-fill" /> Hall da Fama</a>
+            <a href="/"><i className="bi bi-plus-circle"/> Adicionar Bot Remoto</a>
             <a href="/" onClick={handleLogout}><i className="bi bi-suit-diamond-fill" /> Sair </a>
         </nav>
     )

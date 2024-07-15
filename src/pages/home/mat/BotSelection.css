@@ -1,0 +1,12 @@
+.unordered-list{
+  color: #000;
+  padding-left: 0px;
+}
+
+.list-item>a{
+  color: #000;
+}
+
+.list-item:hover>a{
+  color: #174dff;
+}

@@ -1,0 +1,11 @@
+.bots-table a{
+  color: #000;
+}
+
+.bots-table a:hover{
+  color: #174dff;
+}
+
+input{
+  color: #838383;
+}
