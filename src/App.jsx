@@ -35,7 +35,6 @@ const App = () => (
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="add-remote" element={<AddRemote />} />
-            <Route path="mat/welcome" element={<WelcomeMat />} />
             <Route path="mat/start-game" element={<StartGameMat />} />
             <Route path="mat/game" element={<Mat />} />
             <Route path="user-history" element={<UserMatchHistory />} />

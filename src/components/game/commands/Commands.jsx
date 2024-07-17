@@ -1,11 +1,13 @@
 import useDecidePoints from '../../../hooks/api/useDecidePoints'
 import useDeleteGame from '../../../hooks/api/useDeleteGame'
+import { useNavigate } from 'react-router-dom'
 import './Commands.css'
 
 const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, quitLabel }) => {
     const decideTo = useDecidePoints()
     const deleteConcludedGame = useDeleteGame()
-    
+    const navigate = useNavigate();
+
     const action = {
         raise: 'raised-points',
         accept: 'accepted-bet',
@@ -41,7 +43,10 @@ const Commands = ({ raiseDisabled, raiseLabel, acceptDisabled, quitDisabled, qui
             <button
                 type='button'
                 className='btn btn-danger'
-                onClick={() => deleteConcludedGame()}
+                onClick={() =>{ 
+                    deleteConcludedGame()
+                    navigate("/")
+                }}
             >
                 Abandonar
             </button>

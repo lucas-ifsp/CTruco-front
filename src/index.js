@@ -14,7 +14,6 @@ root.render(
     <Router>
       <App />
     </Router>
-      {/* <Home/> */}
   </React.StrictMode>
 );
 

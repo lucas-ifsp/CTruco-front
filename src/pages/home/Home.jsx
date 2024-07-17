@@ -16,13 +16,7 @@ const Home = () => {
     <div className="app">
       <Header />
       <Menu />
-      {/* {!intel && <Navigate to="mat/welcome" />}
-      {intel && !intel.last && <Navigate to="mat/start-game" />}
-      {intel && intel.last && <Navigate to="mat/game" />} */}
       <WelcomeMat/>
-      {/* {!intel && <WelcomeMat />}
-      {intel && !intel.last && <StartGameMat />}
-      {intel && intel.last && <GameMat />} */}
       <Footer />
     </div>
   );
