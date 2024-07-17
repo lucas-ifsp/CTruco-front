@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate,Link } from "react-router-dom";
 import useDeleteGame from '../../hooks/api/useDeleteGame';
 import useRefreshToken from "../../hooks/api/useRefreshToken";
 import useIntel from "../../hooks/context/useIntel";
@@ -11,8 +11,7 @@ const Menu = () => {
     const {deleteTokens} = useRefreshToken()
     const [logged, setLogged] = useState(true)
 
-    const handleNewGameSelection = event => {
-        event.preventDefault()
+    const handleNewGameSelection = () => {
         if(intel) return
         setIntel({})
     }
@@ -29,11 +28,11 @@ const Menu = () => {
         !logged? 
         <Navigate to='/login'/>
         :<nav className="menu-area">
-            <a href="/" onClick={handleNewGameSelection}><i className="bi bi-suit-club-fill"/> Nova Partida </a>
-            <a href="/" ><i className="bi bi-suit-spade-fill" /> Histórico de Partidas </a>
-            <a href="/" ><i className="bi bi-suit-heart-fill" /> Hall da Fama</a>
-            <a href="/"><i className="bi bi-plus-circle"/> Adicionar Bot Remoto</a>
-            <a href="/" onClick={handleLogout}><i className="bi bi-suit-diamond-fill" /> Sair </a>
+            <Link to="/mat/start-game" onClick={handleNewGameSelection}><i className="bi bi-suit-club-fill"/> Nova Partida </Link>
+            <Link to="/user-history" ><i className="bi bi-suit-spade-fill" /> Histórico de Partidas </Link>
+            <Link to="/hall-of-fame" ><i className="bi bi-suit-heart-fill" /> Hall da Fama</Link>
+            <Link to="/add-remote"><i className="bi bi-plus-circle"/>Bots Remotos</Link>
+            <Link to="/" onClick={handleLogout}><i className="bi bi-suit-diamond-fill" /> Sair </Link>
         </nav>
     )
 }

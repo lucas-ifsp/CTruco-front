@@ -13,3 +13,8 @@ main.choose-opponent {
     padding: 30px 30px 10px 30px;
     border-radius: 5px;
 }
+
+.choose-opponent form>div{
+    display: flex;
+    flex-direction: column;
+}

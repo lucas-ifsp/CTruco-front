@@ -29,11 +29,6 @@ const BotTableSelection = ({ setOpponentName, opponentName, botsList }) => {
   };
 
   useEffect(() => {
-    containerRef.current.value = opponentName;
-    handleInputChange(containerRef.current);
-  }, [opponentName]);
-
-  useEffect(() => {
     setListNames(botsList);
   }, [botsList]);
 
@@ -46,18 +41,24 @@ const BotTableSelection = ({ setOpponentName, opponentName, botsList }) => {
         placeholder="Procure pelo Nome"
       ></input>
       <TableContainer className="bots-table">
-        <Table variant="striped" colorScheme="gray">
-          <TableCaption>Bots</TableCaption>
+        <Table variant="simple" colorScheme="gray">
           <Thead>
             <Tr>
-              <Th>Bots</Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
             {listNames.map((name) => (
-              <Tr key={name}>
-                <Td>
-                  <a href="/" onClick={(e) => handleClick(e)}>
+              <Tr
+                key={name}
+                className={
+                  "tr " +
+                  (opponentName == name ? "selected" : "unselected")
+                }
+                onClick={(e) => handleClick(e)}
+              >
+                <Td className="td">
+                  <a href="#">
                     {name}
                   </a>
                 </Td>
