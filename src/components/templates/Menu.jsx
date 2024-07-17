@@ -30,6 +30,9 @@ const Menu = () => {
       <Link to="/mat/start-game" onClick={handleNewGameSelection}>
         <i className="bi bi-suit-club-fill" /> Nova Partida{" "}
       </Link>
+      <Link to="/simulate-bots">
+        <i className="bi bi-suit-club-fill" /> Simular Bot vs Bot{" "}
+      </Link>
       <Link to="/user-history">
         <i className="bi bi-suit-spade-fill" /> Histórico de Partidas{" "}
       </Link>

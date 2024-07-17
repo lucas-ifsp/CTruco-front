@@ -9,11 +9,11 @@ import Home from "./pages/home/Home";
 import Layout from "./pages/main/Layout";
 import Registration from "./pages/registration/Registration";
 import AddRemote from "./pages/home/crud-remote-bots/AddRemote";
-import WelcomeMat from "./pages/home/mat/WelcomeMat";
 import StartGameMat from "./pages/home/mat/StartGameMat";
 import Mat from "./pages/home/mat/GameMat";
 import UserMatchHistory from "./pages/history/UserMatchHistory";
 import HallOfFame from "./pages/hall/HallOfFame";
+import ConfigSimulation from "./pages/simulate- mat/ConfigSimulation";
 
 // TODO
 // 1. Solve opponent card showing covered before unveiled. X
@@ -39,6 +39,7 @@ const App = () => (
             <Route path="mat/game" element={<Mat />} />
             <Route path="user-history" element={<UserMatchHistory />} />
             <Route path="hall-of-fame" element={<HallOfFame />} />
+            <Route path="simulate-bots" element={<ConfigSimulation/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

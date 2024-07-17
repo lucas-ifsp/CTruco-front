@@ -1,24 +1,24 @@
-.bots-table a{
+.bots-table a {
   color: #000;
 }
 
-/* colocar um className no input para não se referir a ele desse forma na css  */
-input{ 
+/*TODO - colocar um className no input para não se referir a ele desse forma na css  */
+input {
   color: #2c4b00;
 }
 
-.bots-table .td{
+.bots-table .tr {
   border-radius: 10px;
 }
 
-.bots-table .selected{
+.bots-table .selected {
   background-color: #014e0180;
 }
 
-.bots-table .tr:hover:not(.selected){
+.bots-table .tr:hover:not(.selected) {
   background-color: #c6c6c6bf;
 }
 
-.bots-table .tr a:hover{
+.bots-table .tr a:hover {
   color: #000;
 }

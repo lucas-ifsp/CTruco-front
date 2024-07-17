@@ -2,11 +2,9 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
@@ -14,7 +12,7 @@ import "./BotTableSelection.css";
 
 const BotTableSelection = ({ setOpponentName, opponentName, botsList }) => {
   const [listNames, setListNames] = useState(botsList);
-  const containerRef = useRef();
+  const containerRef = useRef(); 
   const handleClick = (event) => {
     event.preventDefault();
     setOpponentName(event.target.innerText);
@@ -53,12 +51,12 @@ const BotTableSelection = ({ setOpponentName, opponentName, botsList }) => {
                 key={name}
                 className={
                   "tr " +
-                  (opponentName == name ? "selected" : "unselected")
+                  (opponentName === name ? "selected" : "unselected")
                 }
                 onClick={(e) => handleClick(e)}
               >
                 <Td className="td">
-                  <a href="#">
+                  <a href="/">
                     {name}
                   </a>
                 </Td>
