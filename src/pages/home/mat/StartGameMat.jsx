@@ -4,9 +4,8 @@ import useCreateGame from "../../../hooks/api/useCreateGame";
 import useIntel from "../../../hooks/context/useIntel";
 import { ChakraProvider } from "@chakra-ui/react";
 import useGetBotNames from "../../../hooks/api/useGetBotNames";
-import BotTableSelection from "./BotTableSelection";
+import BotSelection from "./BotSelection";
 import "./StartGameMat.css";
-import "../Home.css";
 import Header from "../../../components/templates/Header";
 import Menu from "../../../components/templates/Menu";
 import Footer from "../../../components/templates/Footer";
@@ -54,12 +53,12 @@ const StartGameMat = () => {
                 ESCOLHA O OPONENTE
               </label>
               <ChakraProvider>
-                <BotTableSelection
-                  setOpponentName={setOpponentName}
-                  opponentName={opponentName}
+                <BotSelection
+                  setSelectedBot={setOpponentName}
+                  selectedBot={opponentName}
                   botsList={botsList}
                   setBotsList={setBotsList}
-                ></BotTableSelection>
+                ></BotSelection>
               </ChakraProvider>
             </div>
             <button

@@ -1,9 +1,5 @@
-.bots-table a {
-  color: #000;
-}
-
 /*TODO - colocar um className no input para não se referir a ele desse forma na css  */
-input {
+.filter {
   color: #2c4b00;
 }
 
@@ -20,5 +16,9 @@ input {
 }
 
 .bots-table .tr a:hover {
+  color: #000;
+}
+
+.bots-table a {
   color: #000;
 }

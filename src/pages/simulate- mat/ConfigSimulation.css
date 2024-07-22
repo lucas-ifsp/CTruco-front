@@ -1,0 +1,64 @@
+.config-simulation{
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.config-simulation>form {
+  margin: 10px 0px 10px 0px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  grid-template-rows: auto auto;
+  grid-template-columns: 200px 350px 200px;
+  justify-items: center;
+}
+
+.config-simulation>form .bot-filter{
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.config-simulation>form .in2{
+  grid-row: 1;
+  grid-column: 3;
+}
+
+.config-simulation>form .table1{
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.config-simulation>form .table2{
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.config-simulation>form .others{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+
+.bots-table .tr {
+  border-radius: 10px;
+}
+
+.bots-table .selected {
+  background-color: #014e0180;
+}
+
+.bots-table .tr:hover:not(.selected) {
+  background-color: #c6c6c6bf;
+}
+
+.bots-table .tr a:hover {
+  color: #000;
+}
+
+.bots-table a {
+  color: #000;
+}
