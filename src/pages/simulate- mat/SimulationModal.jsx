@@ -11,7 +11,7 @@ import {
 import "./SimulationModal.css";
 import { useState } from "react";
 
-const SimulationModal = ({ isOpen, onOpen, onClose }) => {
+const SimulationModal = ({ isOpen, onOpen, onClose, results }) => {
   const [isSimulating, setIsSimulating] = useState(true);
 
   return (
@@ -20,11 +20,13 @@ const SimulationModal = ({ isOpen, onOpen, onClose }) => {
         <ModalOverlay />
         <ModalContent className="modal-content">
           <ModalHeader>
-            {isSimulating ? "Simulando Partida" : "Resultado"}
+            {!results && "Simulando Partida"}
+            {results && "Resultado"}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>OLA</p>
+            {!results && <p>Este processo pode demorar um pouco</p>}
+            {results}
           </ModalBody>
 
           <ModalFooter>

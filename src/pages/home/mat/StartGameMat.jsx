@@ -41,7 +41,6 @@ const StartGameMat = () => {
     <div className="app">
       <Header />
       <Menu />
-      {console.log(intel)}
       {intel && intel.last  ? (
         <Navigate to="/mat/game" />
       ) : (
