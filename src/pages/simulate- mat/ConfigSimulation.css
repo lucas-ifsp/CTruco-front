@@ -1,4 +1,5 @@
 .config-simulation{
+  background-color: var(--mat-bg-color);
   display: flex;
   align-items: start;
   justify-content: center;
@@ -12,6 +13,13 @@
   grid-template-rows: auto auto;
   grid-template-columns: 200px 350px 200px;
   justify-items: center;
+}
+
+.config-simulation>form {
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, .4);
+  background-color: white;
+  padding: 30px 30px 10px 30px;
+  border-radius: 5px;
 }
 
 .config-simulation>form .bot-filter{

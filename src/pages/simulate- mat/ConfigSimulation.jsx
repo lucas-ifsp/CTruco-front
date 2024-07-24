@@ -17,6 +17,7 @@ const ConfigSimulation = () => {
   const [botsToShowT1, setBotsToShowT1] = useState(botsList);
   const [botsToShowT2, setBotsToShowT2] = useState(botsList);
   const [results, setResults] = useState();
+  const [modalContent, setModalContent] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchBotNames = useGetBotNames();
   const startSimulation = useSimulateBots();
@@ -53,8 +54,8 @@ const ConfigSimulation = () => {
   }, [botsList]);
 
   const handleSimulationRequest = async () => {
-    const results = await startSimulation(bot1, bot2, times);
-    console.log(results);
+    const response = await startSimulation(bot1, bot2, times);
+    setResults(response.data);
   };
 
   return (
@@ -68,6 +69,7 @@ const ConfigSimulation = () => {
             onOpen={onOpen}
             onClose={onClose}
             results={results}
+            setResults={setResults}
           />
           <form>
             <Input
@@ -97,12 +99,10 @@ const ConfigSimulation = () => {
                 }}
               ></Input>
               <Button
-                onClick={
-                  (onOpen,
-                  (e) => {
-                    handleSimulationRequest();
-                  })
-                }
+                onClick={() => {
+                  onOpen();
+                  handleSimulationRequest();
+                }}
               >
                 {bot1 + " X " + bot2}
               </Button>
