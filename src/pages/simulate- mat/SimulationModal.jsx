@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import "./SimulationModal.css";
 import { useEffect, useState } from "react";
@@ -44,27 +45,38 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
         <ModalOverlay />
         <ModalContent className="modal-content">
           <ModalHeader>
-            {!results && "Simulando Partida"}
+            {!results && "Simulando Partidas"}
             {results && "Resultado"}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            {!results && <p>Este processo pode demorar um pouco</p>}
+          <ModalBody className="modal-body">
+            {!results && (
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+                className="spinner"
+              />
+            )}
             {results && (
               <div>
-                <p>Partidas:{times} Tempo de execução: {timeToExecute}ms</p>
-                <p>{bot1Name}: {bot1Wins}</p>
-                <p>{bot2Name}: {bot2Wins}</p>
+                <p>
+                  Partidas: {times} Tempo de execução: {timeToExecute}ms
+                </p>
+                <p>
+                  {bot1Name}: {bot1Wins}
+                </p>
+                <p>
+                  {bot2Name}: {bot2Wins}
+                </p>
               </div>
             )}
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
+          {/*<ModalFooter>
+          </ModalFooter>*/}
         </ModalContent>
       </Modal>
     </>

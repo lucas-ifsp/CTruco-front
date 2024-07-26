@@ -1,0 +1,9 @@
+.modal-body{
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner{
+  align-self: center;
+  padding: 10px;
+}
