@@ -21,9 +21,8 @@ import ConfigSimulation from "./pages/simulate- mat/ConfigSimulation";
 // 3. Implement feature to remove active game if player leaves
 // 4. Solve problem of overflow in long usernames and put a limit in name length
 // 5. Implement responsive layout
-// 6. Implement microstream to handle active games
-// 7. Implement hall of fame
-// 8. Implement player history
+// 6. Implement hall of fame
+// 7. Implement player history
 
 const App = () => (
   <AuthContextProvider>

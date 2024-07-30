@@ -22,36 +22,61 @@ const AddRemote = () => {
     <div className="app">
       <Header />
       <Menu />
-      <form>
-        <ChakraProvider>
-          <label htmlFor="bots_filter"> BUSCAR PELO NOME </label>
-          <br/>
-          <Input type="text" id="bots_filter" />
-          <TableContainer className="bots-table">
-            <Table variant="simple" colorScheme="gray">
-              <Thead>
-                <Tr>
-                  <Th>Bot</Th>
-                  <Th>Endereço</Th>
-                  <Th>Porta</Th>
-                  <Th>Opções</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>RemoteBot</Td>
-                  <Td>http://localhost</Td>
-                  <Td>8080</Td>
-                  <Td>
-                    <Button color={"yellow"}>Editar</Button>
-                    <Button color={"red"}>Remover</Button>
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </ChakraProvider>
-      </form>
+      <main id="crud-remote">
+        <section>
+          <ChakraProvider>
+            <label id="bots-filter-label" htmlFor="bots-filter">
+              BUSCAR PELO NOME
+            </label>
+            <div className="crud-remote-header">
+              <Input type="text" id="bots-filter" />
+              <Button height={"50px"} backgroundColor={"lightgreen"} className="add-btn">
+                Adicionar
+              </Button>
+            </div>
+            <TableContainer className="bots-table">
+              <Table variant="simple" colorScheme="gray">
+                <Thead>
+                  <Tr>
+                    <Th>Bot</Th>
+                    <Th>Endereço</Th>
+                    <Th>Porta</Th>
+                    <Th>Opções</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>RemoteBot</Td>
+                    <Td>http://localhost</Td>
+                    <Td>8080</Td>
+                    <Td>
+                      <Button className="edit-btn" backgroundColor={"yellow"}>
+                        Editar
+                      </Button>
+                      <Button className="remove-btn" backgroundColor={"red"}>
+                        Remover
+                      </Button>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>RemoteBot2</Td>
+                    <Td>http://localhost</Td>
+                    <Td>8081</Td>
+                    <Td>
+                      <Button className="edit-btn" backgroundColor={"yellow"}>
+                        Editar
+                      </Button>
+                      <Button className="remove-btn" backgroundColor={"red"}>
+                        Remover
+                      </Button>
+                    </Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </ChakraProvider>
+        </section>
+      </main>
       <Footer />
     </div>
   );
