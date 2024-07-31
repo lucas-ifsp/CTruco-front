@@ -7,7 +7,7 @@
 }
 
 #crud-remote section {
-  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, .4);
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
   width: 60%;
   background-color: white;
   padding: 30px 30px 10px 30px;
@@ -16,29 +16,37 @@
   flex-direction: column;
 }
 
-div.crud-remote-header{
+div.crud-remote-header {
   display: flex;
   justify-content: space-between;
 }
 
-#bots-filter-label{
+#bots-filter-label {
   align-self: center;
 }
 
-#bots-filter{
+#bots-filter {
   width: 80%;
   height: 50px;
 }
 
-.edit-btn{
+.edit-btn {
   margin-right: 10px;
 }
 
-.add-btn{
+.add-btn {
   align-self: flex-end;
 }
 
-.bots-table{
+.bots-table {
   align-self: center;
   width: 100%;
+}
+
+.bots-table th {
+  text-align: center;
+}
+
+.bots-table td {
+  text-align: center;
 }

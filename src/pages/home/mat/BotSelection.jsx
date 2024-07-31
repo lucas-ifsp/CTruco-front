@@ -6,10 +6,6 @@ import BotsTable from "./BotsTable";
 const BotTableSelection = ({ setSelectedBot, selectedBot, botsList }) => {
   const [botsToShow, setBotsToShow] = useState(botsList);
   const containerRef = useRef();
-  const handleClick = (event) => {
-    event.preventDefault();
-    setSelectedBot(event.target.innerText);
-  };
 
   const handleInputChange = (target) => {
     const content = target.value;

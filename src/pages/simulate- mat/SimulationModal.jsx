@@ -33,53 +33,51 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
   }, [results]);
 
   return (
-    <>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => {
-          onClose();
-          setResults(undefined);
-        }}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent className="modal-content">
-          <ModalHeader>
-            {!results && "Simulando Partidas"}
-            {results && "Resultado"}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody className="modal-body">
-            {!results && (
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-                className="spinner"
-              />
-            )}
-            {results && (
-              <div>
-                <p>
-                  Partidas: {times} Tempo de execução: {timeToExecute}ms
-                </p>
-                <p>
-                  {bot1Name}: {bot1Wins}
-                </p>
-                <p>
-                  {bot2Name}: {bot2Wins}
-                </p>
-              </div>
-            )}
-          </ModalBody>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setResults(undefined);
+      }}
+      isCentered
+    >
+      <ModalOverlay />
+      <ModalContent className="modal-content">
+        <ModalHeader>
+          {!results && "Simulando Partidas"}
+          {results && "Resultado"}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody className="modal-body">
+          {!results && (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+              className="spinner"
+            />
+          )}
+          {results && (
+            <div>
+              <p>
+                Partidas: {times} Tempo de execução: {timeToExecute}ms
+              </p>
+              <p>
+                {bot1Name}: {bot1Wins}
+              </p>
+              <p>
+                {bot2Name}: {bot2Wins}
+              </p>
+            </div>
+          )}
+        </ModalBody>
 
-          {/*<ModalFooter>
+        {/*<ModalFooter>
           </ModalFooter>*/}
-        </ModalContent>
-      </Modal>
-    </>
+      </ModalContent>
+    </Modal>
   );
 };
 
