@@ -38,17 +38,17 @@ div.crud-remote-header {
   align-self: flex-end;
 }
 
-.bots-table {
+.crud-bots-table {
   align-self: center;
   width: 100%;
   max-height: 300px;
   overflow: auto;
 }
 
-.bots-table th {
+.remote-bots-table th {
   text-align: center;
 }
 
-.bots-table .table-info {
+.remote-bots-table .table-info {
   text-align: center;
 }

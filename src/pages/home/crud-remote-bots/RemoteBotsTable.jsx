@@ -19,7 +19,7 @@ const RemoteBotsTable = ({
   setVisibleOnes,
 }) => {
   return (
-    <TableContainer className="bots-table">
+    <TableContainer className="remote-bots-table">
       <Table variant="simple" colorScheme="gray">
         <Thead>
           <Tr>

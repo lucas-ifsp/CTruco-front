@@ -28,11 +28,13 @@ const BotTableSelection = ({ setSelectedBot, selectedBot, botsList }) => {
         onChange={(e) => handleInputChange(e.target)}
         placeholder="Procure pelo Nome"
       ></Input>
-      <BotsTable
-        setSelectedBot={setSelectedBot}
-        selectedBot={selectedBot}
-        bots={botsToShow}
-      ></BotsTable>
+      <div id="start-game-mat-table">
+        <BotsTable
+          setSelectedBot={setSelectedBot}
+          selectedBot={selectedBot}
+          bots={botsToShow}
+        ></BotsTable>
+      </div>
     </>
   );
 };

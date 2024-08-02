@@ -1,10 +1,9 @@
-/*TODO - colocar um className no input para não se referir a ele desse forma na css  */
 .filter {
   color: #2c4b00;
 }
-
-.bots-table .tr {
-  border-radius: 10px;
+#start-game-mat-table{
+  max-height: 300px;
+  overflow: auto;
 }
 
 .bots-table .selected {
