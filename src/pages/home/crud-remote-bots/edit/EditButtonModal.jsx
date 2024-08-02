@@ -9,24 +9,17 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
+import RemoteBotForm from "../bot-info-form/RemoteBotForm";
 
 const EditButtonModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>TEM CERTEZA?</ModalHeader>
+      <ModalHeader>EDITAR</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <p
-            style={{
-              fontSize: "30px",
-              color: "red",
-            }}
-          >
-            Se confirmar esta ação o bot será removido!!
-          </p>
-          <p>não será possível desfazer esta ação.</p>
+          <RemoteBotForm />
         </ModalBody>
         <ModalFooter>
           <Button

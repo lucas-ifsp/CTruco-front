@@ -12,7 +12,6 @@ import {
 
 const DeleteButtonModal = ({
   isOpen,
-  onOpen,
   onClose,
   handleDeleteAction,
   botName,
@@ -40,7 +39,7 @@ const DeleteButtonModal = ({
             mr={3}
             onClick={() => {
               onClose();
-              handleDeleteAction();
+              handleDeleteAction(botName);
             }}
           >
             Confirmar

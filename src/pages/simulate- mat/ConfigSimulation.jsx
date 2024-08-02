@@ -78,10 +78,10 @@ const ConfigSimulation = () => {
               placeholder="Buscar bot1"
             ></Input>
             <div className="p1-name">
-              <p>{bot1}</p>
+              <p style={{ marginBottom: "0px" }}>{bot1}</p>
             </div>
             <div className="p2-name">
-              <p>{bot2}</p>
+              <p style={{ marginBottom: "0px" }}>{bot2}</p>
             </div>
 
             <Input

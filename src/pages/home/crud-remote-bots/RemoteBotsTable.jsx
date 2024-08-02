@@ -17,6 +17,7 @@ const RemoteBotsTable = ({
   setUserBots,
   visibleOnes,
   setVisibleOnes,
+  updateUserBots,
 }) => {
   return (
     <TableContainer className="remote-bots-table">
@@ -38,10 +39,8 @@ const RemoteBotsTable = ({
               <Td className="table-info">
                 <EditButton />
                 <DeleteButton
-                  userBots={userBots}
-                  setUserBots={setUserBots}
-                  visibleOnes={visibleOnes}
-                  setVisibleOnes={setVisibleOnes}
+                  botName={bot.botName}
+                  updateUserBots={updateUserBots}
                 />
               </Td>
             </Tr>

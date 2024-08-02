@@ -39,11 +39,17 @@
 }
 
 .config-simulation > form .p1-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-row: 2;
   grid-column: 1;
 }
 
 .config-simulation > form .p2-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-row: 2;
   grid-column: 3;
 }

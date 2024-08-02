@@ -24,6 +24,7 @@ const RemoteBotsMenu = () => {
   };
 
   useEffect(() => {
+    console.log("passou")
     updateUserBots();
   }, []);
 
@@ -67,6 +68,7 @@ const RemoteBotsMenu = () => {
               setUserBots={setUserBots}
               visibleOnes={visibleBots}
               setVisibleOnes={setVisibleBots}
+              updateUserBots={updateUserBots}
             />
           </ChakraProvider>
         </section>

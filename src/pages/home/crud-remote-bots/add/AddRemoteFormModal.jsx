@@ -10,6 +10,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import RemoteBotForm from "../bot-info-form/RemoteBotForm";
+import useAddRemote from "./useAddRemote";
 
 const AddRemoteFormModal = ({
   isOpen,
@@ -21,6 +22,7 @@ const AddRemoteFormModal = ({
   port,
   setPort,
 }) => {
+  const addBotHook = useAddRemote();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -28,14 +30,16 @@ const AddRemoteFormModal = ({
         <ModalHeader>ADICIONAR BOT</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <RemoteBotForm/>
+          <RemoteBotForm />
         </ModalBody>
         <ModalFooter>
           <Button
             colorScheme="green"
             mr={3}
             onClick={() => {
+              console.log("passou aqui");
               onClose();
+              addBotHook();
             }}
           >
             Confirmar
