@@ -9,7 +9,8 @@ import {
   TableContainer,
   Button,
 } from "@chakra-ui/react";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "./delete/DeleteButton";
+import EditButton from "./edit/EditButton";
 
 const RemoteBotsTable = ({
   userBots,
@@ -31,14 +32,17 @@ const RemoteBotsTable = ({
         <Tbody>
           {visibleOnes.map((bot) => (
             <Tr key={bot.botName}>
-              <Td>{bot.botName}</Td>
-              <Td>{bot.url}</Td>
-              <Td>{bot.port}</Td>
-              <Td>
-                <Button className="edit-btn" backgroundColor={"yellow"}>
-                  Editar
-                </Button>
-                <DeleteButton/>
+              <Td className="table-info">{bot.botName}</Td>
+              <Td className="table-info">{bot.url}</Td>
+              <Td className="table-info">{bot.port}</Td>
+              <Td className="table-info">
+                <EditButton />
+                <DeleteButton
+                  userBots={userBots}
+                  setUserBots={setUserBots}
+                  visibleOnes={visibleOnes}
+                  setVisibleOnes={setVisibleOnes}
+                />
               </Td>
             </Tr>
           ))}

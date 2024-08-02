@@ -3,16 +3,18 @@ import Header from "../../../components/templates/Header";
 import Menu from "../../../components/templates/Menu";
 import Footer from "../../../components/templates/Footer";
 import RemoteBotsTable from "./RemoteBotsTable";
-import { Button, Input, ChakraProvider } from "@chakra-ui/react";
+import { Button, Input, ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import useGetRemoteBotsByUserId from "../../../hooks/api/useGetRemoteBotsByUser";
 import useAuth from "../../../hooks/context/useAuth";
-import "./AddRemote.css";
+import "./RemoteBotsMenu.css";
 import "../Home.css";
+import AddRemoteFormModal from "./add/AddRemoteFormModal";
 
-const AddRemote = () => {
+const RemoteBotsMenu = () => {
   const [userBots, setUserBots] = useState([]);
   const [visibleBots, setVisibleBots] = useState([]);
   const { auth } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchBots = useGetRemoteBotsByUserId();
 
   const updateUserBots = async () => {
@@ -54,9 +56,11 @@ const AddRemote = () => {
                 height={"50px"}
                 backgroundColor={"#57f057"}
                 className="add-btn"
+                onClick={onOpen}
               >
                 Adicionar
               </Button>
+              <AddRemoteFormModal isOpen={isOpen} onClose={onClose} />
             </div>
             <RemoteBotsTable
               userBots={userBots}
@@ -72,4 +76,4 @@ const AddRemote = () => {
   );
 };
 
-export default AddRemote;
+export default RemoteBotsMenu;

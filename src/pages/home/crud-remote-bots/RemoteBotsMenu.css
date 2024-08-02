@@ -41,12 +41,14 @@ div.crud-remote-header {
 .bots-table {
   align-self: center;
   width: 100%;
+  max-height: 300px;
+  overflow: auto;
 }
 
 .bots-table th {
   text-align: center;
 }
 
-.bots-table td {
+.bots-table .table-info {
   text-align: center;
 }

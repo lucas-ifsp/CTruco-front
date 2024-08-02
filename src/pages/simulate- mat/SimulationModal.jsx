@@ -3,16 +3,20 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   Spinner,
 } from "@chakra-ui/react";
 import "./SimulationModal.css";
 import { useEffect, useState } from "react";
 
 const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
+  /* TODO - ajustar o jeito que o request é feito.
+  Retornar um http 100 avisando que a solicitação foi feita adequadamente
+  e checar em intervalos se a simulação terminou ou não,
+  fazer isso através de uma consulta no banco (criar uma tabela no banco para isso)
+  atualizar o estado do isSimulating de acordo com a situação.
+  */
   const [isSimulating, setIsSimulating] = useState(true);
   const [bot1Name, setBot1Name] = useState("sem bot aqui");
   const [bot2Name, setBot2Name] = useState("");

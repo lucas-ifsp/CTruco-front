@@ -77,6 +77,12 @@ const ConfigSimulation = () => {
               onChange={(e) => handleInputChangeT1(e.target)}
               placeholder="Buscar bot1"
             ></Input>
+            <div className="p1-name">
+              <p>{bot1}</p>
+            </div>
+            <div className="p2-name">
+              <p>{bot2}</p>
+            </div>
 
             <Input
               className="bot-filter in2"
@@ -98,15 +104,20 @@ const ConfigSimulation = () => {
                   setTimes(e.target.value);
                 }}
               ></Input>
-              <Button
-                onClick={() => {
-                  onOpen();
-                  handleSimulationRequest();
-                }}
-              >
-                {bot1 + " X " + bot2}
-              </Button>
             </div>
+            <Button
+              className="play-btn"
+              fontWeight={"light"}
+              colorScheme="green"
+              alignSelf={"center"}
+              w={"50%"}
+              onClick={() => {
+                onOpen();
+                handleSimulationRequest();
+              }}
+            >
+              JOGAR
+            </Button>
 
             <div className="table1">
               <BotsTable

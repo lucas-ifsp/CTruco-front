@@ -2,8 +2,16 @@ import React from "react";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import DeleteButtonModal from "./DeleteButtonModal";
 
-const DeleteButton = () => {
+const DeleteButton = ({
+  userBots,
+  setUserBots,
+  visibleOnes,
+  setVisibleOnes,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  //TODO - fazer isso
+  const handleDeleteAction = () => {};
+
   return (
     <>
       <Button
@@ -14,7 +22,12 @@ const DeleteButton = () => {
         Remover
       </Button>
 
-      <DeleteButtonModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <DeleteButtonModal
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        handleDeleteAction={handleDeleteAction}
+      />
     </>
   );
 };
