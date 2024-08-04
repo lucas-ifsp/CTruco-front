@@ -7,18 +7,11 @@ import {
   Th,
   Td,
   TableContainer,
-  Button,
 } from "@chakra-ui/react";
 import DeleteButton from "./delete/DeleteButton";
 import EditButton from "./edit/EditButton";
 
-const RemoteBotsTable = ({
-  userBots,
-  setUserBots,
-  visibleOnes,
-  setVisibleOnes,
-  updateUserBots,
-}) => {
+const RemoteBotsTable = ({ visibleOnes, updateUserBots }) => {
   return (
     <TableContainer className="remote-bots-table">
       <Table variant="simple" colorScheme="gray">

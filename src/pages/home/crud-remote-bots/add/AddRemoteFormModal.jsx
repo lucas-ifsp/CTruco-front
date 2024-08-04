@@ -11,18 +11,18 @@ import {
 } from "@chakra-ui/react";
 import RemoteBotForm from "../bot-info-form/RemoteBotForm";
 import useAddRemote from "./useAddRemote";
+import useAuth from "../../../../hooks/context/useAuth";
 
-const AddRemoteFormModal = ({
-  isOpen,
-  onClose,
-  name,
-  setName,
-  url,
-  setUrl,
-  port,
-  setPort,
-}) => {
+const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
+  const [name, setName] = useState();
+  const [url, setUrl] = useState();
+  const [port, setPort] = useState();
+  const { auth } = useAuth();
   const addBotHook = useAddRemote();
+  const handleSubmit = async () => {
+    await addBotHook(name, auth.uuid, url, port);
+    await updateUserBots();
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -30,16 +30,23 @@ const AddRemoteFormModal = ({
         <ModalHeader>ADICIONAR BOT</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <RemoteBotForm />
+          <RemoteBotForm
+            name={name}
+            setName={setName}
+            url={url}
+            setUrl={setUrl}
+            port={port}
+            setPort={setPort}
+          />
         </ModalBody>
         <ModalFooter>
           <Button
             colorScheme="green"
+            type="submit"
             mr={3}
             onClick={() => {
-              console.log("passou aqui");
               onClose();
-              addBotHook();
+              handleSubmit();
             }}
           >
             Confirmar

@@ -1,11 +1,11 @@
 import { axiosPrivate } from "../../../../api/axios";
 const useAddRemote = () => {
-  const AddBot = async () => {
+  const AddBot = async (name, userId, url, port) => {
     const body = {
-      name: "Gustavo",
-      userId: "e9c339b4-cd4e-4cdf-8847-17dba37d0b31",
-      url: "http://localhost",
-      port: "8080",
+      name: name,
+      userId: userId,
+      url: url,
+      port: port,
     };
     try {
       const url = `/api/v1/remote-bots`;

@@ -1,7 +1,8 @@
 .filter {
   color: #2c4b00;
 }
-#start-game-mat-table{
+
+#start-game-mat-table {
   max-height: 300px;
   overflow: auto;
 }

@@ -24,7 +24,6 @@ const RemoteBotsMenu = () => {
   };
 
   useEffect(() => {
-    console.log("passou")
     updateUserBots();
   }, []);
 
@@ -61,13 +60,10 @@ const RemoteBotsMenu = () => {
               >
                 Adicionar
               </Button>
-              <AddRemoteFormModal isOpen={isOpen} onClose={onClose} />
+              <AddRemoteFormModal isOpen={isOpen} onClose={onClose} updateUserBots={updateUserBots} />
             </div>
             <RemoteBotsTable
-              userBots={userBots}
-              setUserBots={setUserBots}
               visibleOnes={visibleBots}
-              setVisibleOnes={setVisibleBots}
               updateUserBots={updateUserBots}
             />
           </ChakraProvider>

@@ -3,12 +3,15 @@ import { Button, useDisclosure } from "@chakra-ui/react";
 import useDeleteRemoteOne from "./useDeleteRemoteOne";
 import DeleteButtonModal from "./DeleteButtonModal";
 
-const DeleteButton = ({ botName, updateUserBots }) => {
+const DeleteButton = ({
+  botName,
+  updateUserBots,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const deleteBotHook = useDeleteRemoteOne();
 
-  const handleDeleteAction = (botName) => {
-    deleteBotHook(botName);
+  const handleDeleteAction = async (botName) => {
+    await deleteBotHook(botName);
     updateUserBots();
   };
 

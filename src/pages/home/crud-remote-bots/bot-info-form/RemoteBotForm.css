@@ -23,3 +23,10 @@
   grid-row: 2;
   grid-column: 1;
 }
+
+.invalid-inp {
+  border-color: red !important;
+}
+.valid-inp {
+  border-color: green !important;
+}
