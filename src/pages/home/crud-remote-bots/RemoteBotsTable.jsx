@@ -30,7 +30,7 @@ const RemoteBotsTable = ({ visibleOnes, updateUserBots }) => {
               <Td className="table-info">{bot.url}</Td>
               <Td className="table-info">{bot.port}</Td>
               <Td className="table-info">
-                <EditButton />
+                <EditButton updateUserBots={updateUserBots} />
                 <DeleteButton
                   botName={bot.botName}
                   updateUserBots={updateUserBots}

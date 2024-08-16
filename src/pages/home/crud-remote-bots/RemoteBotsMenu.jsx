@@ -60,7 +60,11 @@ const RemoteBotsMenu = () => {
               >
                 Adicionar
               </Button>
-              <AddRemoteFormModal isOpen={isOpen} onClose={onClose} updateUserBots={updateUserBots} />
+              <AddRemoteFormModal
+                isOpen={isOpen}
+                onClose={onClose}
+                updateUserBots={updateUserBots}
+              />
             </div>
             <RemoteBotsTable
               visibleOnes={visibleBots}
