@@ -9,13 +9,15 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
+import useDeleteRemote from "./useDeleteRemote";
 
-const DeleteButtonModal = ({
-  isOpen,
-  onClose,
-  handleDeleteAction,
-  botName,
-}) => {
+const DeleteButtonModal = ({ isOpen, onClose, botName, updateUserBots }) => {
+  const deleteBotHook = useDeleteRemote();
+  const handleDeleteAction = async (botName) => {
+    await deleteBotHook(botName);
+    updateUserBots();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -29,7 +31,7 @@ const DeleteButtonModal = ({
               color: "red",
             }}
           >
-            Se confirmar esta ação o bot será removido!!{"\n"}
+            Se confirmar esta ação o bot será removido!!
           </p>
           <p>não será possível desfazer esta ação.</p>
         </ModalBody>

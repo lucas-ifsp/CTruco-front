@@ -17,6 +17,11 @@
   grid-row: 1;
   grid-column: 2;
 }
+
+.url-field input {
+  width: 180px;
+}
+
 .port-field {
   display: flex;
   flex-direction: column;

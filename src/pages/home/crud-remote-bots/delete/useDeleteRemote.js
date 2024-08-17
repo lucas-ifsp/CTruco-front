@@ -1,5 +1,5 @@
 import { axiosPrivate } from "../../../../api/axios";
-const useDeleteRemoteOne = () => {
+const useDeleteRemote = () => {
   const deleteBot = async (botName) => {
     try {
       const url = `/api/v1/remote-bots/${botName}`;
@@ -11,4 +11,4 @@ const useDeleteRemoteOne = () => {
   return deleteBot;
 };
 
-export default useDeleteRemoteOne;
+export default useDeleteRemote;

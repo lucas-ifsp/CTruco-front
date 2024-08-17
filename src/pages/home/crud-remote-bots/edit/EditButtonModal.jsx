@@ -10,21 +10,37 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
+import useEditRemote from "./useEditRemote";
+import useAuth from "../../../../hooks/context/useAuth";
 
-const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
-  const [name, setName] = useState();
-  const [url, setUrl] = useState();
-  const [port, setPort] = useState();
+const EditButtonModal = ({
+  isOpen,
+  onClose,
+  updateUserBots,
+  prevName,
+  prevUrl,
+  prevPort,
+}) => {
+  const { auth } = useAuth();
+
+  const [newName, setNewName] = useState();
+  const [newUrl, setNewUrl] = useState();
+  const [newPort, setNewPort] = useState();
+
   const [nameFieldColor, setNameFieldColor] = useState("red");
   const [urlFieldColor, setUrlFieldColor] = useState("red");
   const [portFieldColor, setPortFieldColor] = useState("red");
+
   const [nameWarning, setNameWarning] = useState("mensagem de aviso");
   const [urlWarning, setUrlWarning] = useState("mensagem de aviso");
   const [portWarning, setPortWarning] = useState("mensagem de aviso");
+
   const nameInputRef = useRef(null);
   const urlInputRef = useRef(null);
   const portInputRef = useRef(null);
   const submitButton = useRef(null);
+
+  const editBotHook = useEditRemote();
 
   const validateFields = () => {
     const validateField = (fieldRef, setColor, setWarningMessage) => {
@@ -45,9 +61,15 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
     validateField(portField, setPortFieldColor, setPortWarning);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // await addBotHook(name, auth.uuid, url, port);
+  const handleSubmit = async () => {
+    const payload = {
+      prevName: prevName,
+      name: newName,
+      userId: auth.uuid,
+      url: newUrl,
+      port: newPort,
+    };
+    await editBotHook(payload);
     await updateUserBots();
   };
 
@@ -59,14 +81,6 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
         <ModalCloseButton />
         <form className="bot-info-form">
           <ModalBody className="info-form-content">
-            {/* <RemoteBotForm
-            name={name}
-            setName={setName}
-            url={url}
-            setUrl={setUrl}
-            port={port}
-            setPort={setPort}
-          /> */}
             <div className="name-field">
               <label htmlFor="bot-name-inp">Nome</label>
               <Input
@@ -76,9 +90,9 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-name"
                 id="bot-name-inp"
-                defaultValue={name}
+                placeholder={prevName}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setNewName(e.target.value);
                   validateFields();
                 }}
               />
@@ -95,9 +109,9 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-url"
                 id="bot-url-inp"
-                defaultValue={url}
+                placeholder={prevUrl}
                 onChange={(e) => {
-                  setUrl(e.target.value);
+                  setNewUrl(e.target.value);
                   validateFields();
                 }}
               />
@@ -114,9 +128,9 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-port"
                 id="bot-port-inp"
-                defaultValue={port}
+                placeholder={prevPort}
                 onChange={(e) => {
-                  setPort(e.target.value);
+                  setNewPort(e.target.value);
                   validateFields();
                 }}
               />
@@ -131,7 +145,8 @@ const EditButtonModal = ({ isOpen, onClose, updateUserBots }) => {
               colorScheme="green"
               type="submit"
               mr={3}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 onClose();
                 handleSubmit();
               }}
