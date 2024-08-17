@@ -24,12 +24,12 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
   const urlInputRef = useRef(null);
   const portInputRef = useRef(null);
   const submitButton = useRef(null);
-  const [nameFieldColor, setNameFieldColor] = useState("red");
-  const [urlFieldColor, setUrlFieldColor] = useState("red");
-  const [portFieldColor, setPortFieldColor] = useState("red");
-  const [nameWarning, setNameWarning] = useState("mensagem de aviso");
-  const [urlWarning, setUrlWarning] = useState("mensagem de aviso");
-  const [portWarning, setPortWarning] = useState("mensagem de aviso");
+  const [nameFieldColor, setNameFieldColor] = useState("");
+  const [urlFieldColor, setUrlFieldColor] = useState("");
+  const [portFieldColor, setPortFieldColor] = useState("");
+  const [nameWarning, setNameWarning] = useState("");
+  const [urlWarning, setUrlWarning] = useState("");
+  const [portWarning, setPortWarning] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,23 +41,15 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
     await updateUserBots();
   };
 
-  const validateFields = () => {
-    const validateField = (fieldRef, setColor, setWarningMessage) => {
-      if (fieldRef.value.trim().length < 4) {
-        setColor("red");
-        setWarningMessage("campo inválido");
-      } else {
-        setWarningMessage("");
-        setColor("green");
-      }
-    };
-    // definir condições para validar os campos
-    const nameField = nameInputRef.current;
-    const urlField = urlInputRef.current;
-    const portField = portInputRef.current;
-    validateField(nameField, setNameFieldColor, setNameWarning);
-    validateField(urlField, setUrlFieldColor, setUrlWarning);
-    validateField(portField, setPortFieldColor, setPortWarning);
+  const validateField = (fieldRef, setColor, setWarningMessage) => {
+    if (fieldRef.value.trim().length < 4) {
+      setColor("red");
+      setWarningMessage("campo inválido");
+    } else {
+      //caractere invisível, não é um espaço!
+      setWarningMessage("⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+      setColor("green");
+    }
   };
 
   useEffect(() => {
@@ -78,14 +70,6 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
         <ModalCloseButton />
         <form className="bot-info-form">
           <ModalBody className="info-form-content">
-            {/* <RemoteBotForm
-            name={name}
-            setName={setName}
-            url={url}
-            setUrl={setUrl}
-            port={port}
-            setPort={setPort}
-          /> */}
             <div className="name-field">
               <label htmlFor="bot-name-inp">Nome</label>
               <Input
@@ -98,7 +82,11 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 defaultValue={name}
                 onChange={(e) => {
                   setName(e.target.value);
-                  validateFields();
+                  validateField(
+                    nameInputRef.current,
+                    setNameFieldColor,
+                    setNameWarning
+                  );
                 }}
               />
               <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
@@ -117,7 +105,11 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 defaultValue={url}
                 onChange={(e) => {
                   setUrl(e.target.value);
-                  validateFields();
+                  validateField(
+                    urlInputRef.current,
+                    setUrlFieldColor,
+                    setUrlWarning
+                  );
                 }}
               />
               <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
@@ -136,7 +128,11 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 defaultValue={port}
                 onChange={(e) => {
                   setPort(e.target.value);
-                  validateFields();
+                  validateField(
+                    portInputRef.current,
+                    setPortFieldColor,
+                    setPortWarning
+                  );
                 }}
               />
               <p style={{ width: "100px", color: "red", fontSize: "12px" }}>

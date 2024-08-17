@@ -27,13 +27,13 @@ const EditButtonModal = ({
   const [newUrl, setNewUrl] = useState();
   const [newPort, setNewPort] = useState();
 
-  const [nameFieldColor, setNameFieldColor] = useState("red");
-  const [urlFieldColor, setUrlFieldColor] = useState("red");
-  const [portFieldColor, setPortFieldColor] = useState("red");
+  const [nameFieldColor, setNameFieldColor] = useState("");
+  const [urlFieldColor, setUrlFieldColor] = useState("");
+  const [portFieldColor, setPortFieldColor] = useState("");
 
-  const [nameWarning, setNameWarning] = useState("mensagem de aviso");
-  const [urlWarning, setUrlWarning] = useState("mensagem de aviso");
-  const [portWarning, setPortWarning] = useState("mensagem de aviso");
+  const [nameWarning, setNameWarning] = useState(" ");
+  const [urlWarning, setUrlWarning] = useState(" ");
+  const [portWarning, setPortWarning] = useState(" ");
 
   const nameInputRef = useRef(null);
   const urlInputRef = useRef(null);
@@ -42,23 +42,15 @@ const EditButtonModal = ({
 
   const editBotHook = useEditRemote();
 
-  const validateFields = () => {
-    const validateField = (fieldRef, setColor, setWarningMessage) => {
-      if (fieldRef.value.trim().length < 4) {
-        setColor("red");
-        setWarningMessage("campo inválido");
-      } else {
-        setWarningMessage("");
-        setColor("green");
-      }
-    };
-    // definir condições para validar os campos
-    const nameField = nameInputRef.current;
-    const urlField = urlInputRef.current;
-    const portField = portInputRef.current;
-    validateField(nameField, setNameFieldColor, setNameWarning);
-    validateField(urlField, setUrlFieldColor, setUrlWarning);
-    validateField(portField, setPortFieldColor, setPortWarning);
+  const validateField = (fieldRef, setColor, setWarningMessage) => {
+    if (fieldRef.value.trim().length < 4) {
+      setColor("red");
+      setWarningMessage("campo inválido");
+    } else {
+      //caractere invisível, não é um espaço!
+      setWarningMessage("⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+      setColor("green");
+    }
   };
 
   const handleSubmit = async () => {
@@ -93,10 +85,21 @@ const EditButtonModal = ({
                 placeholder={prevName}
                 onChange={(e) => {
                   setNewName(e.target.value);
-                  validateFields();
+                  validateField(
+                    nameInputRef.current,
+                    setNameFieldColor,
+                    setNameWarning
+                  );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {nameWarning}
               </p>
             </div>
@@ -112,10 +115,21 @@ const EditButtonModal = ({
                 placeholder={prevUrl}
                 onChange={(e) => {
                   setNewUrl(e.target.value);
-                  validateFields();
+                  validateField(
+                    urlInputRef.current,
+                    setUrlFieldColor,
+                    setUrlWarning
+                  );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {urlWarning}
               </p>
             </div>
@@ -131,10 +145,21 @@ const EditButtonModal = ({
                 placeholder={prevPort}
                 onChange={(e) => {
                   setNewPort(e.target.value);
-                  validateFields();
+                  validateField(
+                    portInputRef.current,
+                    setPortFieldColor,
+                    setPortWarning
+                  );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {portWarning}
               </p>
             </div>
