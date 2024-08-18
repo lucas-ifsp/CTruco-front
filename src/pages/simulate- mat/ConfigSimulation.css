@@ -63,7 +63,7 @@
   grid-row: 3;
   grid-column: 1;
   max-height: 250px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .config-simulation > form .table2 {

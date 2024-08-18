@@ -36,7 +36,7 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
     try {
       await addBotHook(name, auth.uuid, url, port);
     } catch (error) {
-      console.log("DEU RUIM");
+      console.log(error);
     }
     await updateUserBots();
   };

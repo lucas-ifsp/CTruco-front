@@ -33,7 +33,7 @@ const DeleteButtonModal = ({ isOpen, onClose, botName, updateUserBots }) => {
           >
             Se confirmar esta ação o bot será removido!!
           </p>
-          <p>não será possível desfazer esta ação.</p>
+          <p>isto não pode ser desfeito.</p>
         </ModalBody>
         <ModalFooter>
           <Button
