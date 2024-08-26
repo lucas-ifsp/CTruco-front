@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/templates/Header";
 import Menu from "../../components/templates/Menu";
 import Footer from "../../components/templates/Footer";
 import { ChakraProvider, Spinner } from "@chakra-ui/react";
+import useRankAllBots from "./useRankAllBots";
 import "../home/Home.css";
 import "./HallOfFame.css";
 
 const HallOfFame = () => {
+  const [rank, setRank] = useState();
+  const rankAvailableOnes = useRankAllBots();
+
+  useEffect(() => {
+    setRank(rankAvailableOnes());
+  }, []);
   // const botsRank = null;
   const botsRank = [
     {
