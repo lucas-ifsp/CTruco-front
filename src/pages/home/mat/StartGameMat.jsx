@@ -41,7 +41,9 @@ const StartGameMat = () => {
     <div className="app">
       <Header />
       <Menu />
-      {intel && intel.last  ? (
+      {/* {console.log(intel)}
+      {console.log(intel.last)} */}
+      {intel && intel.last ? (
         <Navigate to="/mat/game" />
       ) : (
         <main className="choose-opponent h-300">

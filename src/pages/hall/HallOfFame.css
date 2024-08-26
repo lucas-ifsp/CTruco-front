@@ -1,0 +1,29 @@
+#bots-rank {
+  display: flex;
+  height: 100%;
+  background-color: var(--mat-bg-color);
+  justify-content: center;
+  align-items: center;
+}
+
+#bots-rank section {
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
+  width: 60%;
+  background-color: white;
+  padding: 30px 30px 10px 30px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.th-bots-rank {
+  text-align: center;
+  font-size: 18px;
+  background-color: rgb(138, 246, 246);
+}
+
+.td-bots-rank {
+  text-align: center;
+  font-size: 16px;
+  background-color: rgb(174, 255, 174);
+}
