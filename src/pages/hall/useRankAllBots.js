@@ -5,7 +5,7 @@ const useRankAllBots = () => {
       const url = `/api/v1/bots/rank`;
       const response = await axiosPrivate.post(url);
       console.log(response);
-      return response;
+      return response.data;
     } catch (error) {
       console.log(error.response.data.message);
     }
