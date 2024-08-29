@@ -74,32 +74,35 @@ const HallOfFame = () => {
               <p style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
                 (da ultima análise)
               </p>
-              <table>
-                <thead>
-                  <tr>
-                    <th className="th-bots-rank">rank</th>
-                    <th className="th-bots-rank">bot</th>
-                    <th className="th-bots-rank">vitórias</th>
-                    {/* <th className="th-bots-rank">dono</th> */}
-                    {/* <th className="th-bots-rank">tipo</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rank.map((bot) => {
-                    return (
-                      <tr key={bot.botName}>
-                        <td className="td-bots-rank">{bot.botRank}</td>
-                        <td className="td-bots-rank">{bot.botName}</td>
-                        <td className="td-bots-rank">{bot.botWins}</td>
-                        {/* <td className="td-bots-rank">{bot.owner}</td> */}
-                        {/* <td className="td-bots-rank">{bot.type}</td> */}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="rank-table-limiter">
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="th-bots-rank">rank</th>
+                      <th className="th-bots-rank">bot</th>
+                      <th className="th-bots-rank">vitórias</th>
+                      {/* <th className="th-bots-rank">dono</th> */}
+                      {/* <th className="th-bots-rank">tipo</th> */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rank.map((bot) => {
+                      return (
+                        <tr key={bot.botName}>
+                          <td className="td-bots-rank">{bot.botRank}</td>
+                          <td className="td-bots-rank">{bot.botName}</td>
+                          <td className="td-bots-rank">{bot.botWins}</td>
+                          {/* <td className="td-bots-rank">{bot.owner}</td> */}
+                          {/* <td className="td-bots-rank">{bot.type}</td> */}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
+          <button>Refresh</button>
         </section>
       </main>
       <Footer />

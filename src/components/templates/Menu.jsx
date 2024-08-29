@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
+import Accordion from "../../pages/home/utils/Accordion";
 import useDeleteGame from "../../hooks/api/useDeleteGame";
 import useRefreshToken from "../../hooks/api/useRefreshToken";
 import useIntel from "../../hooks/context/useIntel";
@@ -36,9 +37,29 @@ const Menu = () => {
       <Link to="/user-history">
         <i className="bi bi-suit-spade-fill" /> Histórico de Partidas{" "}
       </Link>
-      <Link to="/hall-of-fame">
-        <i className="bi bi-suit-heart-fill" /> Hall da Fama
-      </Link>
+      <Accordion
+        title="Hall da Fama"
+        content={
+          <>
+            <Link to="/hall-of-fame">
+              <i
+                style={{ fontStyle: "normal" }}
+                className="bi bi-suit-spade-fill"
+              >
+                Ranking dos Bots
+              </i>
+            </Link>
+            <Link to="/hall-of-fame">
+              <i
+                style={{ fontStyle: "normal" }}
+                className="bi bi-suit-heart-fill"
+              >
+                Ranking dos Bots
+              </i>
+            </Link>
+          </>
+        }
+      />
       <Link to="/add-remote">
         <i className="bi bi-plus-circle" />
         Bots Remotos
