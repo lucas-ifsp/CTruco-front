@@ -29,6 +29,12 @@
 }
 
 .rank-table-limiter {
-  max-height: 200px;
+  display: flex;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.rank-table-limiter table {
+  width: 100%;
   overflow: auto;
 }

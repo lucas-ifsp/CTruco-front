@@ -14,9 +14,9 @@ const Accordion = ({ title, content }) => {
         <i className="bi bi-suit-spade-fill" /> {title}{" "}
         <span>
           {isOpen ? (
-            <i class="bi bi-arrow-up" />
+            <i className="bi bi-arrow-up" />
           ) : (
-            <i class="bi bi-arrow-down" />
+            <i className="bi bi-arrow-down" />
           )}
         </span>
       </div>

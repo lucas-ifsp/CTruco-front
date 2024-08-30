@@ -14,6 +14,7 @@ import UserMatchHistory from "./pages/history/UserMatchHistory";
 import HallOfFame from "./pages/hall/HallOfFame";
 import ConfigSimulation from "./pages/simulate- mat/ConfigSimulation";
 import RemoteBotsMenu from "./pages/home/crud-remote-bots/RemoteBotsMenu";
+import TopWinners from "./pages/hall/TopWinners";
 
 // TODO
 // 1. Solve opponent card showing covered before unveiled. X
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="mat/game" element={<Mat />} />
             <Route path="user-history" element={<UserMatchHistory />} />
             <Route path="hall-of-fame" element={<HallOfFame />} />
+            <Route path="top-winners" element={<TopWinners/>}/>
             <Route path="simulate-bots" element={<ConfigSimulation />} />
           </Route>
           <Route path="*" element={<NotFound />} />

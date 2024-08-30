@@ -3,33 +3,33 @@ import Header from "../../components/templates/Header";
 import Menu from "../../components/templates/Menu";
 import Footer from "../../components/templates/Footer";
 import { ChakraProvider, Spinner } from "@chakra-ui/react";
-import useRankAllBots from "./useRankAllBots";
+import useTopWinners from "./useTopWinners";
 import "../home/Home.css";
 import "./HallOfFame.css";
 
-const HallOfFame = () => {
-  const [rank, setRank] = useState([]);
-  const rankAvailableOnes = useRankAllBots();
+const TopWinners = () => {
+  const findTopWinners = useTopWinners();
+  const [playersRank, setPlayersRank] = useState({});
 
-  const updateRank = async () => {
-    let response = await rankAvailableOnes();
+  const updateWinnersTable = async () => {
+    let response = await findTopWinners();
     console.log(response);
-    if (response.rank) {
-      setRank(response.rank);
-    }
+    // if (response.rank) {
+    //   setPlayersRank(response);
+    // }
   };
 
   useEffect(() => {
-    updateRank();
+    updateWinnersTable();
   }, []);
 
   return (
     <div className="app">
       <Header />
       <Menu />
-      <main id="bots-rank" className="cs-feat">
+      <main className="cs-feat">
         <section>
-          {rank.length == 0 && (
+          {!playersRank && (
             <ChakraProvider>
               <Spinner
                 thickness="4px"
@@ -42,43 +42,28 @@ const HallOfFame = () => {
               <p>Isso pode demorar um pouco...</p>
             </ChakraProvider>
           )}
-          {rank.length > 0 && (
+          {playersRank && (
             <>
               <h4 style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
-                COLOCAÇÃO
+                Melhores Jogadores
               </h4>
-              <p style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
-                (da ultima análise)
-              </p>
-              <div className="rank-table-limiter">
+              <div>
                 <table>
                   <thead>
                     <tr>
                       <th className="th-bots-rank">rank</th>
-                      <th className="th-bots-rank">bot</th>
+                      <th className="th-bots-rank">Jogador</th>
                       <th className="th-bots-rank">vitórias</th>
                       {/* <th className="th-bots-rank">dono</th> */}
                       {/* <th className="th-bots-rank">tipo</th> */}
                     </tr>
                   </thead>
-                  <tbody>
-                    {rank.map((bot) => {
-                      return (
-                        <tr key={bot.botName}>
-                          <td className="td-bots-rank">{bot.botRank}</td>
-                          <td className="td-bots-rank">{bot.botName}</td>
-                          <td className="td-bots-rank">{bot.botWins}</td>
-                          {/* <td className="td-bots-rank">{bot.owner}</td> */}
-                          {/* <td className="td-bots-rank">{bot.type}</td> */}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </>
           )}
-          <button onClick={() => updateRank()}>Refresh</button>
+          <button>Refresh</button>
         </section>
       </main>
       <Footer />
@@ -86,4 +71,4 @@ const HallOfFame = () => {
   );
 };
 
-export default HallOfFame;
+export default TopWinners;

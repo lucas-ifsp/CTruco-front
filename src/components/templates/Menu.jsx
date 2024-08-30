@@ -45,17 +45,15 @@ const Menu = () => {
               <i
                 style={{ fontStyle: "normal" }}
                 className="bi bi-suit-spade-fill"
-              >
-                Ranking dos Bots
-              </i>
+              />{" "}
+              Ranking dos Bots
             </Link>
-            <Link to="/hall-of-fame">
+            <Link to="/top-winners">
               <i
                 style={{ fontStyle: "normal" }}
                 className="bi bi-suit-heart-fill"
-              >
-                Ranking dos Bots
-              </i>
+              />{" "}
+              Ranking de Jogadores
             </Link>
           </>
         }
