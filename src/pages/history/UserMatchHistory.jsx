@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Header from "../../components/templates/Header";
 import Menu from "../../components/templates/Menu";
 import Footer from "../../components/templates/Footer";
@@ -6,10 +6,24 @@ import { ChakraProvider, Spinner, useDisclosure } from "@chakra-ui/react";
 import "../home/Home.css";
 import "./UserMatchHistory.css";
 import MatchDetailsModal from "./MatchDetailsModal";
+import useUserMatchHistory from "./useUserMatchHistory";
 
 const UserMatchHistory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [matchDetails, setMatchDetails] = useState();
+  const [userHistory, setUserHistory] = useState();
+  const getHistory = useUserMatchHistory();
+
+  const updateUserHistory = async () => {
+    let response = await getHistory();
+    console.log(response);
+    setUserHistory(response);
+  };
+
+  useEffect(() => {
+    updateUserHistory();
+  }, []);
+
   const matchHistory = [
     {
       winner: "LazyBot",
