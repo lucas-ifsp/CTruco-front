@@ -39,6 +39,9 @@
 }
 
 .config-simulation > form .p1-name {
+  min-width: 200px;
+  background-color: #00712d;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +49,16 @@
   grid-column: 1;
 }
 
+.config-simulation > form .p1-name p {
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 0px;
+}
+
 .config-simulation > form .p2-name {
+  min-width: 200px;
+  background-color: #00712d;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,9 +66,31 @@
   grid-column: 3;
 }
 
-.config-simulation > form .play-btn {
-  grid-row: 2;
+.config-simulation > form .p2-name p {
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 0px;
+}
+
+.config-simulation > form .middle-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  grid-row: 3;
   grid-column: 2;
+}
+
+.config-simulation > form .middle-container img {
+  height: 80%;
+  width: 50%;
+  margin-bottom: 15px;
+  align-self: center;
+}
+
+.config-simulation > form .middle-container i {
+  font-size: 10rem;
+  align-self: center;
 }
 
 .config-simulation > form .table1 {

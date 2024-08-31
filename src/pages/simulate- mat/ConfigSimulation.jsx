@@ -8,6 +8,7 @@ import "./ConfigSimulation.css";
 import { ChakraProvider, Input, Button, useDisclosure } from "@chakra-ui/react";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
 import useSimulateBots from "../../hooks/api/useSimulateBots";
+import IMAGES from "../../assets/images/cards/CardImages";
 
 const ConfigSimulation = () => {
   const [bot1, setBot1] = useState("MineiroByBueno");
@@ -78,10 +79,19 @@ const ConfigSimulation = () => {
               placeholder="Buscar bot1"
             ></Input>
             <div className="p1-name">
-              <p style={{ marginBottom: "0px" }}>{bot1}</p>
+              <p>{bot1}</p>
+            </div>
+            <div
+              style={{
+                alignContent: "center",
+              }}
+            >
+              <p style={{ marginBottom: "0px" }} id="vs-label">
+                VS
+              </p>
             </div>
             <div className="p2-name">
-              <p style={{ marginBottom: "0px" }}>{bot2}</p>
+              <p>{bot2}</p>
             </div>
 
             <Input
@@ -91,8 +101,11 @@ const ConfigSimulation = () => {
             ></Input>
 
             <div className="others">
-              <label htmlFor="number-of-simulations">
-                Numbero de simulações
+              <label
+                style={{ alignSelf: "center" }}
+                htmlFor="number-of-simulations"
+              >
+                Número de simulações
               </label>
               <Input
                 id="number-of-simulations"
@@ -105,19 +118,23 @@ const ConfigSimulation = () => {
                 }}
               ></Input>
             </div>
-            <Button
-              className="play-btn"
-              fontWeight={"light"}
-              colorScheme="green"
-              alignSelf={"center"}
-              w={"50%"}
-              onClick={() => {
-                onOpen();
-                handleSimulationRequest();
-              }}
-            >
-              JOGAR
-            </Button>
+            <div className="middle-container">
+              <img src={IMAGES[`card_back`]} alt={"back"} />
+              {/* <i className="bi bi-suit-club-fill" /> */}
+              <Button
+                className="play-btn"
+                fontWeight={"light"}
+                colorScheme="green"
+                alignSelf={"center"}
+                w={"50%"}
+                onClick={() => {
+                  onOpen();
+                  handleSimulationRequest();
+                }}
+              >
+                JOGAR
+              </Button>
+            </div>
 
             <div className="table1">
               <BotsTable

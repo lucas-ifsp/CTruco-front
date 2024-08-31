@@ -2,15 +2,12 @@ import { React, useEffect, useState } from "react";
 import Header from "../../components/templates/Header";
 import Menu from "../../components/templates/Menu";
 import Footer from "../../components/templates/Footer";
-import { ChakraProvider, Spinner, useDisclosure } from "@chakra-ui/react";
+import { ChakraProvider, Spinner } from "@chakra-ui/react";
 import "../home/Home.css";
 import "./UserMatchHistory.css";
-import MatchDetailsModal from "./MatchDetailsModal";
 import useUserMatchHistory from "./useUserMatchHistory";
 
 const UserMatchHistory = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [matchDetails, setMatchDetails] = useState();
   const [userHistory, setUserHistory] = useState();
   const getHistory = useUserMatchHistory();
 
@@ -56,10 +53,6 @@ const UserMatchHistory = () => {
       gameId: 3,
     },
   ];
-  const handleShowMatchDetails = (match) => {
-    setMatchDetails(match);
-    onOpen();
-  };
 
   return (
     <div className="app">
@@ -90,29 +83,22 @@ const UserMatchHistory = () => {
                     <th className="th-match-history">Ganhador</th>
                     <th className="th-match-history">Jogador 1</th>
                     <th className="th-match-history">Jogador 2</th>
-                    <th className="th-match-history">Opções</th>
+                    <th className="th-match-history">Pontos J1</th>
+                    <th className="th-match-history">Pontos J2</th>
+                    <th className="th-match-history">Data Início</th>
+                    <th className="th-match-history">Data Fim</th>
                   </tr>
                 </thead>
                 <tbody>
                   {matchHistory.map((match) => (
                     <tr key={match.gameId} id={match.gameId}>
-                      <MatchDetailsModal
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        match={matchDetails}
-                      />
                       <td className="td-match-history">{match.winner}</td>
                       <td className="td-match-history">{match.p1}</td>
                       <td className="td-match-history">{match.p2}</td>
-                      <td className="td-match-history">
-                        <button
-                          className="match-details-btn"
-                          onClick={() => handleShowMatchDetails(match)}
-                        >
-                          detalhes
-                        </button>
-                      </td>
+                      <td className="td-match-history">{match.p1Score}</td>
+                      <td className="td-match-history">{match.p2Score}</td>
+                      <td className="td-match-history">{match.initTime}</td>
+                      <td className="td-match-history">{match.endTime}</td>
                     </tr>
                   ))}
                 </tbody>
