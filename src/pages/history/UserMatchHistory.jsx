@@ -96,16 +96,16 @@ const UserMatchHistory = () => {
                 <tbody>
                   {matchHistory.map((match) => (
                     <tr key={match.gameId} id={match.gameId}>
-                      <MatchDetailsModal
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        match={matchDetails}
-                      />
                       <td className="td-match-history">{match.winner}</td>
                       <td className="td-match-history">{match.p1}</td>
                       <td className="td-match-history">{match.p2}</td>
                       <td className="td-match-history">
+                        <MatchDetailsModal
+                          isOpen={isOpen}
+                          onOpen={onOpen}
+                          onClose={onClose}
+                          match={matchDetails}
+                        />
                         <button
                           className="match-details-btn"
                           onClick={() => handleShowMatchDetails(match)}

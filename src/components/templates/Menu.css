@@ -52,6 +52,7 @@ nav.menu-area {
 }
 
 .menu-area .accordion-header:hover {
+  cursor: pointer;
   padding: 10px;
   text-decoration: none;
   color: #fff;
