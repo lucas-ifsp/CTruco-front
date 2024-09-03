@@ -16,25 +16,23 @@
   flex-direction: column;
 }
 
+#match-history section table {
+  border: 2px solid black;
+}
+#match-history .table-limiter {
+  height: 400px;
+  overflow: auto;
+}
+
 .th-match-history {
+  padding: 10px 5px 10px 5px;
   text-align: center;
-  font-size: 18px;
-  background-color: rgb(138, 246, 246);
+  font-size: 22px;
+  border: 2px solid black;
 }
 
 .td-match-history {
   text-align: center;
-  font-size: 16px;
-  background-color: rgb(174, 255, 174);
-}
-
-.match-details-btn {
-  border-radius: 8px;
-  background-color: yellow;
-}
-
-.match-details-btn:hover {
-  transition: 200ms;
-  border-radius: 8px;
-  background-color: rgb(255, 150, 30);
+  font-size: 18px;
+  border: 2px solid black;
 }

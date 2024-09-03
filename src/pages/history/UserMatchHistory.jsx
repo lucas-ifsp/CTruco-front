@@ -60,7 +60,7 @@ const UserMatchHistory = () => {
       <Menu />
       <main id="match-history" className="cs-feat">
         <section>
-          {!matchHistory && (
+          {!userHistory && (
             <ChakraProvider>
               <Spinner
                 thickness="4px"
@@ -72,37 +72,42 @@ const UserMatchHistory = () => {
               />
             </ChakraProvider>
           )}
-          {matchHistory && (
+          {userHistory && (
             <>
               <h4 style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
                 Histórico de Partidas
               </h4>
-              <table style={{ gap: "3px" }}>
-                <thead>
-                  <tr>
-                    <th className="th-match-history">Ganhador</th>
-                    <th className="th-match-history">Jogador 1</th>
-                    <th className="th-match-history">Jogador 2</th>
-                    <th className="th-match-history">Pontos J1</th>
-                    <th className="th-match-history">Pontos J2</th>
-                    <th className="th-match-history">Data Início</th>
-                    <th className="th-match-history">Data Fim</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {matchHistory.map((match) => (
-                    <tr key={match.gameId} id={match.gameId}>
-                      <td className="td-match-history">{match.winner}</td>
-                      <td className="td-match-history">{match.p1}</td>
-                      <td className="td-match-history">{match.p2}</td>
-                      <td className="td-match-history">{match.p1Score}</td>
-                      <td className="td-match-history">{match.p2Score}</td>
-                      <td className="td-match-history">{match.initTime}</td>
-                      <td className="td-match-history">{match.endTime}</td>
+              <div className="table-limiter">
+                <table style={{ gap: "3px" }}>
+                  <thead>
+                    <tr>
+                      <th className="th-match-history">Ganhador</th>
+                      <th className="th-match-history">Jogador 1</th>
+                      <th className="th-match-history">Jogador 2</th>
+                      <th className="th-match-history">Pontos J1</th>
+                      <th className="th-match-history">Pontos J2</th>
+                      <th className="th-match-history">Data Fim</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {userHistory.map((match) => (
+                      <tr key={match.gameId} id={match.gameId}>
+                        <td className="td-match-history">{match.winner}</td>
+                        <td className="td-match-history">{match.p1Name}</td>
+                        <td className="td-match-history">{match.p2Name}</td>
+                        <td className="td-match-history">{match.p1Score}</td>
+                        <td className="td-match-history">{match.p2Score}</td>
+                        <td
+                          style={{ paddingRight: "20px" }}
+                          className="td-match-history"
+                        >
+                          {match.endingTime}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
         </section>
