@@ -17,6 +17,7 @@
 }
 
 #match-history section table {
+  width: 100%;
   border: 2px solid black;
 }
 #match-history .table-limiter {
