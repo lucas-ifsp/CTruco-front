@@ -74,9 +74,7 @@ const UserMatchHistory = () => {
           )}
           {userHistory && (
             <>
-              <h4 style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
-                Histórico de Partidas
-              </h4>
+              <h4 style={{ textAlign: "center" }}>Histórico de Partidas</h4>
               <div className="table-limiter">
                 <table style={{ gap: "3px" }}>
                   <thead>
@@ -86,22 +84,30 @@ const UserMatchHistory = () => {
                       <th className="th-match-history">Jogador 2</th>
                       <th className="th-match-history">Pontos J1</th>
                       <th className="th-match-history">Pontos J2</th>
+                      <th className="th-match-history">Data Início</th>
                       <th className="th-match-history">Data Fim</th>
+                      <th className="th-match-history">Duração</th>
                     </tr>
                   </thead>
                   <tbody>
                     {userHistory.map((match) => (
-                      <tr key={match.gameId} id={match.gameId}>
+                      <tr key={match.gameId}>
                         <td className="td-match-history">{match.winner}</td>
                         <td className="td-match-history">{match.p1Name}</td>
                         <td className="td-match-history">{match.p2Name}</td>
                         <td className="td-match-history">{match.p1Score}</td>
                         <td className="td-match-history">{match.p2Score}</td>
+                        <td className="td-match-history">{match.endingDate}</td>
                         <td
                           style={{ paddingRight: "20px" }}
                           className="td-match-history"
                         >
-                          {match.endingTime}
+                          {match.startingDate}
+                        </td>
+                        <td className="td-match-history">
+                          {match.matchDuration > 60
+                            ? `${match.matchDuration / 60}min`
+                            : `${match.matchDuration}sec`}
                         </td>
                       </tr>
                     ))}

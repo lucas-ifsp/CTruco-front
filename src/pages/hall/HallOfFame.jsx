@@ -44,12 +44,8 @@ const HallOfFame = () => {
           )}
           {rank.length > 0 && (
             <>
-              <h4 style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
-                COLOCAÇÃO
-              </h4>
-              <p style={{ textAlign: "center", backgroundColor: "#ff5858" }}>
-                (da ultima análise)
-              </p>
+              <h4 style={{ textAlign: "center" }}>COLOCAÇÃO</h4>
+              <p style={{ textAlign: "center" }}>(da ultima análise)</p>
               <div className="rank-table-limiter">
                 <table>
                   <thead>
