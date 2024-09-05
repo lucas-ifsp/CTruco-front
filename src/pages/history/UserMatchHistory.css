@@ -20,6 +20,7 @@
   border: 2px solid black;
 }
 #match-history .table-limiter {
+  align-self: center;
   height: 400px;
   overflow: auto;
 }

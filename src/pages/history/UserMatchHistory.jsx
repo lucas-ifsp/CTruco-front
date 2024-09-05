@@ -98,7 +98,10 @@ const UserMatchHistory = () => {
                         <td className="td-match-history">{match.p1Score}</td>
                         <td className="td-match-history">{match.p2Score}</td>
                         <td
-                          style={{ paddingRight: "20px" }}
+                          style={{
+                            textAlign: "center",
+                            paddingRight:"15px"
+                          }}
                           className="td-match-history"
                         >
                           {match.endingTime}
