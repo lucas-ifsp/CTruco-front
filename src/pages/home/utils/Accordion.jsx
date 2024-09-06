@@ -11,7 +11,7 @@ const Accordion = ({ title, content }) => {
   return (
     <div className="accordion">
       <div className="accordion-header" onClick={toggleAccordion}>
-        <i className="bi bi-suit-spade-fill" /> {title}{" "}
+        <i className="bi bi-award-fill" /> {title}{" "}
         <span>
           {isOpen ? (
             <i className="bi bi-arrow-up" />

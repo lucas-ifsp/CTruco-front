@@ -27,19 +27,3 @@
         "footer footer";
     height: 100vh;
 }
-
-header.header {
-    grid-area: header;
-}
-
-nav.menu-area {
-    grid-area: menu-area;
-}
-
-main.mat-area {
-    grid-area: mat;
-}
-
-footer.footer {
-    grid-area: footer;
-}

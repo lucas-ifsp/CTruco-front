@@ -16,25 +16,22 @@
   flex-direction: column;
 }
 
-.th-bots-rank {
-  text-align: center;
-  font-size: 18px;
-  background-color: rgb(138, 246, 246);
-}
-
-.td-bots-rank {
-  text-align: center;
-  font-size: 16px;
-  background-color: rgb(174, 255, 174);
-}
-
 .top-winners-limiter {
   display: flex;
+  width: 100%;
   max-height: 300px;
   overflow: auto;
 }
 
-.top-winners-limiter table {
-  width: 100%;
-  overflow: auto;
+.section-header h4 {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.section-header button {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: end;
 }

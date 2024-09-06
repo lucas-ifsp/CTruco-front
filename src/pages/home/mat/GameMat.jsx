@@ -34,37 +34,32 @@ const Mat = () => {
   } = useAnimation();
 
   return (
-    <div className="app">
-      <Header />
-      <Menu />
-      <main className="mat-area">
-        <div className="mat">
-          <div className="opponent-score">
-            <Score player={opponentName} score={opponentScore} position="top" />
-          </div>
-          <div className="player-score">
-            <Score player={username} score={playerScore} position="botton" />
-          </div>
-          <OpponentHand cards={opponentHand} />
-          <OpenCards
-            vira={vira}
-            playerCard={playerCard}
-            opponentCard={opponentCard}
-          />
-          <PlayerHand cards={playerHand} />
-          <Rounds rounds={rounds} points={handPoints} />
-          <Commands
-            quitLabel={quitLabel}
-            quitDisabled={quitDisabled}
-            acceptDisabled={acceptDisabled}
-            raiseDisabled={raiseDisabled}
-            raiseLabel={raiseLabel}
-          />
-          <Message text={message} />
+    <main className="mat-area">
+      <div className="mat">
+        <div className="opponent-score">
+          <Score player={opponentName} score={opponentScore} position="top" />
         </div>
-      </main>
-      <Footer />
-    </div>
+        <div className="player-score">
+          <Score player={username} score={playerScore} position="botton" />
+        </div>
+        <OpponentHand cards={opponentHand} />
+        <OpenCards
+          vira={vira}
+          playerCard={playerCard}
+          opponentCard={opponentCard}
+        />
+        <PlayerHand cards={playerHand} />
+        <Rounds rounds={rounds} points={handPoints} />
+        <Commands
+          quitLabel={quitLabel}
+          quitDisabled={quitDisabled}
+          acceptDisabled={acceptDisabled}
+          raiseDisabled={raiseDisabled}
+          raiseLabel={raiseLabel}
+        />
+        <Message text={message} />
+      </div>
+    </main>
   );
 };
 

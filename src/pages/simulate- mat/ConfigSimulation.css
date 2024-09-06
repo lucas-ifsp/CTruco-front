@@ -40,7 +40,7 @@
 
 .config-simulation > form .p1-name {
   min-width: 200px;
-  background-color: #00712d;
+  background-color: var(--bs-body-color);
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -57,7 +57,7 @@
 
 .config-simulation > form .p2-name {
   min-width: 200px;
-  background-color: #00712d;
+  background-color: var(--bs-body-color);
   border-radius: 15px;
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import DeleteButtonModal from "./DeleteButtonModal";
 
 const DeleteButton = ({ botName, updateUserBots }) => {
@@ -7,13 +7,9 @@ const DeleteButton = ({ botName, updateUserBots }) => {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        className="remove-btn"
-        backgroundColor={"#ff3f3f"}
-      >
+      <button onClick={onOpen} className="btn btn-danger remove-btn">
         Remover
-      </Button>
+      </button>
 
       <DeleteButtonModal
         botName={botName}

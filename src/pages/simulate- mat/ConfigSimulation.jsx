@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import BotsTable from "../home/mat/BotsTable";
-import Header from "../../components/templates/Header";
-import Menu from "../../components/templates/Menu";
-import Footer from "../../components/templates/Footer";
 import SimulationModal from "./SimulationModal";
 import "./ConfigSimulation.css";
-import { ChakraProvider, Input, Button, useDisclosure } from "@chakra-ui/react";
+import { ChakraProvider, Input, useDisclosure } from "@chakra-ui/react";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
 import useSimulateBots from "../../hooks/api/useSimulateBots";
 import IMAGES from "../../assets/images/cards/CardImages";
@@ -18,7 +15,6 @@ const ConfigSimulation = () => {
   const [botsToShowT1, setBotsToShowT1] = useState(botsList);
   const [botsToShowT2, setBotsToShowT2] = useState(botsList);
   const [results, setResults] = useState();
-  const [modalContent, setModalContent] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchBotNames = useGetBotNames();
   const startSimulation = useSimulateBots();
@@ -60,101 +56,96 @@ const ConfigSimulation = () => {
   };
 
   return (
-    <div className="app">
-      <Header />
-      <Menu />
-      <main className="config-simulation">
-        <ChakraProvider>
-          <SimulationModal
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            results={results}
-            setResults={setResults}
-          />
-          <form>
+    <main className="config-simulation">
+      <ChakraProvider>
+        <SimulationModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          results={results}
+          setResults={setResults}
+        />
+        <form>
+          <Input
+            className="bot-filter in1"
+            onChange={(e) => handleInputChangeT1(e.target)}
+            placeholder="Buscar bot1"
+          ></Input>
+          <div className="p1-name">
+            <p>{bot1}</p>
+          </div>
+          <div
+            style={{
+              alignContent: "center",
+            }}
+          >
+            <p style={{ marginBottom: "0px" }} id="vs-label">
+              VS
+            </p>
+          </div>
+          <div className="p2-name">
+            <p>{bot2}</p>
+          </div>
+
+          <Input
+            className="bot-filter in2"
+            onChange={(e) => handleInputChangeT2(e.target)}
+            placeholder="Buscar bot2"
+          ></Input>
+
+          <div className="others">
+            <label
+              style={{ alignSelf: "center" }}
+              htmlFor="number-of-simulations"
+            >
+              Número de simulações
+            </label>
             <Input
-              className="bot-filter in1"
-              onChange={(e) => handleInputChangeT1(e.target)}
-              placeholder="Buscar bot1"
+              id="number-of-simulations"
+              type="number"
+              onChange={(e) => {
+                if (e.target.value > 10000) {
+                  e.target.value = 10000;
+                }
+                setTimes(e.target.value);
+              }}
             ></Input>
-            <div className="p1-name">
-              <p>{bot1}</p>
-            </div>
-            <div
-              style={{
-                alignContent: "center",
+          </div>
+          <div className="middle-container">
+            <img src={IMAGES[`card_back`]} alt={"back"} />
+            {/* <i className="bi bi-suit-club-fill" /> */}
+            <button
+              type="submit"
+              className="btn btn-dark play-btn"
+              fontWeight={"light"}
+              w={"50%"}
+              onClick={(e) => {
+                e.preventDefault();
+                onOpen();
+                handleSimulationRequest();
               }}
             >
-              <p style={{ marginBottom: "0px" }} id="vs-label">
-                VS
-              </p>
-            </div>
-            <div className="p2-name">
-              <p>{bot2}</p>
-            </div>
+              JOGAR
+            </button>
+          </div>
 
-            <Input
-              className="bot-filter in2"
-              onChange={(e) => handleInputChangeT2(e.target)}
-              placeholder="Buscar bot2"
-            ></Input>
-
-            <div className="others">
-              <label
-                style={{ alignSelf: "center" }}
-                htmlFor="number-of-simulations"
-              >
-                Número de simulações
-              </label>
-              <Input
-                id="number-of-simulations"
-                type="number"
-                onChange={(e) => {
-                  if (e.target.value > 10000) {
-                    e.target.value = 10000;
-                  }
-                  setTimes(e.target.value);
-                }}
-              ></Input>
-            </div>
-            <div className="middle-container">
-              <img src={IMAGES[`card_back`]} alt={"back"} />
-              {/* <i className="bi bi-suit-club-fill" /> */}
-              <Button
-                className="play-btn"
-                fontWeight={"light"}
-                colorScheme="green"
-                alignSelf={"center"}
-                w={"50%"}
-                onClick={() => {
-                  onOpen();
-                  handleSimulationRequest();
-                }}
-              >
-                JOGAR
-              </Button>
-            </div>
-
-            <div className="table1">
-              <BotsTable
-                selectedBot={bot1}
-                setSelectedBot={setBot1}
-                bots={botsToShowT1}
-              />
-            </div>
-            <div className="table2">
-              <BotsTable
-                selectedBot={bot2}
-                setSelectedBot={setBot2}
-                bots={botsToShowT2}
-              />
-            </div>
-          </form>
-        </ChakraProvider>
-      </main>
-      <Footer />
-    </div>
+          <div className="table1">
+            <BotsTable
+              selectedBot={bot1}
+              setSelectedBot={setBot1}
+              bots={botsToShowT1}
+            />
+          </div>
+          <div className="table2">
+            <BotsTable
+              selectedBot={bot2}
+              setSelectedBot={setBot2}
+              bots={botsToShowT2}
+            />
+          </div>
+        </form>
+      </ChakraProvider>
+    </main>
   );
 };
 

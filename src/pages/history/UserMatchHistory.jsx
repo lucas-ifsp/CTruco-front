@@ -5,6 +5,7 @@ import Footer from "../../components/templates/Footer";
 import { ChakraProvider, Spinner } from "@chakra-ui/react";
 import "../home/Home.css";
 import "./UserMatchHistory.css";
+import "../Table.css";
 import useUserMatchHistory from "./useUserMatchHistory";
 
 const UserMatchHistory = () => {
@@ -55,74 +56,69 @@ const UserMatchHistory = () => {
   ];
 
   return (
-    <div className="app">
-      <Header />
-      <Menu />
-      <main id="match-history" className="cs-feat">
-        <section>
-          {!userHistory && (
-            <ChakraProvider>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-                className="spinner"
-              />
-            </ChakraProvider>
-          )}
-          {userHistory && (
-            <>
-              <h4 style={{ textAlign: "center" }}>Histórico de Partidas</h4>
-              <div className="table-limiter">
-                <table style={{ gap: "3px" }}>
-                  <thead>
-                    <tr>
-                      <th className="th-match-history">Ganhador</th>
-                      <th className="th-match-history">Jogador 1</th>
-                      <th className="th-match-history">Jogador 2</th>
-                      <th className="th-match-history">Pontos J1</th>
-                      <th className="th-match-history">Pontos J2</th>
-                      <th className="th-match-history">Data Início</th>
-                      <th className="th-match-history">Data Fim</th>
-                      <th className="th-match-history">Duração</th>
+    <main id="match-history" className="cs-feat">
+      <section>
+        {!userHistory && (
+          <ChakraProvider>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+              className="spinner"
+            />
+          </ChakraProvider>
+        )}
+        {userHistory && (
+          <>
+            <h4 style={{ textAlign: "center" }}>Histórico de Partidas</h4>
+            <div className="table-limiter">
+              <table className="default-table" style={{ gap: "3px" }}>
+                <thead>
+                  <tr>
+                    <th className="default-th">Ganhador</th>
+                    <th className="default-th">Jogador 1</th>
+                    <th className="default-th">Jogador 2</th>
+                    <th className="default-th">Pontos J1</th>
+                    <th className="default-th">Pontos J2</th>
+                    <th className="default-th">Data Início</th>
+                    <th className="default-th">Data Fim</th>
+                    <th className="default-th">Duração</th>
+                  </tr>
+                </thead>
+                <tbody className="default-tbody">
+                  {userHistory.map((match) => (
+                    <tr key={match.gameId}>
+                      <td className="default-td">{match.winner}</td>
+                      <td className="default-td">{match.p1Name}</td>
+                      <td className="default-td">{match.p2Name}</td>
+                      <td className="default-td">{match.p1Score}</td>
+                      <td className="default-td">{match.p2Score}</td>
+                      <td className="default-td">{match.endingDate}</td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          paddingRight: "15px",
+                        }}
+                        className="default-td"
+                      >
+                        {match.startingDate}
+                      </td>
+                      <td className="default-td">
+                        {match.matchDuration > 60
+                          ? `${match.matchDuration / 60}min`
+                          : `${match.matchDuration}sec`}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {userHistory.map((match) => (
-                      <tr key={match.gameId}>
-                        <td className="td-match-history">{match.winner}</td>
-                        <td className="td-match-history">{match.p1Name}</td>
-                        <td className="td-match-history">{match.p2Name}</td>
-                        <td className="td-match-history">{match.p1Score}</td>
-                        <td className="td-match-history">{match.p2Score}</td>
-                        <td className="td-match-history">{match.endingDate}</td>
-                        <td
-                          style={{
-                            textAlign: "center",
-                            paddingRight:"15px"
-                          }}
-                          className="td-match-history"
-                        >
-                          {match.startingDate}
-                        </td>
-                        <td className="td-match-history">
-                          {match.matchDuration > 60
-                            ? `${match.matchDuration / 60}min`
-                            : `${match.matchDuration}sec`}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
-          )}
-        </section>
-      </main>
-      <Footer />
-    </div>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </section>
+    </main>
   );
 };
 

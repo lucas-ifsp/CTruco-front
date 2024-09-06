@@ -11,10 +11,11 @@ import Registration from "./pages/registration/Registration";
 import StartGameMat from "./pages/home/mat/StartGameMat";
 import Mat from "./pages/home/mat/GameMat";
 import UserMatchHistory from "./pages/history/UserMatchHistory";
-import HallOfFame from "./pages/hall/HallOfFame";
+import RankBots from "./pages/hall/RankBots";
 import ConfigSimulation from "./pages/simulate- mat/ConfigSimulation";
 import RemoteBotsMenu from "./pages/home/crud-remote-bots/RemoteBotsMenu";
 import TopWinners from "./pages/hall/TopWinners";
+import PagesLayout from "./pages/main/PagesLayout";
 
 // TODO
 // 1. Solve opponent card showing covered before unveiled. X
@@ -33,14 +34,16 @@ const App = () => (
           <Route path="login" element={<Authentication />} />
           <Route path="register" element={<Registration />} />
           <Route element={<RequireAuth />}>
-            <Route path="/" element={<Home />} />
-            <Route path="add-remote" element={<RemoteBotsMenu />} />
-            <Route path="mat/start-game" element={<StartGameMat />} />
-            <Route path="mat/game" element={<Mat />} />
-            <Route path="user-history" element={<UserMatchHistory />} />
-            <Route path="hall-of-fame" element={<HallOfFame />} />
-            <Route path="top-winners" element={<TopWinners/>}/>
-            <Route path="simulate-bots" element={<ConfigSimulation />} />
+            <Route element={<PagesLayout />}>
+              <Route index element={<Home />} />
+              <Route path="add-remote" element={<RemoteBotsMenu />} />
+              <Route path="mat/start-game" element={<StartGameMat />} />
+              <Route path="mat/game" element={<Mat />} />
+              <Route path="user-history" element={<UserMatchHistory />} />
+              <Route path="hall-of-fame" element={<RankBots />} />
+              <Route path="top-winners" element={<TopWinners />} />
+              <Route path="simulate-bots" element={<ConfigSimulation />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

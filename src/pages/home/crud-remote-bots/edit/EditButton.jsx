@@ -18,14 +18,13 @@ const EditButton = ({ updateUserBots }) => {
 
   return (
     <>
-      <Button
+      <button
         ref={buttonRef}
         onClick={onOpen}
-        className="edit-btn"
-        backgroundColor={"yellow"}
+        className="btn btn-warning edit-btn"
       >
         Editar
-      </Button>
+      </button>
 
       <EditButtonModal
         isOpen={isOpen}

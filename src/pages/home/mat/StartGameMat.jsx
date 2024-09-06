@@ -38,11 +38,7 @@ const StartGameMat = () => {
   }, []);
 
   return (
-    <div className="app">
-      <Header />
-      <Menu />
-      {/* {console.log(intel)}
-      {console.log(intel.last)} */}
+    <>
       {intel && intel.last ? (
         <Navigate to="/mat/game" />
       ) : (
@@ -72,8 +68,7 @@ const StartGameMat = () => {
           </form>
         </main>
       )}
-      <Footer />
-    </div>
+    </>
   );
 };
 

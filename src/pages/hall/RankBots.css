@@ -8,7 +8,7 @@
 
 #bots-rank section {
   box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
-  width: 60%;
+  width: 40%;
   background-color: white;
   padding: 30px 30px 10px 30px;
   border-radius: 5px;
@@ -16,25 +16,26 @@
   flex-direction: column;
 }
 
-.th-bots-rank {
-  text-align: center;
-  font-size: 18px;
-  background-color: rgb(138, 246, 246);
-}
-
-.td-bots-rank {
-  text-align: center;
-  font-size: 16px;
-  background-color: rgb(174, 255, 174);
-}
-
-.rank-table-limiter {
+.section-content {
   display: flex;
-  max-height: 300px;
-  overflow: auto;
+  flex-direction: column;
 }
 
-.rank-table-limiter table {
-  width: 100%;
-  overflow: auto;
+.section-header {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+}
+
+.section-header h4 {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.section-header button {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: end;
 }

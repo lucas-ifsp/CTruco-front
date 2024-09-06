@@ -37,44 +37,38 @@ const RemoteBotsMenu = () => {
   };
 
   return (
-    <div className="app">
-      <Header />
-      <Menu />
-      <main id="crud-remote">
-        <section>
-          <ChakraProvider>
-            <label id="bots-filter-label" htmlFor="bots-filter">
-              BUSCAR PELO NOME
-            </label>
-            <div className="crud-remote-header">
-              <Input
-                type="text"
-                id="bots-filter"
-                onChange={(e) => handleInputChange(e.target)}
-              />
-              <Button
-                height={"50px"}
-                backgroundColor={"#57f057"}
-                className="add-btn"
-                onClick={onOpen}
-              >
-                Adicionar
-              </Button>
-              <AddRemoteFormModal
-                isOpen={isOpen}
-                onClose={onClose}
-                updateUserBots={updateUserBots}
-              />
-            </div>
-            <RemoteBotsTable
-              visibleOnes={visibleBots}
+    <main id="crud-remote">
+      <section>
+        <ChakraProvider>
+          <label id="bots-filter-label" htmlFor="bots-filter">
+            BUSCAR PELO NOME
+          </label>
+          <div className="crud-remote-header">
+            <Input
+              type="text"
+              id="bots-filter"
+              onChange={(e) => handleInputChange(e.target)}
+            />
+            <button
+              height={"50px"}
+              className="btn btn-success add-btn"
+              onClick={onOpen}
+            >
+              Adicionar
+            </button>
+            <AddRemoteFormModal
+              isOpen={isOpen}
+              onClose={onClose}
               updateUserBots={updateUserBots}
             />
-          </ChakraProvider>
-        </section>
-      </main>
-      <Footer />
-    </div>
+          </div>
+          <RemoteBotsTable
+            visibleOnes={visibleBots}
+            updateUserBots={updateUserBots}
+          />
+        </ChakraProvider>
+      </section>
+    </main>
   );
 };
 
