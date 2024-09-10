@@ -14,7 +14,7 @@ const UserMatchHistory = () => {
 
   const updateUserHistory = async () => {
     let response = await getHistory();
-    console.log(response);
+    // console.log(response);
     setUserHistory(response);
   };
 
@@ -22,38 +22,15 @@ const UserMatchHistory = () => {
     updateUserHistory();
   }, []);
 
-  const matchHistory = [
-    {
-      winner: "LazyBot",
-      p1: "VapoBot",
-      p2: "LazyBot",
-      p1Score: 0,
-      p2Score: 12,
-      initTime: "10:00",
-      endTime: "11:00",
-      gameId: 1,
-    },
-    {
-      winner: "VapoBot",
-      p1: "VapoBot",
-      p2: "MineiroByBueno",
-      p1Score: 12,
-      p2Score: 5,
-      initTime: "10:00",
-      endTime: "11:00",
-      gameId: 2,
-    },
-    {
-      winner: "MineiroByBueno",
-      p1: "MineiroByBueno",
-      p2: "LazyBot",
-      p1Score: 12,
-      p2Score: 3,
-      initTime: "10:00",
-      endTime: "11:00",
-      gameId: 3,
-    },
-  ];
+  const dateHandler = (originalDate) => {
+    // original format YYYY-MM-DD HH:SS
+
+    const [date, time] = originalDate.split(" ");
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year.slice(2)} ${time}`;
+
+    // treated format DD-MM-YY HH:SS
+  };
 
   return (
     <main id="match-history" className="cs-feat">
@@ -94,7 +71,9 @@ const UserMatchHistory = () => {
                     <td className="default-td">{match.p2Name}</td>
                     <td className="default-td">{match.p1Score}</td>
                     <td className="default-td">{match.p2Score}</td>
-                    <td className="default-td">{match.endingDate}</td>
+                    <td className="default-td">
+                      {dateHandler(match.startingDate)}
+                    </td>
                     <td
                       style={{
                         textAlign: "center",
@@ -102,7 +81,7 @@ const UserMatchHistory = () => {
                       }}
                       className="default-td"
                     >
-                      {match.startingDate}
+                      {dateHandler(match.endingDate)}
                     </td>
                     <td className="default-td">
                       {match.matchDuration > 60

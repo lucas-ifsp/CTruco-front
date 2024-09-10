@@ -39,34 +39,37 @@ const RemoteBotsMenu = () => {
   return (
     <main id="crud-remote">
       <section>
-        <ChakraProvider>
-          <label id="bots-filter-label" htmlFor="bots-filter">
-            BUSCAR PELO NOME
-          </label>
-          <div className="crud-remote-header">
-            <Input
-              type="text"
-              id="bots-filter"
-              onChange={(e) => handleInputChange(e.target)}
-            />
-            <button
-              height={"50px"}
-              className="btn btn-dark add-btn"
-              onClick={onOpen}
-            >
-              <i className="bi bi-plus-circle-fill" />
-            </button>
-            <AddRemoteFormModal
-              isOpen={isOpen}
-              onClose={onClose}
+        <p className="fs-5 mb-0 text-center">Remote Bots Menu</p>
+        <div className="mb-3 mt-4 section-content">
+          <ChakraProvider>
+            <label id="bots-filter-label" htmlFor="bots-filter">
+              Buscar pelo nome
+            </label>
+            <div className="crud-remote-header">
+              <Input
+                type="text"
+                id="bots-filter"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              <button
+                height={"50px"}
+                className="btn btn-dark add-btn"
+                onClick={onOpen}
+              >
+                <i className="bi bi-plus-circle-fill" />
+              </button>
+              <AddRemoteFormModal
+                isOpen={isOpen}
+                onClose={onClose}
+                updateUserBots={updateUserBots}
+              />
+            </div>
+            <RemoteBotsTable
+              visibleOnes={visibleBots}
               updateUserBots={updateUserBots}
             />
-          </div>
-          <RemoteBotsTable
-            visibleOnes={visibleBots}
-            updateUserBots={updateUserBots}
-          />
-        </ChakraProvider>
+          </ChakraProvider>
+        </div>
       </section>
     </main>
   );

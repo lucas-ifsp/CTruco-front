@@ -14,9 +14,15 @@ const Accordion = ({ title, content }) => {
         <i className="bi bi-controller" /> {title}{" "}
         <span>
           {isOpen ? (
-            <i style={{ alignSelf: "start" }} className="bi bi-arrow-up" />
+            <i
+              style={{ alignSelf: "start", fontSize: "10px" }}
+              className="bi bi-arrow-up"
+            />
           ) : (
-            <i style={{ fontSize: "10px" }} className="bi bi-arrow-down" />
+            <i
+              style={{ alignSelf: "start", fontSize: "10px" }}
+              className="bi bi-arrow-down"
+            />
           )}
         </span>
       </div>

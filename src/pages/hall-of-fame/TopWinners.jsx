@@ -53,7 +53,7 @@ const TopWinners = () => {
               <thead>
                 <tr>
                   <th className="default-th">Jogador</th>
-                  <th className="default-th">vitórias</th>
+                  <th className="default-th">Vitórias</th>
                 </tr>
               </thead>
               <tbody className="default-tbody">

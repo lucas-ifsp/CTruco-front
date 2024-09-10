@@ -12,8 +12,9 @@ const RankBots = () => {
   const getFromDB = useGetRank();
 
   const updateRank = async () => {
-    // await rankAvailableOnes();
+    await rankAvailableOnes();
     let payload = await getFromDB();
+    // console.log(payload);
     setNumberOfGames(payload.numberOfGames);
     if (payload.rank.length > 0) {
       setRank(payload.rank);
@@ -44,17 +45,19 @@ const RankBots = () => {
           <p className="fs-5 mb-0 text-center">Colocação Atual</p>
         </div>
         {rank.length === 0 && (
-          <ChakraProvider>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-              className="spinner"
-            />
-            <p>Isso pode demorar um pouco...</p>
-          </ChakraProvider>
+          <div className="mb-3 mt-4 spinner-container">
+            <ChakraProvider>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+                className="spinner"
+              />
+              <p style={{ margin: "0px" }}>Isso pode demorar um pouco...</p>
+            </ChakraProvider>
+          </div>
         )}
         {rank.length > 0 && (
           <div className="section-content mb-3 mt-4">
@@ -62,9 +65,9 @@ const RankBots = () => {
               <table className="default-table" style={{ width: "100%" }}>
                 <thead>
                   <tr>
-                    <th className="default-th">rank</th>
-                    <th className="default-th">bot</th>
-                    <th className="default-th">vitórias</th>
+                    <th className="default-th">Rank</th>
+                    <th className="default-th">Bot</th>
+                    <th className="default-th">Vitórias</th>
                   </tr>
                 </thead>
                 <tbody className="default-tbody">
