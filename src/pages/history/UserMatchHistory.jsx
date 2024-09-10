@@ -58,6 +58,7 @@ const UserMatchHistory = () => {
   return (
     <main id="match-history" className="cs-feat">
       <section>
+        <p className="fs-5 mb-0 text-center">Suas Partidas</p>
         {!userHistory && (
           <ChakraProvider>
             <Spinner
@@ -71,51 +72,48 @@ const UserMatchHistory = () => {
           </ChakraProvider>
         )}
         {userHistory && (
-          <>
-            <h4 style={{ textAlign: "center" }}>Histórico de Partidas</h4>
-            <div className="table-limiter">
-              <table className="default-table" style={{ gap: "3px" }}>
-                <thead>
-                  <tr>
-                    <th className="default-th">Ganhador</th>
-                    <th className="default-th">Jogador 1</th>
-                    <th className="default-th">Jogador 2</th>
-                    <th className="default-th">Pontos J1</th>
-                    <th className="default-th">Pontos J2</th>
-                    <th className="default-th">Data Início</th>
-                    <th className="default-th">Data Fim</th>
-                    <th className="default-th">Duração</th>
+          <div className="table-limiter mb-3 mt-4">
+            <table className="default-table" style={{ gap: "3px" }}>
+              <thead>
+                <tr>
+                  <th className="default-th">Ganhador</th>
+                  <th className="default-th">Jogador 1</th>
+                  <th className="default-th">Jogador 2</th>
+                  <th className="default-th">Pontos J1</th>
+                  <th className="default-th">Pontos J2</th>
+                  <th className="default-th">Data Início</th>
+                  <th className="default-th">Data Fim</th>
+                  <th className="default-th">Duração</th>
+                </tr>
+              </thead>
+              <tbody className="default-tbody">
+                {userHistory.map((match) => (
+                  <tr key={match.gameId}>
+                    <td className="default-td">{match.winner}</td>
+                    <td className="default-td">{match.p1Name}</td>
+                    <td className="default-td">{match.p2Name}</td>
+                    <td className="default-td">{match.p1Score}</td>
+                    <td className="default-td">{match.p2Score}</td>
+                    <td className="default-td">{match.endingDate}</td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        paddingRight: "15px",
+                      }}
+                      className="default-td"
+                    >
+                      {match.startingDate}
+                    </td>
+                    <td className="default-td">
+                      {match.matchDuration > 60
+                        ? `${match.matchDuration / 60}min`
+                        : `${match.matchDuration}sec`}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="default-tbody">
-                  {userHistory.map((match) => (
-                    <tr key={match.gameId}>
-                      <td className="default-td">{match.winner}</td>
-                      <td className="default-td">{match.p1Name}</td>
-                      <td className="default-td">{match.p2Name}</td>
-                      <td className="default-td">{match.p1Score}</td>
-                      <td className="default-td">{match.p2Score}</td>
-                      <td className="default-td">{match.endingDate}</td>
-                      <td
-                        style={{
-                          textAlign: "center",
-                          paddingRight: "15px",
-                        }}
-                        className="default-td"
-                      >
-                        {match.startingDate}
-                      </td>
-                      <td className="default-td">
-                        {match.matchDuration > 60
-                          ? `${match.matchDuration / 60}min`
-                          : `${match.matchDuration}sec`}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </main>

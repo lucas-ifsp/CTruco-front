@@ -21,9 +21,9 @@ const EditButton = ({ updateUserBots }) => {
       <button
         ref={buttonRef}
         onClick={onOpen}
-        className="btn btn-warning edit-btn"
+        className="btn btn-dark edit-btn"
       >
-        Editar
+        <i className="bi bi-pencil-square" />
       </button>
 
       <EditButtonModal

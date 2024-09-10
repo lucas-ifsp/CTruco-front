@@ -28,15 +28,26 @@ const Menu = () => {
     <Navigate to="/login" />
   ) : (
     <nav className="menu-area">
-      <Link to="/mat/start-game" onClick={handleNewGameSelection}>
-        {/* <i className="bi bi-play-fill" /> Nova Partida{" "} */}
-        <i className="bi bi-geo-fill" /> Nova Partida{" "}
-      </Link>
-      <Link to="/simulate-bots">
-        <i className="bi bi-robot" /> Simular Bot vs Bot{" "}
+      <Accordion
+        title="Jogar"
+        content={
+          <>
+            <Link to="/mat/start-game" onClick={handleNewGameSelection}>
+              <i className="bi bi-geo-fill" /> você vs bot{" "}
+            </Link>
+            <Link to="/simulate-bots">
+              <i className="bi bi-robot" /> bot vs bot{" "}
+            </Link>
+          </>
+        }
+      />
+      <Link to="/evaluate-bot">
+        <i style={{ paddingRight: "0px" }} className="bi bi-graph-up" /> Avaliar
+        Bot{" "}
       </Link>
       <Link to="/user-history">
-        <i className="bi bi-clock-history" /> Histórico de Partidas{" "}
+        <i style={{ paddingRight: "0px" }} className="bi bi-clock-history" />{" "}
+        Histórico de Partidas{" "}
       </Link>
       <Accordion
         title="Hall da Fama"
@@ -61,7 +72,8 @@ const Menu = () => {
         Bots Remotos
       </Link>
       <Link to="/" onClick={handleLogout}>
-        <i className="bi bi-box-arrow-left" /> Sair{" "}
+        <i style={{ paddingRight: "0px" }} className="bi bi-box-arrow-left" />{" "}
+        Sair{" "}
       </Link>
     </nav>
   );

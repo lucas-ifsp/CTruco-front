@@ -11,12 +11,12 @@ const Accordion = ({ title, content }) => {
   return (
     <div className="accordion">
       <div className="accordion-header" onClick={toggleAccordion}>
-        <i className="bi bi-award-fill" /> {title}{" "}
+        <i className="bi bi-controller" /> {title}{" "}
         <span>
           {isOpen ? (
-            <i className="bi bi-arrow-up" />
+            <i style={{ alignSelf: "start" }} className="bi bi-arrow-up" />
           ) : (
-            <i className="bi bi-arrow-down" />
+            <i style={{ fontSize: "10px" }} className="bi bi-arrow-down" />
           )}
         </span>
       </div>

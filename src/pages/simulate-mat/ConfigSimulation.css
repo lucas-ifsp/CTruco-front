@@ -5,7 +5,16 @@
   justify-content: center;
 }
 
-.config-simulation > form {
+.config-simulation section {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.config-simulation section form {
   margin: 10px 0px 10px 0px;
   display: grid;
   align-content: end;
@@ -15,30 +24,30 @@
   justify-items: center;
 }
 
-.config-simulation > form {
-  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  padding: 30px 30px 10px 30px;
-  border-radius: 5px;
-}
-
-.config-simulation > form .bot-filter {
+.config-simulation form .bot-filter {
   width: 200px;
   display: flex;
   justify-content: center;
 }
 
-.config-simulation > form .others {
+.config-simulation form .others {
   grid-row: 1;
   grid-column: 2;
 }
 
-.config-simulation > form .in2 {
+.config-simulation form .in1 {
+  align-self: end;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.config-simulation form .in2 {
+  align-self: end;
   grid-row: 1;
   grid-column: 3;
 }
 
-.config-simulation > form .p1-name {
+.config-simulation form .p1-name {
   min-width: 200px;
   background-color: var(--bs-body-color);
   border-radius: 15px;
@@ -49,13 +58,13 @@
   grid-column: 1;
 }
 
-.config-simulation > form .p1-name p {
+.config-simulation form .p1-name p {
   color: #fff;
   padding: 6px 10px 6px 10px;
   margin-bottom: 0px;
 }
 
-.config-simulation > form .p2-name {
+.config-simulation form .p2-name {
   min-width: 200px;
   background-color: var(--bs-body-color);
   border-radius: 15px;
@@ -66,70 +75,53 @@
   grid-column: 3;
 }
 
-.config-simulation > form .p2-name p {
+.config-simulation form .p2-name p {
   color: #fff;
   padding: 6px 10px 6px 10px;
   margin-bottom: 0px;
 }
 
-.config-simulation > form .middle-container {
-  display: flex;
+.config-simulation form .middle-container {
+  display: inline-grid;
   flex-direction: column;
-  align-content: center;
-  justify-content: center;
   grid-row: 3;
   grid-column: 2;
 }
 
-.config-simulation > form .middle-container img {
+.config-simulation form .middle-container img {
   height: 80%;
   width: 50%;
   margin-bottom: 15px;
   align-self: center;
 }
 
-.config-simulation > form .middle-container i {
-  font-size: 10rem;
+.config-simulation form .middle-container i {
+  font-size: 7rem;
   align-self: center;
 }
 
-.config-simulation > form .table1 {
+.config-simulation form .middle-container button {
+  justify-self: center;
+  align-self: flex-end;
+}
+
+.config-simulation form .table1 {
   grid-row: 3;
   grid-column: 1;
   max-height: 250px;
   overflow: auto;
 }
 
-.config-simulation > form .table2 {
+.config-simulation form .table2 {
   grid-row: 3;
   grid-column: 3;
   max-height: 250px;
   overflow: auto;
 }
 
-.config-simulation > form .others {
+.config-simulation form .others {
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-}
-
-.bots-table .tr {
-  border-radius: 10px;
-}
-
-.bots-table .selected {
-  background-color: #014e0180;
-}
-
-.bots-table .tr:hover:not(.selected) {
-  background-color: #c6c6c6bf;
-}
-
-.bots-table .tr a:hover {
-  color: #000;
-}
-
-.bots-table a {
-  color: #000;
 }

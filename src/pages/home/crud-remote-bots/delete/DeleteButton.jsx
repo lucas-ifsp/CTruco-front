@@ -7,8 +7,8 @@ const DeleteButton = ({ botName, updateUserBots }) => {
 
   return (
     <>
-      <button onClick={onOpen} className="btn btn-danger remove-btn">
-        Remover
+      <button onClick={onOpen} className="btn btn-dark remove-btn">
+        <i className="bi bi-trash-fill" />
       </button>
 
       <DeleteButtonModal

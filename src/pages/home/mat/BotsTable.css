@@ -1,10 +1,5 @@
-.filter {
-  color: #2c4b00;
-}
-
-#start-game-mat-table {
-  max-height: 300px;
-  overflow: auto;
+.bots-table .tr {
+  border-radius: 10px;
 }
 
 .bots-table .selected {
@@ -22,3 +17,6 @@
 .bots-table a {
   color: #000;
 }
+
+
+

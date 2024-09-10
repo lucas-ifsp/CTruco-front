@@ -11,10 +11,11 @@ import Registration from "./pages/registration/Registration";
 import StartGameMat from "./pages/home/mat/StartGameMat";
 import Mat from "./pages/home/mat/GameMat";
 import UserMatchHistory from "./pages/history/UserMatchHistory";
-import RankBots from "./pages/hall/RankBots";
-import ConfigSimulation from "./pages/simulate- mat/ConfigSimulation";
+import RankBots from "./pages/hall-of-fame/RankBots";
+import ConfigSimulation from "./pages/simulate-mat/ConfigSimulation";
 import RemoteBotsMenu from "./pages/home/crud-remote-bots/RemoteBotsMenu";
-import TopWinners from "./pages/hall/TopWinners";
+import TopWinners from "./pages/hall-of-fame/TopWinners";
+import EvaluateBot from "./pages/evaluate-bot/EvaluateBot";
 import PagesLayout from "./pages/main/PagesLayout";
 
 // TODO
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="add-remote" element={<RemoteBotsMenu />} />
               <Route path="mat/start-game" element={<StartGameMat />} />
               <Route path="mat/game" element={<Mat />} />
+              <Route path="evaluate-bot" element={<EvaluateBot />} />
               <Route path="user-history" element={<UserMatchHistory />} />
               <Route path="hall-of-fame" element={<RankBots />} />
               <Route path="top-winners" element={<TopWinners />} />

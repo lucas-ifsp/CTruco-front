@@ -8,6 +8,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import "./BotsTable.css";
 
 const BotsTable = ({ selectedBot, setSelectedBot, bots }) => {
   const handleClick = (event) => {

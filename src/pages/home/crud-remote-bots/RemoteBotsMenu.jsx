@@ -51,10 +51,10 @@ const RemoteBotsMenu = () => {
             />
             <button
               height={"50px"}
-              className="btn btn-success add-btn"
+              className="btn btn-dark add-btn"
               onClick={onOpen}
             >
-              Adicionar
+              <i className="bi bi-plus-circle-fill" />
             </button>
             <AddRemoteFormModal
               isOpen={isOpen}
