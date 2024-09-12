@@ -77,9 +77,6 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
             </div>
           )}
         </ModalBody>
-
-        {/*<ModalFooter>
-          </ModalFooter>*/}
       </ModalContent>
     </Modal>
   );

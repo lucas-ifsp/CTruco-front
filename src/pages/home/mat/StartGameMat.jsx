@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BotsTable from "./BotsTable";
 import useCreateGame from "../../../hooks/api/useCreateGame";
 import useIntel from "../../../hooks/context/useIntel";
@@ -43,48 +43,47 @@ const StartGameMat = () => {
   }, [botsList]);
 
   useEffect(() => {
+    if (intel && intel.last) {
+      navigate("/mat/game");
+    }
     updateBotsList();
   }, []);
 
   return (
     <>
-      {intel && intel.last ? (
-        <Navigate to="/mat/game" />
-      ) : (
-        <main className="choose-opponent h-300">
-          <form>
-            <p className="fs-5 mb-0 text-center">Nova partida</p>
-            <div className="mb-3 mt-4">
-              <label htmlFor="inputOpponent" className="form-label">
-                Escolha o oponente
-              </label>
-              <ChakraProvider>
-                <Input
-                  className="filter"
-                  ref={containerRef}
-                  type="text"
-                  onChange={(e) => handleInputChange(e.target)}
-                  placeholder="Procure pelo Nome"
-                ></Input>
-                <div id="start-game-mat-table">
-                  <BotsTable
-                    setSelectedBot={setOpponentName}
-                    selectedBot={opponentName}
-                    bots={botsToShow}
-                  ></BotsTable>
-                </div>
-              </ChakraProvider>
-            </div>
-            <button
-              type="submit"
-              className="btn w-100 btn-dark"
-              onClick={handleSubmit}
-            >
-              Jogar X {opponentName}
-            </button>
-          </form>
-        </main>
-      )}
+      <main className="choose-opponent cs-feat">
+        <form>
+          <p className="fs-5 mb-0 text-center">Nova partida</p>
+          <div className="mb-3 mt-4">
+            <label htmlFor="inputOpponent" className="form-label">
+              Escolha o oponente
+            </label>
+            <ChakraProvider>
+              <Input
+                className="filter"
+                ref={containerRef}
+                type="text"
+                onChange={(e) => handleInputChange(e.target)}
+                placeholder="Procure pelo Nome"
+              ></Input>
+              <div className="start-game-mat-table">
+                <BotsTable
+                  selectedBot={opponentName}
+                  setSelectedBot={setOpponentName}
+                  bots={botsToShow}
+                />
+              </div>
+            </ChakraProvider>
+          </div>
+          <button
+            type="submit"
+            className="btn w-100 btn-dark"
+            onClick={handleSubmit}
+          >
+            Jogar X {opponentName}
+          </button>
+        </form>
+      </main>
     </>
   );
 };

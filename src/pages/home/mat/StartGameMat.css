@@ -7,6 +7,8 @@ main.choose-opponent {
 }
 
 .choose-opponent form {
+  display: flex;
+  flex-direction: column;
   box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
   width: 400px;
   background-color: white;
@@ -14,9 +16,8 @@ main.choose-opponent {
   border-radius: 5px;
 }
 
-.choose-opponent form div {
-  display: flex;
-  flex-direction: column;
+.start-game-mat-table {
   height: 300px;
+  padding-right: 20px;
   overflow: auto;
 }

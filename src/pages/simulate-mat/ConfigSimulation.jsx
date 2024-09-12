@@ -118,8 +118,7 @@ const ConfigSimulation = () => {
               <button
                 type="submit"
                 className="btn btn-dark play-btn"
-                fontWeight={"light"}
-                w={"50%"}
+                w={"100px"}
                 onClick={(e) => {
                   e.preventDefault();
                   onOpen();
