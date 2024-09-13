@@ -40,7 +40,7 @@ const TopWinners = () => {
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
-              color="blue.500"
+              color="black"
               size="xl"
               className="spinner"
             />

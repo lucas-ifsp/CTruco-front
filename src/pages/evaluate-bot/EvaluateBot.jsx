@@ -9,7 +9,8 @@ import useEvaluateBot from "./useEvaluateBot";
 const EvaluateBot = () => {
   const [botsList, setBotsList] = useState([]);
   const [botsToShow, setBotsToShow] = useState(botsList);
-  const [selectedBot, setSelectedBot] = useState("Gustavo");
+  const [selectedBot, setSelectedBot] = useState("DummyBot");
+  const [evaluateResult, setEvaluateResult] = useState({});
   const {
     isEvaluating,
     setIsEvaluating,
@@ -50,7 +51,7 @@ const EvaluateBot = () => {
   };
 
   const submitHandler = () => {
-    updateEvaluateResults("DummyBot");
+    updateEvaluateResults(selectedBot);
   };
 
   useEffect(() => {
@@ -58,10 +59,12 @@ const EvaluateBot = () => {
   }, [botsList]);
 
   useEffect(() => {
+    setEvaluateResult(JSON.parse(JSON.stringify(evaluateResultString)));
+  }, [evaluateResultString]);
+
+  useEffect(() => {
     updateBotsList();
-    setEvaluateResultString({
-      gustavo: "contiero",
-    });
+    setEvaluateResult(JSON.parse(JSON.stringify(evaluateResultString)));
   }, []);
 
   return (
@@ -76,19 +79,17 @@ const EvaluateBot = () => {
             <p className="mb-0 text-start">{selectedBot}</p>
           </div>
           {isEvaluating && !evaluateResultString && (
-            <div className="mb-3 mt-4 spinner-container">
-              <ChakraProvider>
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="black"
-                  size="xl"
-                  className="spinner"
-                />
-                <p style={{ margin: "0px" }}>Isso pode demorar um pouco...</p>
-              </ChakraProvider>
-            </div>
+            <ChakraProvider>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="black"
+                size="xl"
+                className="spinner"
+              />
+              <p style={{ margin: "0px" }}>Isso pode demorar um pouco...</p>
+            </ChakraProvider>
           )}
           {!isEvaluating && !evaluateResultString && (
             <>
@@ -118,11 +119,49 @@ const EvaluateBot = () => {
               </button>
             </>
           )}
-          {evaluateResultString && (
-            <>
-              <p>
-                ALO:{JSON.parse(JSON.stringify(evaluateResultString)).gustavo}
-              </p>
+          {evaluateResult && (
+            <div id="evaluate-result">
+              <div className="computing-time">
+                <p>Tempo de Análise:</p>
+                <p>
+                  {evaluateResult.computingTime
+                    ? (evaluateResult.computingTime / 1000).toFixed(2)
+                    : 0}
+                  s
+                </p>
+              </div>
+              <div className="defeated-opponents">
+                <p>Adversários Vencidos:</p>
+                <p>
+                  {evaluateResult.defeatedOpponents} /{" "}
+                  {evaluateResult.numberOfOpponents}
+                </p>
+              </div>
+              <div className="victories">
+                <p>Vitórias Totais:</p>
+                <p>
+                  {evaluateResult.evaluatedBotWins} /
+                  {evaluateResult.numberOfGames}
+                </p>
+              </div>
+              <div className="win-rate">
+                <p>Taxa de vitória:</p>
+                <p>
+                  {evaluateResult.winRate
+                    ? evaluateResult.winRate.toFixed(2)
+                    : "0"}
+                  %
+                </p>
+              </div>
+              <div className="percentile">
+                <p>Percentil:</p>
+                <p>
+                  {evaluateResult.percentile
+                    ? evaluateResult.percentile.toFixed(2)
+                    : "0"}
+                  %
+                </p>
+              </div>
               <button
                 className="btn btn-dark"
                 onClick={() => {
@@ -132,7 +171,7 @@ const EvaluateBot = () => {
               >
                 Avaliar outro bot
               </button>
-            </>
+            </div>
           )}
         </div>
       </section>

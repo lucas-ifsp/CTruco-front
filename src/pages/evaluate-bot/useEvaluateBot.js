@@ -5,7 +5,8 @@ const useEvaluateBot = () => {
       const url = `/api/v1/bots/evaluate/${bot}`;
       const response = await axiosPrivate.post(url);
       console.log(response);
-      return response.data;
+      console.log(response.data.payload);
+      return response.data.payload;
     } catch (error) {
       console.log(error.response.data.message);
     }

@@ -17,7 +17,6 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
   fazer isso através de uma consulta no banco (criar uma tabela no banco para isso)
   atualizar o estado do isSimulating de acordo com a situação.
   */
-  const [isSimulating, setIsSimulating] = useState(true);
   const [bot1Name, setBot1Name] = useState("sem bot aqui");
   const [bot2Name, setBot2Name] = useState("");
   const [bot1Wins, setBot1Wins] = useState(0);
@@ -58,7 +57,7 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
-              color="blue.500"
+              color="black"
               size="xl"
               className="spinner"
             />
