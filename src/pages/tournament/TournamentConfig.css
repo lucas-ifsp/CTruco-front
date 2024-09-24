@@ -1,0 +1,25 @@
+.tournament-config {
+  background-color: var(--mat-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tournament-config section {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.tournament-config section form {
+  margin: 10px 0px 10px 0px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 200px 350px 200px;
+  justify-items: center;
+}

@@ -33,17 +33,22 @@ const Menu = () => {
         content={
           <>
             <Link to="/mat/start-game" onClick={handleNewGameSelection}>
-              <i className="bi bi-geo-fill" /> você vs bot{" "}
+              <i className="bi bi-geo-fill" /> Você vs Bot{" "}
             </Link>
             <Link to="/simulate-bots">
-              <i className="bi bi-robot" /> bot vs bot{" "}
+              <i className="bi bi-robot" /> Bot vs Bot{" "}
+            </Link>
+            <Link to="/tournament-config">
+              <i className="bi bi-trophy" /> Campeonato {" "}
             </Link>
           </>
         }
       />
       <Link to="/evaluate-bot">
-        <i style={{ paddingRight: "0px" }} className="bi bi-graph-up" /> Avaliar
-        Bot{" "}
+        {/* <i style={{ paddingRight: "0px" }} className="bi bi-graph-up" /> Avaliar
+        Bot{" "} */}
+        <i style={{ paddingRight: "0px" }} className="bi bi-activity" />{" "}
+        Avaliar Bot{" "}
       </Link>
       <Link to="/user-history">
         <i style={{ paddingRight: "0px" }} className="bi bi-clock-history" />{" "}
