@@ -18,6 +18,7 @@ import TopWinners from "./pages/hall-of-fame/TopWinners";
 import EvaluateBot from "./pages/evaluate-bot/EvaluateBot";
 import PagesLayout from "./pages/main/PagesLayout";
 import TournamentConfig from "./pages/tournament/TournamentConfig";
+import Tournament from "./pages/tournament/Tournament";
 
 // TODO
 // 1. Solve opponent card showing covered before unveiled. X
@@ -46,7 +47,8 @@ const App = () => (
               <Route path="hall-of-fame" element={<RankBots />} />
               <Route path="top-winners" element={<TopWinners />} />
               <Route path="simulate-bots" element={<ConfigSimulation />} />
-              <Route path="tournament-config" element={<TournamentConfig />} />
+              <Route path="tournament/config" element={<TournamentConfig />} />
+              <Route path="tournament" element={<Tournament />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

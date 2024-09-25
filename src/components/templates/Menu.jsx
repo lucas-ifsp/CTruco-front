@@ -38,8 +38,11 @@ const Menu = () => {
             <Link to="/simulate-bots">
               <i className="bi bi-robot" /> Bot vs Bot{" "}
             </Link>
-            <Link to="/tournament-config">
-              <i className="bi bi-trophy" /> Campeonato {" "}
+            <Link to="/tournament/config">
+              <i className="bi bi-trophy" /> Campeonato CONFIGURACAO{" "}
+            </Link>
+            <Link to="/tournament">
+              <i className="bi bi-trophy" /> Campeonato{" "}
             </Link>
           </>
         }
@@ -47,8 +50,8 @@ const Menu = () => {
       <Link to="/evaluate-bot">
         {/* <i style={{ paddingRight: "0px" }} className="bi bi-graph-up" /> Avaliar
         Bot{" "} */}
-        <i style={{ paddingRight: "0px" }} className="bi bi-activity" />{" "}
-        Avaliar Bot{" "}
+        <i style={{ paddingRight: "0px" }} className="bi bi-activity" /> Avaliar
+        Bot{" "}
       </Link>
       <Link to="/user-history">
         <i style={{ paddingRight: "0px" }} className="bi bi-clock-history" />{" "}
