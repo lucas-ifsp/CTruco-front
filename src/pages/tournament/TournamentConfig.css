@@ -23,3 +23,21 @@
   grid-template-columns: 200px 350px 200px;
   justify-items: center;
 }
+
+.list-limiter{
+  height: 300px;
+  width: 200px;
+  overflow: auto;
+}
+
+.actions-container button {
+  width: 100px;
+  height: 50px;
+  align-self: center;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
