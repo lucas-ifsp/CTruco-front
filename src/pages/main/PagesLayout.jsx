@@ -5,6 +5,7 @@ import Header from "../../components/templates/Header";
 import Footer from "../../components/templates/Footer";
 import "./PagesLayout.css";
 import { EvaluationProvider } from "../evaluate-bot/EvaluateContext";
+import { TournamentProvider } from "../tournament/TournamentProvider";
 
 const PagesLayout = () => {
   return (
@@ -12,7 +13,9 @@ const PagesLayout = () => {
       <Header />
       <Menu />
       <EvaluationProvider>
-        <Outlet />
+        <TournamentProvider>
+          <Outlet />
+        </TournamentProvider>
       </EvaluationProvider>
       <Footer />
     </div>
