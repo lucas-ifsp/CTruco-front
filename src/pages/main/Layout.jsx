@@ -1,11 +1,14 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
+import { TournamentProvider } from "../tournament/TournamentProvider";
 
 const Layout = () => {
-    return (
-        <main>
-            <Outlet />
-        </main>
-    )
-}
+  return (
+    <main>
+      <TournamentProvider>
+        <Outlet />
+      </TournamentProvider>
+    </main>
+  );
+};
 
-export default Layout
+export default Layout;

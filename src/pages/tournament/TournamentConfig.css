@@ -24,8 +24,13 @@
   justify-items: center;
 }
 
-.list-limiter{
-  height: 300px;
+.tournament-config section form > button {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+.list-limiter {
+  height: 320px;
   width: 200px;
   overflow: auto;
 }

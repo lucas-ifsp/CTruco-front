@@ -4,6 +4,7 @@ import Accordion from "../../pages/home/utils/Accordion";
 import useDeleteGame from "../../hooks/api/useDeleteGame";
 import useRefreshToken from "../../hooks/api/useRefreshToken";
 import useIntel from "../../hooks/context/useIntel";
+import useTournamentStatus from "../../pages/context/useTournamentStatus";
 import "./Menu.css";
 
 const Menu = () => {
@@ -11,6 +12,7 @@ const Menu = () => {
   const deleteConcludedGame = useDeleteGame();
   const { deleteTokens } = useRefreshToken();
   const [logged, setLogged] = useState(true);
+  const { championship, setChampionship } = useTournamentStatus();
 
   const handleNewGameSelection = () => {
     if (!intel) setIntel({});
@@ -38,10 +40,7 @@ const Menu = () => {
             <Link to="/simulate-bots">
               <i className="bi bi-robot" /> Bot vs Bot{" "}
             </Link>
-            <Link to="/tournament/config">
-              <i className="bi bi-trophy" /> Campeonato CONFIGURACAO{" "}
-            </Link>
-            <Link to="/tournament">
+            <Link to={championship ? "/tournament" : "/tournament/config"}>
               <i className="bi bi-trophy" /> Campeonato{" "}
             </Link>
           </>

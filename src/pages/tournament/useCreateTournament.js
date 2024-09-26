@@ -1,18 +1,12 @@
 import { axiosPrivate } from "../../api/axios";
 const useCreateTournament = () => {
-  const create = async () => {
+  const create = async (participants) => {
     try {
       const url = `/api/v1/tournament`;
-      const response = await axiosPrivate.post(url, [
-        "LazyBot",
-        "DummyBot",
-        "MineiroByBueno",
-        "VapoBot",
-        "UncleBobBot",
-        "SkolTable",
-        "VeioDoBarBot",
-        "W'rkncacnter",
-      ]);
+      const response = await axiosPrivate.post(url, {
+        participants: participants,
+        times: 31,
+      });
       // console.log(response);
       return response.data.payload;
     } catch (error) {
