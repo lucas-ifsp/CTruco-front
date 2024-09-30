@@ -1,9 +1,10 @@
 import React from "react";
+import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
+import MatchModal from "./MatchModal";
 
-const Match = ({
-  match,
-  onPlay,
-}) => {
+const Match = ({ match, onPlay }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <div className={"match-player m" + match.matchNumber + " p1"}>
@@ -25,13 +26,15 @@ const Match = ({
       <div className={"match-button m" + match.matchNumber + " b"}>
         <button
           className="btn btn-success"
-          onClick={() => onPlay(match.matchNumber)}
+          onClick={() => {
+            onOpen();
+            onPlay(match.matchNumber);
+          }}
           disabled={!(match.p1Name && match.p2Name && !match.winnerName)}
         >
           Jogar
         </button>
       </div>
-
       <div className={"match-player m" + match.matchNumber + " p2"}>
         <div className={"t-score m" + match.matchNumber}>
           <p
@@ -48,6 +51,13 @@ const Match = ({
         </div>
         <p className="p2">{match.p2Name || "?"}</p>
       </div>
+      <ChakraProvider>
+        <MatchModal
+          isOpen={isOpen}
+          match={match}
+          onClose={onClose}
+        ></MatchModal>
+      </ChakraProvider>
     </>
   );
 };

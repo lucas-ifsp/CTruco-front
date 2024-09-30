@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ChakraProvider, List, ListItem, Checkbox } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  List,
+  ListItem,
+  Checkbox,
+  Input,
+} from "@chakra-ui/react";
 import "./TournamentConfig.css";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
 import useTournamentStatus from "../context/useTournamentStatus";
@@ -13,6 +19,7 @@ const TournamentConfig = () => {
   const [selectedBotsToRemove, setSelectedBotsToRemove] = useState([]);
   const [isAllSelectedL1, setIsAllSelectedL1] = useState(false);
   const [isAllSelectedL2, setIsAllSelectedL2] = useState(false);
+  const [times, setTimes] = useState(31);
   const { championship, setChampionship } = useTournamentStatus();
   const fetchBotNames = useGetBotNames();
   const createTournament = useCreateTournament();
@@ -121,8 +128,8 @@ const TournamentConfig = () => {
     }
   };
 
-  const createCamp = async (bots) => {
-    let camp = await createTournament(bots);
+  const createCamp = async (bots, times) => {
+    let camp = await createTournament(bots, times);
     console.log(camp);
     console.log(camp.matchesDTO);
     setChampionship(camp);
@@ -133,29 +140,33 @@ const TournamentConfig = () => {
     <main className="tournament-config">
       <section>
         <form>
-          <div className="list-limiter">
-            <ChakraProvider>
-              <Checkbox
-                onChange={toggleSelectAllL1}
-                isChecked={isAllSelectedL1}
-                mb={2}
+          <ChakraProvider>
+            <div className="l1-container">
+              <button
+                className="btn btn-dark select-all"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleSelectAllL1();
+                }}
               >
                 Selecionar Todos
-              </Checkbox>
-              <List paddingLeft={"0px"} paddingRight={"15px"} spacing={3}>
-                {l1Bots.map((bot) => (
-                  <ListItem key={bot}>
-                    <Checkbox
-                      onChange={() => handleCheckboxChangeL1(bot)}
-                      isChecked={selectedBotsToInsert.includes(bot)}
-                    >
-                      {bot}
-                    </Checkbox>
-                  </ListItem>
-                ))}
-              </List>
-            </ChakraProvider>
-          </div>
+              </button>
+              <div className="list-limiter">
+                <List paddingLeft={"0px"} paddingRight={"15px"} spacing={3}>
+                  {l1Bots.map((bot) => (
+                    <ListItem key={bot}>
+                      <Checkbox
+                        onChange={() => handleCheckboxChangeL1(bot)}
+                        isChecked={selectedBotsToInsert.includes(bot)}
+                      >
+                        {bot}
+                      </Checkbox>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </ChakraProvider>
 
           <div className="actions-container">
             <button
@@ -177,44 +188,77 @@ const TournamentConfig = () => {
               <i className="bi bi-arrow-left"></i>
             </button>
           </div>
-
-          <div className="list-limiter">
-            <ChakraProvider>
-              <Checkbox
-                onChange={toggleSelectAllL2}
-                isChecked={isAllSelectedL2}
-                mb={2}
+          <ChakraProvider>
+            <div className="l2-container">
+              <p style={{ margin: "0px", textAlign: "center" }}>
+                Bots selecionados: {l2Bots.length}
+              </p>
+              <button
+                className="btn btn-dark select-all"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleSelectAllL2();
+                }}
               >
                 Selecionar Todos
-              </Checkbox>
-              <List paddingLeft={"0px"} paddingRight={"15px"} spacing={3}>
-                {l2Bots.map((bot) => (
-                  <ListItem key={bot}>
-                    <Checkbox
-                      onChange={() => handleCheckboxChangeL2(bot)}
-                      isChecked={selectedBotsToRemove.includes(bot)}
-                    >
-                      {bot}
-                    </Checkbox>
-                  </ListItem>
-                ))}
-              </List>
+              </button>
+              <div className="list-limiter">
+                <List paddingLeft={"0px"} paddingRight={"15px"} spacing={3}>
+                  {l2Bots.map((bot) => (
+                    <ListItem key={bot}>
+                      <Checkbox
+                        onChange={() => handleCheckboxChangeL2(bot)}
+                        isChecked={selectedBotsToRemove.includes(bot)}
+                      >
+                        {bot}
+                      </Checkbox>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </ChakraProvider>
+          <div id="lower-container">
+            <label htmlFor="nbr-simu">Número de simulações</label>
+            <ChakraProvider>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  if (e.target.value > 5000) {
+                    e.target.value = 5000;
+                  }
+                  setTimes(e.target.value);
+                }}
+                id="nbr-simu"
+                name="nbr-simu"
+              />
             </ChakraProvider>
+            <div id="create-camp-btn">
+              <p
+                style={{ color: "red", fontSize: "12px", margin: "0px" }}
+                hidden={l2Bots.length === 8}
+              >
+                Devem ser selecionados 8 bots
+              </p>
+              <button
+                type="submit"
+                className="btn btn-dark"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (l2Bots.length == 8) {
+                    createCamp(l2Bots, times);
+                  } else {
+                    console.log(
+                      "Numero invalido de jogadores: " + l2Bots.length
+                    );
+                  }
+                }}
+                disabled={l2Bots.length !== 8}
+              >
+                Começar Torneio
+              </button>
+            </div>
           </div>
-          <button
-            type="submit"
-            className="btn btn-dark play-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              if (l2Bots.length == 8) {
-                createCamp(l2Bots);
-              } else {
-                console.log("Numero invalido de jogadores: " + l2Bots.length);
-              }
-            }}
-          >
-            Começar Torneio
-          </button>
         </form>
       </section>
     </main>

@@ -1,0 +1,24 @@
+#match-modal-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#result {
+  height: 100px;
+  display: grid;
+  grid-template-columns: 150px auto 20px auto 150px;
+  max-width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+}
+
+#result .p1Name {
+  text-align: center;
+}
+#result .p2Name {
+  text-align: center;
+}

@@ -1,11 +1,11 @@
 import { axiosPrivate } from "../../api/axios";
 const useCreateTournament = () => {
-  const create = async (participants) => {
+  const create = async (participants, times) => {
     try {
       const url = `/api/v1/tournament`;
       const response = await axiosPrivate.post(url, {
         participants: participants,
-        times: 31,
+        times: times,
       });
       // console.log(response);
       return response.data.payload;
