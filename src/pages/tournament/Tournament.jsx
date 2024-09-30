@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Match from "./Match";
 import "./Tournament.css";
+import "./Tournament-8.css";
+import "./Tournament-16.css";
 import useTournamentStatus from "../context/useTournamentStatus";
 import usePlayTournamentMatch from "./usePlayTournamentMatch";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +25,9 @@ const Tournament = () => {
   }, []);
 
   return (
-    <main className="tournament">
+    <main
+      className={"tournament " + "s" + (championship.matchesDTO.length + 1)}
+    >
       <section>
         <button
           className="btn btn-danger"
@@ -40,9 +44,13 @@ const Tournament = () => {
           </div>
 
           {championship.matchesDTO.map((match) => (
-            <Match match={match} onPlay={playCampMatch} />
+            <Match
+              campSize={championship.matchesDTO.length + 1}
+              match={match}
+              onPlay={playCampMatch}
+            />
           ))}
-          
+
           <div className="match-player winner">
             <p>{championship.winnerName || "?"}</p>
           </div>

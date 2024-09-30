@@ -1,0 +1,286 @@
+.s16 .tournament-grid {
+  display: grid;
+  place-items: center;
+  /*12 linhas*/
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+  row-gap: 30px;
+  column-gap: 10px;
+  /*9 colunas*/
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}
+
+.s16 .info-simulacoes {
+  text-align: center;
+  font-size: 18px;
+  width: 200px;
+  width: fit-content;
+  grid-row: 1;
+  grid-column: 3/8;
+}
+
+.s16 .reset.b {
+  font-size: 26px;
+  grid-row: 9;
+  grid-column: 4/7;
+}
+
+.s16 .match-player.winner {
+  padding: 20px;
+  width: fit-content;
+  min-width: 120px;
+  grid-row: 5;
+  grid-column: 4/7;
+}
+.s16 .match-player.winner p {
+  text-align: center;
+  font-size: 30px;
+  width: 100%;
+}
+
+.s16 .match-player.m15.p1 {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.s16 .match-player.m15.p2 {
+  display: flex;
+  flex-direction: column;
+}
+/*Oitavas*/
+.s16 .m1.p1 {
+  align-self: flex-end;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.s16 .m1.b {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.s16 .m1.p2 {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.s16 .m2.p1 {
+  grid-row: 4;
+  grid-column: 1;
+}
+
+.s16 .m2.b {
+  grid-row: 5;
+  grid-column: 1;
+}
+
+.s16 .m2.p2 {
+  grid-row: 6;
+  grid-column: 1;
+}
+
+.s16 .m3.p1 {
+  grid-row: 7;
+  grid-column: 1;
+}
+
+.s16 .m3.b {
+  grid-row: 8;
+  grid-column: 1;
+}
+
+.s16 .m3.p2 {
+  grid-row: 9;
+  grid-column: 1;
+}
+
+.s16 .m4.p1 {
+  grid-row: 10;
+  grid-column: 1;
+}
+
+.s16 .m4.b {
+  grid-row: 11;
+  grid-column: 1;
+}
+
+.s16 .m4.p2 {
+  grid-row: 12;
+  grid-column: 1;
+}
+
+.s16 .m5.p1 {
+  align-self: flex-end;
+  grid-row: 1;
+  grid-column: 9;
+}
+
+.s16 .m5.b {
+  align-self: center;
+  grid-row: 2;
+  grid-column: 9;
+}
+
+.s16 .m5.p2 {
+  grid-row: 3;
+  grid-column: 9;
+}
+
+.s16 .m6.p1 {
+  align-self: center;
+  grid-row: 4;
+  grid-column: 9;
+}
+
+.s16 .m6.b {
+  align-self: center;
+  grid-row: 5;
+  grid-column: 9;
+}
+
+.s16 .m6.p2 {
+  grid-row: 6;
+  grid-column: 9;
+}
+
+.s16 .m7.p1 {
+  align-self: center;
+  grid-row: 7;
+  grid-column: 9;
+}
+
+.s16 .m7.b {
+  align-self: center;
+  grid-row: 8;
+  grid-column: 9;
+}
+
+.s16 .m7.p2 {
+  grid-row: 9;
+  grid-column: 9;
+}
+
+.s16 .m8.p1 {
+  align-self: center;
+  grid-row: 10;
+  grid-column: 9;
+}
+
+.s16 .m8.b {
+  align-self: center;
+  grid-row: 11;
+  grid-column: 9;
+}
+
+.s16 .m8.p2 {
+  grid-row: 12;
+  grid-column: 9;
+}
+
+/*Quartas*/
+.s16 .m9.p1 {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.s16 .m9.b {
+  align-self: center;
+  grid-row: 3/5;
+  grid-column: 2;
+}
+
+.s16 .m9.p2 {
+  grid-row: 5;
+  grid-column: 2;
+}
+
+.s16 .m10.p1 {
+  grid-row: 8;
+  grid-column: 2;
+}
+
+.s16 .m10.b {
+  grid-row: 9/11;
+  grid-column: 2;
+}
+
+.s16 .m10.p2 {
+  grid-row: 11;
+  grid-column: 2;
+}
+
+.s16 .m11.p1 {
+  grid-row: 2;
+  grid-column: 8;
+}
+
+.s16 .m11.b {
+  grid-row: 3/5;
+  grid-column: 8;
+}
+
+.s16 .m11.p2 {
+  grid-row: 5;
+  grid-column: 8;
+}
+
+.s16 .m12.p1 {
+  grid-row: 8;
+  grid-column: 8;
+}
+
+.s16 .m12.b {
+  grid-row: 9/11;
+  grid-column: 8;
+}
+
+.s16 .m12.p2 {
+  grid-row: 11;
+  grid-column: 8;
+}
+
+/* Semi-final */
+.s16 .m13.p1 {
+  grid-row: 3/5;
+  grid-column: 3;
+}
+
+.s16 .m13.b {
+  grid-row: 6/8;
+  grid-column: 3;
+}
+
+.s16 .m13.p2 {
+  grid-row: 9/11;
+  grid-column: 3;
+}
+
+.s16 .m14.p1 {
+  grid-row: 3/5;
+  grid-column: 7;
+}
+
+.s16 .m14.b {
+  grid-row: 6/8;
+  grid-column: 7;
+}
+
+.s16 .m14.p2 {
+  grid-row: 9/11;
+  grid-column: 7;
+}
+
+/*Final*/
+.s16 .m15.p1 {
+  grid-row: 6/8;
+  grid-column: 4;
+}
+
+.s16 .m15.b {
+  grid-row: 6/8;
+  grid-column: 5;
+}
+
+.s16 .m15.p2 {
+  grid-row: 6/8;
+  grid-column: 6;
+}

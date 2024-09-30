@@ -42,6 +42,10 @@
   margin-bottom: 5px;
   align-self: center;
 }
+
+.l1-container .select-all {
+  margin-top: 24px;
+}
 #lower-container {
   display: flex;
   flex-direction: column;

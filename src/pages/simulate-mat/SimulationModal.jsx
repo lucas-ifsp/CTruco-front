@@ -63,15 +63,28 @@ const SimulationModal = ({ isOpen, onOpen, onClose, results, setResults }) => {
             />
           )}
           {results && (
-            <div>
-              <p>
-                Partidas: {times} Tempo de execução: {timeToExecute}ms
+            <div id="simulation-modal-results">
+              <p className="times">Partidas: {times}</p>
+              <p className="time-to-execute">
+                Tempo de execução: {timeToExecute}ms
               </p>
-              <p>
-                {bot1Name}: {bot1Wins}
+              <p className="bot1-name">{bot1Name}</p>
+              {/*.winner e .loser estão estilizados no arquivo Tournament.css*/}
+              <p
+                className={
+                  (bot1Wins > bot2Wins ? "winner " : "loser ") + "bot1-wins"
+                }
+              >
+                {bot1Wins}
               </p>
-              <p>
-                {bot2Name}: {bot2Wins}
+              <p className="versus">X</p>
+              <p className="bot2-name">{bot2Name}</p>
+              <p
+                className={
+                  (bot2Wins > bot1Wins ? "winner " : "loser ") + "bot2-wins"
+                }
+              >
+                {bot2Wins}
               </p>
             </div>
           )}

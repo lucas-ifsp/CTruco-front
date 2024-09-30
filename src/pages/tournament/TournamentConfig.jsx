@@ -46,11 +46,9 @@ const TournamentConfig = () => {
 
       if (index > -1) {
         bots.splice(index, 1);
-        console.log("REMOVEU!!");
       }
     } else {
       bots.push(bot);
-      console.log("ADICIONOU!!");
     }
 
     setSelectedBotsToInsert(bots);
@@ -64,11 +62,9 @@ const TournamentConfig = () => {
 
       if (index > -1) {
         bots.splice(index, 1);
-        console.log("REMOVEU!!");
       }
     } else {
       bots.push(bot);
-      console.log("ADICIONOU!!");
     }
 
     setSelectedBotsToRemove(bots);
@@ -131,7 +127,6 @@ const TournamentConfig = () => {
   const createCamp = async (bots, times) => {
     let camp = await createTournament(bots, times);
     console.log(camp);
-    console.log(camp.matchesDTO);
     setChampionship(camp);
     navigate("/tournament");
   };
@@ -236,24 +231,18 @@ const TournamentConfig = () => {
             <div id="create-camp-btn">
               <p
                 style={{ color: "red", fontSize: "12px", margin: "0px" }}
-                hidden={l2Bots.length === 8}
+                hidden={l2Bots.length === 8 || l2Bots.length === 16}
               >
-                Devem ser selecionados 8 bots
+                Devem ser selecionados 8 ou 16
               </p>
               <button
                 type="submit"
                 className="btn btn-dark"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (l2Bots.length == 8) {
-                    createCamp(l2Bots, times);
-                  } else {
-                    console.log(
-                      "Numero invalido de jogadores: " + l2Bots.length
-                    );
-                  }
+                  createCamp(l2Bots, times);
                 }}
-                disabled={l2Bots.length !== 8}
+                disabled={l2Bots.length !== 8 && l2Bots.length !== 16}
               >
                 Começar Torneio
               </button>

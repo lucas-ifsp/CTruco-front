@@ -1,0 +1,139 @@
+.s8 .tournament-grid {
+  display: grid;
+  place-items: center;
+  grid-template-rows: auto auto auto auto auto auto auto;
+  row-gap: 30px;
+  column-gap: 10px;
+  grid-template-columns: auto auto auto auto auto auto;
+}
+
+.s8 .info-simulacoes {
+  width: fit-content;
+  grid-row: 1;
+  grid-column: 3/6;
+}
+
+.s8 .match-player.winner {
+  padding: 10px;
+  width: fit-content;
+  min-width: 120px;
+  grid-row: 2/4;
+  grid-column: 4;
+}
+
+.s8 .reset.b {
+  grid-row: 6;
+  grid-column: 4;
+}
+
+/*Quartas*/
+.s8 .m1.p1 {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.s8 .m1.b {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.s8 .m1.p2 {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.s8 .m2.p1 {
+  grid-row: 4;
+  grid-column: 1;
+}
+
+.s8 .m2.b {
+  grid-row: 5;
+  grid-column: 1;
+}
+
+.s8 .m2.p2 {
+  grid-row: 6;
+  grid-column: 1;
+}
+
+.s8 .m3.p1 {
+  grid-row: 1;
+  grid-column: 7;
+}
+
+.s8 .m3.b {
+  grid-row: 2;
+  grid-column: 7;
+}
+
+.s8 .m3.p2 {
+  grid-row: 3;
+  grid-column: 7;
+}
+
+.s8 .m4.p1 {
+  grid-row: 4;
+  grid-column: 7;
+}
+
+.s8 .m4.b {
+  grid-row: 5;
+  grid-column: 7;
+}
+
+.s8 .m4.p2 {
+  grid-row: 6;
+  grid-column: 7;
+}
+
+/*Semi-final*/
+.s8 .m5.p1 {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.s8 .m5.b {
+  align-self: center;
+  display: flex;
+  grid-row: 3/5;
+  grid-column: 2;
+}
+
+.s8 .m5.p2 {
+  grid-row: 5;
+  grid-column: 2;
+}
+
+.s8 .m6.p1 {
+  grid-row: 2;
+  grid-column: 6;
+}
+
+.s8 .m6.b {
+  grid-row: 3/5;
+  grid-column: 6;
+}
+
+.s8 .m6.p2 {
+  grid-row: 5;
+  grid-column: 6;
+}
+
+/*Final*/
+.s8 .m7.p1 {
+  align-self: center;
+  grid-row: 3/5;
+  grid-column: 3;
+}
+
+.s8 .m7.b {
+  align-self: center;
+  grid-row: 3/5;
+  grid-column: 4;
+}
+
+.s8 .m7.p2 {
+  grid-row: 3/5;
+  grid-column: 5;
+}

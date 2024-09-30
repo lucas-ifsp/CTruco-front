@@ -1,9 +1,73 @@
-.modal-body{
+.modal-body {
   display: flex;
   flex-direction: column;
 }
 
-.spinner{
+.spinner {
   align-self: center;
   padding: 10px;
+}
+
+#simulation-modal-results p {
+  font-size: 20px;
+}
+
+#simulation-modal-results {
+  display: grid;
+  gap: 10px;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 150px auto 20px auto 150px;
+}
+
+#simulation-modal-results .times {
+  justify-self: center;
+  grid-row: 1;
+  grid-column: 1/6;
+}
+
+#simulation-modal-results .bot1-name {
+  width: 100%;
+  font-size: 20px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#simulation-modal-results .bot2-name {
+  width: 100%;
+  font-size: 20px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 5;
+}
+
+#simulation-modal-results .versus {
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+#simulation-modal-results .bot1-wins {
+  font-size: 26px;
+  align-self: center;
+  justify-self: center;
+  grid-row: 2;
+  grid-column: 2;
+}
+
+#simulation-modal-results .bot2-wins {
+  font-size: 26px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 4;
+}
+
+#simulation-modal-results .time-to-execute {
+  justify-self: center;
+  grid-row: 3;
+  grid-column: 1/6;
 }
