@@ -24,6 +24,12 @@ const Tournament = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!championship) {
+      navigate("/tournament/config");
+    }
+  }, [championship]);
+
   return (
     <main
       className={"tournament " + "s" + (championship.matchesDTO.length + 1)}
@@ -39,12 +45,13 @@ const Tournament = () => {
           Cancelar
         </button>
         <div className="tournament-grid mt-4 mb-3">
-          <div class="alert alert-info info-simulacoes" role="alert">
+          <div className="alert alert-info info-simulacoes" role="alert">
             Simulações por Partida: {championship.times}
           </div>
 
           {championship.matchesDTO.map((match) => (
             <Match
+              key={match.uuid}
               campSize={championship.matchesDTO.length + 1}
               match={match}
               onPlay={playCampMatch}

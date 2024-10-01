@@ -31,12 +31,16 @@ const TournamentConfig = () => {
     setL1Bots(data);
   };
 
-  useEffect(() => {
+  const handleLoading = () => {
     if (championship) {
       navigate("/tournament");
     }
     updateBotsList();
-  }, []);
+  };
+
+  useEffect(() => {
+    handleLoading();
+  }, [championship]);
 
   const handleCheckboxChangeL1 = (bot) => {
     let bots = [...selectedBotsToInsert];
