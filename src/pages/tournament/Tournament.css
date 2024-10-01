@@ -74,11 +74,3 @@ p.winner {
 .match-player.winner p {
   font-size: 20px;
 }
-
-
-
-.info-simulacoes {
-  width: fit-content;
-  grid-row: 1;
-  grid-column: 3/6;
-}
