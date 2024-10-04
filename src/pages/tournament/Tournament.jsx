@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import Match from "./Match";
+import MatchModal from "./MatchModal";
 import "./Tournament.css";
 import "./Tournament-8.css";
 import "./Tournament-16.css";
 import useTournamentStatus from "../context/useTournamentStatus";
 import usePlayTournamentMatch from "./usePlayTournamentMatch";
 import { useNavigate } from "react-router-dom";
+import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 
 const Tournament = () => {
   const play = usePlayTournamentMatch();
   const navigate = useNavigate();
   const { championship, setChampionship } = useTournamentStatus();
+  const { onOpen, isOpen, onClose } = useDisclosure();
 
   const playCampMatch = async (matchNumber) => {
     let camp = await play(championship.uuid, matchNumber);
@@ -52,14 +55,34 @@ const Tournament = () => {
           {championship.matchesDTO.map((match) => (
             <Match
               key={match.uuid}
-              campSize={championship.matchesDTO.length + 1}
+              campSize={championship.size}
               match={match}
               onPlay={playCampMatch}
             />
           ))}
 
           <div className="match-player winner">
-            <p>{championship.winnerName || "?"}</p>
+            {!championship.winnerName && (
+              <>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => {
+                    onOpen();
+                    playCampMatch(championship.size - 1);
+                  }}
+                >
+                  ?
+                </button>
+                <ChakraProvider>
+                  <MatchModal
+                    isOpen={isOpen}
+                    match={championship.matchesDTO[championship.size - 2]}
+                    onClose={onClose}
+                  ></MatchModal>
+                </ChakraProvider>
+              </>
+            )}
+            {championship.winnerName && <p>{championship.winnerName}</p>}
           </div>
 
           {championship.winnerName && (
