@@ -10,6 +10,7 @@ const useCreateTournament = () => {
       // console.log(response);
       return response.data.payload;
     } catch (error) {
+      console.log(error);
       console.log(error.response.data.message);
     }
   };

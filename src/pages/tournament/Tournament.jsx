@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Match from "./Match";
 import MatchModal from "./MatchModal";
 import "./Tournament.css";
@@ -17,7 +17,6 @@ const Tournament = () => {
 
   const playCampMatch = async (matchNumber) => {
     let camp = await play(championship.uuid, matchNumber);
-    console.log(camp);
     setChampionship(camp);
   };
 
@@ -52,24 +51,32 @@ const Tournament = () => {
             Simulações por Partida: {championship.times}
           </div>
 
-          {championship.matchesDTO.map((match) => (
-            <Match
-              key={match.uuid}
-              campSize={championship.size}
-              match={match}
-              onPlay={playCampMatch}
-            />
-          ))}
+          {championship.matchesDTO.map((match) => {
+            return (
+              <Match
+                key={match.uuid}
+                campSize={championship.size}
+                match={match}
+                allMatches={championship.matchesDTO}
+                camp={championship}
+                onPlay={playCampMatch}
+              />
+            );
+          })}
 
           <div className="match-player winner">
             {!championship.winnerName && (
               <>
                 <button
-                  className="btn btn-dark"
+                  className="btn btn-warning"
+                  style={{ width: "100px" }}
                   onClick={() => {
                     onOpen();
                     playCampMatch(championship.size - 1);
                   }}
+                  disabled={
+                    !championship.matchesDTO[championship.size - 2].available
+                  }
                 >
                   ?
                 </button>
