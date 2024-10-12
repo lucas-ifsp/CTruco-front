@@ -3,7 +3,7 @@ import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import MatchModal from "./MatchModal";
 import "./Match.css";
 
-const Match = ({ match, onPlay, camp }) => {
+const Match = ({ match, onPlay, camp, times }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalPlayer, setModalPlayer] = useState(null);
 
@@ -39,10 +39,11 @@ const Match = ({ match, onPlay, camp }) => {
               className="btn btn-warning play-btn"
               onClick={() => {
                 handleOpenModal("p1");
-                onPlay(2 * match.matchNumber - camp.size - 1);
+                onPlay(2 * match.matchNumber - camp.size - 1, times);
               }}
               disabled={
-                !camp.matchesDTO[2 * match.matchNumber - camp.size - 2].available
+                !camp.matchesDTO[2 * match.matchNumber - camp.size - 2]
+                  .available
               }
             >
               ?
@@ -75,10 +76,11 @@ const Match = ({ match, onPlay, camp }) => {
               className="btn btn-warning play-btn"
               onClick={() => {
                 handleOpenModal("p2");
-                onPlay(2 * match.matchNumber - camp.size);
+                onPlay(2 * match.matchNumber - camp.size, times);
               }}
               disabled={
-                !camp.matchesDTO[2 * match.matchNumber - camp.size - 1].available
+                !camp.matchesDTO[2 * match.matchNumber - camp.size - 1]
+                  .available
               }
             >
               ?

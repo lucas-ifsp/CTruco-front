@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  ChakraProvider,
-  List,
-  ListItem,
-  Checkbox,
-  Input,
-} from "@chakra-ui/react";
+import { ChakraProvider, Input } from "@chakra-ui/react";
 import TransferListFragment from "./TransferListFragment";
 import "./TournamentConfig.css";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
@@ -16,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 const TournamentConfig = () => {
   const [l1Bots, setL1Bots] = useState([]);
   const [l2Bots, setL2Bots] = useState([]);
-  const [times, setTimes] = useState(31);
-  const { championship, setChampionship } = useTournamentStatus();
+  const { championship, setChampionship, setFinalMatchTimes, times, setTimes } =
+    useTournamentStatus();
   const fetchBotNames = useGetBotNames();
   const createTournament = useCreateTournament();
   const navigate = useNavigate();
@@ -33,7 +27,7 @@ const TournamentConfig = () => {
 
   const handleLoading = () => {
     if (championship) {
-      navigate("/tournament");
+      navigate("/tournament", {});
     }
     updateBotsList();
   };
@@ -58,6 +52,7 @@ const TournamentConfig = () => {
     let camp = await createTournament(bots, times);
     console.log(camp);
     setChampionship(camp);
+
     navigate("/tournament");
   };
 
@@ -80,16 +75,33 @@ const TournamentConfig = () => {
           ></TransferListFragment>
 
           <div id="lower-container">
-            <label htmlFor="nbr-simu">Número de simulações</label>
-
             <ChakraProvider>
+              <label htmlFor="nbr-simu">Número de simulações</label>
               <Input
                 type="number"
                 onChange={(e) => {
                   if (e.target.value > 5000) {
                     e.target.value = 5000;
                   }
+                  if (e.target.value <= 0) {
+                    e.target.value = 1;
+                  }
                   setTimes(e.target.value);
+                }}
+                id="nbr-simu"
+                name="nbr-simu"
+              />
+              <label htmlFor="nbr-simu">Final e de Terceiro Lugar</label>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  if (e.target.value > 5000) {
+                    e.target.value = 5000;
+                  }
+                  if (e.target.value <= 0) {
+                    e.target.value = 1;
+                  }
+                  setFinalMatchTimes(e.target.value);
                 }}
                 id="nbr-simu"
                 name="nbr-simu"

@@ -1,0 +1,8 @@
+.transfer-list-fragment {
+  display: block;
+  gap: 10px;
+}
+
+.list-limiter {
+  height: 500px;
+}

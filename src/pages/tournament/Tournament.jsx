@@ -12,19 +12,14 @@ import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 const Tournament = () => {
   const play = usePlayTournamentMatch();
   const navigate = useNavigate();
-  const { championship, setChampionship } = useTournamentStatus();
+  const { championship, setChampionship, times, finalMatchTimes } =
+    useTournamentStatus();
   const { onOpen, isOpen, onClose } = useDisclosure();
 
-  const playCampMatch = async (matchNumber) => {
-    let camp = await play(championship.uuid, matchNumber);
+  const playCampMatch = async (matchNumber, times) => {
+    let camp = await play(championship.uuid, matchNumber, times);
     setChampionship(camp);
   };
-
-  useEffect(() => {
-    if (!championship) {
-      navigate("/tournament/config");
-    }
-  }, []);
 
   useEffect(() => {
     if (!championship) {
@@ -48,7 +43,9 @@ const Tournament = () => {
         </button>
         <div className="tournament-grid mt-4 mb-3">
           <div className="alert alert-info info-simulacoes" role="alert">
-            Simulações por Partida: {championship.times}
+            <p style={{ margin: "0px" }}>Número de Simulações:</p>
+            <p style={{ margin: "0px" }}>Por partida - {championship.times}</p>
+            <p style={{ margin: "0px" }}>Final - {finalMatchTimes}</p>
           </div>
 
           {championship.matchesDTO.map((match) => {
@@ -59,6 +56,7 @@ const Tournament = () => {
                 match={match}
                 allMatches={championship.matchesDTO}
                 camp={championship}
+                times={times}
                 onPlay={playCampMatch}
               />
             );
@@ -72,7 +70,7 @@ const Tournament = () => {
                   style={{ width: "100px" }}
                   onClick={() => {
                     onOpen();
-                    playCampMatch(championship.size - 1);
+                    playCampMatch(championship.size - 1, finalMatchTimes);
                   }}
                   disabled={
                     !championship.matchesDTO[championship.size - 2].available

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ChakraProvider,
   List,
@@ -6,6 +6,7 @@ import {
   Checkbox,
   Input,
 } from "@chakra-ui/react";
+import "./TransferListFragment.css";
 
 const TransferListFragment = ({
   content,
@@ -16,6 +17,11 @@ const TransferListFragment = ({
   const [visibleContent, setVisibleContent] = useState(content);
   const [selectedToTransfer, setSelectedToTransfer] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
+
+  useEffect(() => {
+    setVisibleContent(content);
+  }, [content]);
+
   const handleTransfer = () => {
     setTransferedContent(selectedToTransfer.sort());
     removeTranferedBotsFromContent();
@@ -74,7 +80,7 @@ const TransferListFragment = ({
           <Input
             className="bot-filter"
             onChange={(e) => handleInputChange(e.target)}
-            placeholder="Buscar bot1"
+            placeholder="Buscar bot"
           ></Input>
           <button
             className="btn btn-dark select-all"
