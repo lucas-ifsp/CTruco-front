@@ -36,7 +36,7 @@ const Match = ({ match, onPlay, camp, times }) => {
         <>
           <div className={"match-player m" + match.matchNumber + " p1"}>
             <button
-              className="btn btn-warning play-btn"
+              className="btn btn-dark play-btn"
               onClick={() => {
                 handleOpenModal("p1");
                 onPlay(2 * match.matchNumber - camp.size - 1, times);
@@ -73,7 +73,7 @@ const Match = ({ match, onPlay, camp, times }) => {
         <>
           <div className={"match-player m" + match.matchNumber + " p2"}>
             <button
-              className="btn btn-warning play-btn"
+              className="btn btn-dark play-btn"
               onClick={() => {
                 handleOpenModal("p2");
                 onPlay(2 * match.matchNumber - camp.size, times);

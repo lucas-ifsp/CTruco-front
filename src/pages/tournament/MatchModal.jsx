@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -10,24 +10,38 @@ import {
 } from "@chakra-ui/react";
 import "./MatchModal.css";
 
-const MatchModal = ({ match, isOpen, onClose }) => {
+const MatchModal = ({ isOpen, onClose, match }) => {
+  const { winnerName, p1Name, p1Score, p2Name, p2Score, timeToExecute } = match;
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        onClose();
-      }}
-      isCentered
-    >
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent maxH="220px" height={"90%"} maxW="500px" width="110%"> {/* Aqui você ajusta o tamanho */}
         <ModalHeader>
-          {!match.winnerName && "Simulando Partidas"}
-          {match.winnerName && "Resultado"}
+          {winnerName ? "Resultado" : "Simulando Partidas"}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {!match.winnerName && (
+          {winnerName ? (
+            <div id="result">
+              <p className="p1Name">{p1Name}</p>
+              <p
+                style={{ textAlign: "start" }}
+                className={p2Score > p1Score ? "loser " : "winner "}
+              >
+                {p1Score}
+              </p>
+              <p style={{ textAlign: "center" }}>X</p>
+              <p
+                style={{ textAlign: "end" }}
+                className={p1Score > p2Score ? "loser " : "winner "}
+              >
+                {p2Score}
+              </p>
+              <p className="p2Name">{p2Name}</p>
+              <p className="executionTime">tempo de execução: {timeToExecute}ms</p>
+            </div>
+          ) : (
             <div id="match-modal-spinner">
               <Spinner
                 thickness="4px"
@@ -37,25 +51,6 @@ const MatchModal = ({ match, isOpen, onClose }) => {
                 size="xl"
                 className="spinner"
               />
-            </div>
-          )}
-          {match.winnerName && (
-            <div id="result">
-              <p className="p1Name">{match.p1Name}</p>
-              <p
-                style={{ textAlign: "start" }}
-                className={match.p2Score > match.p1Score ? "loser " : "winner "}
-              >
-                {match.p1Score}
-              </p>
-              <p style={{ textAlign: "center" }}>X</p>
-              <p
-                style={{ textAlign: "end" }}
-                className={match.p1Score > match.p2Score ? "loser " : "winner "}
-              >
-                {match.p2Score}
-              </p>
-              <p className="p2Name">{match.p2Name}</p>
             </div>
           )}
         </ModalBody>

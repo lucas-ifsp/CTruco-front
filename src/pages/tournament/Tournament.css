@@ -40,6 +40,11 @@
   margin: 0px;
 }
 
+.match-player.winner button {
+  background-color: var(--tournament-match-btn-bg-color);
+  color: #fff;
+}
+
 .t-score {
   display: flex;
   justify-content: center;

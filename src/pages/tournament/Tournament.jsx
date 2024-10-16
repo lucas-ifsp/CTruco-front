@@ -14,6 +14,7 @@ const Tournament = () => {
   const navigate = useNavigate();
   const { championship, setChampionship, times, finalMatchTimes } =
     useTournamentStatus();
+  const { matchesDTO } = championship;
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const playCampMatch = async (matchNumber, times) => {
@@ -28,9 +29,7 @@ const Tournament = () => {
   }, [championship]);
 
   return (
-    <main
-      className={"tournament " + "s" + (championship.matchesDTO.length + 1)}
-    >
+    <main className={"tournament " + "s" + (matchesDTO.length + 1)}>
       <section>
         <button
           className="btn btn-danger"
