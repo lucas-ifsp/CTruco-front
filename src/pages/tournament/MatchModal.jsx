@@ -16,7 +16,9 @@ const MatchModal = ({ isOpen, onClose, match }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent maxH="220px" height={"90%"} maxW="500px" width="110%"> {/* Aqui você ajusta o tamanho */}
+      <ModalContent maxH="220px" height={"90%"} maxW="500px" width="110%">
+        {" "}
+        {/* Aqui você ajusta o tamanho */}
         <ModalHeader>
           {winnerName ? "Resultado" : "Simulando Partidas"}
         </ModalHeader>
@@ -27,19 +29,21 @@ const MatchModal = ({ isOpen, onClose, match }) => {
               <p className="p1Name">{p1Name}</p>
               <p
                 style={{ textAlign: "start" }}
-                className={p2Score > p1Score ? "loser " : "winner "}
+                className={(p2Score > p1Score ? "loser " : "winner ") + "score"}
               >
                 {p1Score}
               </p>
               <p style={{ textAlign: "center" }}>X</p>
               <p
                 style={{ textAlign: "end" }}
-                className={p1Score > p2Score ? "loser " : "winner "}
+                className={(p1Score > p2Score ? "loser " : "winner ") + "score"}
               >
                 {p2Score}
               </p>
               <p className="p2Name">{p2Name}</p>
-              <p className="executionTime">tempo de execução: {timeToExecute}ms</p>
+              <p className="executionTime">
+                tempo de execução: {timeToExecute}ms
+              </p>
             </div>
           ) : (
             <div id="match-modal-spinner">

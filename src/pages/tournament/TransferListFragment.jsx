@@ -77,6 +77,7 @@ const TransferListFragment = ({
     <>
       <ChakraProvider>
         <div className="transfer-list-fragment">
+          <p>numero de bots: {content.length}</p>
           <Input
             className="bot-filter"
             onChange={(e) => handleInputChange(e.target)}

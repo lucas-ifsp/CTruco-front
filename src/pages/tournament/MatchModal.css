@@ -5,9 +5,10 @@
 }
 
 #result {
-  height: 100px;
+  height: 100%;
+  width: 100%;
   display: grid;
-  grid-row: inherit inherit;
+  grid-template-rows: auto auto;
   grid-template-columns: 150px auto 20px auto 150px;
   max-width: 100%;
   flex-direction: row;
@@ -15,6 +16,13 @@
   align-items: center;
   gap: 10px;
   font-size: 20px;
+}
+#result p {
+  margin: 0px;
+}
+
+#result .score {
+  font-size: 25px;
 }
 
 #result .p1Name {
@@ -27,4 +35,13 @@
 #result .executionTime {
   grid-row: 2;
   grid-column: 1/6;
+  align-self: center;
+}
+
+#match-modal-spinner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

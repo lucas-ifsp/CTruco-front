@@ -33,6 +33,11 @@ const TournamentConfig = () => {
   };
 
   useEffect(() => {
+    setTimes(31);
+    setFinalMatchTimes(31);
+  }, []);
+
+  useEffect(() => {
     handleLoading();
   }, [championship]);
 
