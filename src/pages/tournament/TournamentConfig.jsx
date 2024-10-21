@@ -36,10 +36,6 @@ const TournamentConfig = () => {
     setTimes(31);
     setFinalMatchTimes(31);
   }, []);
-<<<<<<< HEAD
-=======
-
->>>>>>> 982244c81c917e47ad199bec6ede4bce0f25fce9
   useEffect(() => {
     handleLoading();
   }, [championship]);
