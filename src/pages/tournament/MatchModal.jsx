@@ -44,6 +44,9 @@ const MatchModal = ({ isOpen, onClose, match }) => {
               <p className="executionTime">
                 tempo de execução: {timeToExecute}ms
               </p>
+              <p className="executionTime">
+                tempo de execução: {timeToExecute}ms
+              </p>
             </div>
           ) : (
             <div id="match-modal-spinner">
