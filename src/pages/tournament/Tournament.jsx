@@ -8,6 +8,8 @@ import useTournamentStatus from "../context/useTournamentStatus";
 import usePlayTournamentMatch from "./usePlayTournamentMatch";
 import { useNavigate } from "react-router-dom";
 import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
+import medalhaOuro from "../../assets/images/medals/gold_medal-removebg.png";
+import medalhaBronze from "../../assets/images/medals/bronze_medal-removebg.png";
 
 const Tournament = () => {
   const play = usePlayTournamentMatch();
@@ -29,7 +31,7 @@ const Tournament = () => {
   }, [championship]);
 
   return (
-    <main className={"tournament " + "s" + (matchesDTO.length + 1)}>
+    <main className={"tournament " + "s" + matchesDTO.length}>
       <section>
         <button
           className="btn btn-danger"
@@ -41,12 +43,6 @@ const Tournament = () => {
           Cancelar
         </button>
         <div className="tournament-grid mt-4 mb-3">
-          <div className="alert alert-info info-simulacoes" role="alert">
-            <p style={{ margin: "0px" }}>Número de Simulações:</p>
-            <p style={{ margin: "0px" }}>Por partida - {championship.times}</p>
-            <p style={{ margin: "0px" }}>Final - {finalMatchTimes}</p>
-          </div>
-
           {championship.matchesDTO.map((match) => {
             return (
               <Match
@@ -61,12 +57,12 @@ const Tournament = () => {
             );
           })}
 
+          <p id="tournament-winner-label">Final</p>
           <div className="match-player winner">
             {!championship.winnerName && (
               <>
                 <button
-                  className="btn btn-warning"
-                  style={{ width: "100px" }}
+                  className="btn btn-dark play-btn"
                   onClick={() => {
                     onOpen();
                     playCampMatch(championship.size - 1, finalMatchTimes);
@@ -75,7 +71,7 @@ const Tournament = () => {
                     !championship.matchesDTO[championship.size - 2].available
                   }
                 >
-                  ?
+                  Jogar
                 </button>
                 <ChakraProvider>
                   <MatchModal
@@ -86,7 +82,55 @@ const Tournament = () => {
                 </ChakraProvider>
               </>
             )}
-            {championship.winnerName && <p>{championship.winnerName}</p>}
+            {championship.winnerName && (
+              <div className="winner-info">
+                <img
+                  src={medalhaOuro}
+                  alt="gold medal for the tournament winner"
+                  width="20px"
+                />
+                <p>{championship.winnerName}</p>
+              </div>
+            )}
+          </div>
+
+          <p id="third-place-label">Terceiro Lugar</p>
+          <div className="match-player third-place">
+            {!championship.matchesDTO[championship.size - 1].winnerName && (
+              <>
+                <button
+                  className="btn btn-dark play-btn"
+                  onClick={() => {
+                    onOpen();
+                    playCampMatch(championship.size, finalMatchTimes);
+                  }}
+                  disabled={
+                    !championship.matchesDTO[championship.size - 1].available
+                  }
+                >
+                  Jogar
+                </button>
+                <ChakraProvider>
+                  <MatchModal
+                    isOpen={isOpen}
+                    match={championship.matchesDTO[championship.size - 1]}
+                    onClose={onClose}
+                  ></MatchModal>
+                </ChakraProvider>
+              </>
+            )}
+            {championship.matchesDTO[championship.size - 1].winnerName && (
+              <div className="winner-info">
+                <img
+                  src={medalhaBronze}
+                  alt="gold medal for the tournament winner"
+                  width="20px"
+                />
+                <p>
+                  {championship.matchesDTO[championship.size - 1].winnerName}
+                </p>
+              </div>
+            )}
           </div>
 
           {championship.winnerName && (

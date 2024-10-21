@@ -12,29 +12,35 @@ const Match = ({ match, onPlay, camp, times }) => {
     onOpen();
   };
 
+  const setPlayerState = (selfScore, opponentScore) => {
+    if (selfScore === 0 && opponentScore === 0) {
+      return "";
+    } else if (selfScore > opponentScore) {
+      return "winner";
+    } else {
+      return "loser";
+    }
+  };
   return (
     <>
       {match.p1Name && (
         <div className={"match-player m" + match.matchNumber + " p1"}>
-          <p className="p1">{match.p1Name || "?"}</p>
           <div className={"t-score m" + match.matchNumber}>
-            <p
-              className={
-                match.p1Score === 0 && match.p2Score === 0
-                  ? ""
-                  : match.p1Score > match.p2Score
-                  ? "winner"
-                  : "loser"
-              }
-            >
+            <p className={setPlayerState(match.p1Score, match.p2Score)}>
               {match.p1Score === 0 ? "" : match.p1Score}
             </p>
           </div>
+          <p
+            style={match.p1Name.length > 15 ? { fontSize: "9px" } : {}}
+            className="p1"
+          >
+            {match.p1Name || "?"}
+          </p>
         </div>
       )}
       {!match.p1Name && (
         <>
-          <div className={"match-player m" + match.matchNumber + " p1"}>
+          <div className={"match-play-btn m" + match.matchNumber + " p1"}>
             <button
               className="btn btn-dark play-btn"
               onClick={() => {
@@ -46,7 +52,7 @@ const Match = ({ match, onPlay, camp, times }) => {
                   .available
               }
             >
-              ?
+              Jogar
             </button>
           </div>
         </>
@@ -54,24 +60,21 @@ const Match = ({ match, onPlay, camp, times }) => {
       {match.p2Name && (
         <div className={"match-player m" + match.matchNumber + " p2"}>
           <div className={"t-score m" + match.matchNumber}>
-            <p
-              className={
-                match.p1Score === 0 && match.p2Score === 0
-                  ? ""
-                  : match.p2Score > match.p1Score
-                  ? "winner"
-                  : "loser"
-              }
-            >
+            <p className={setPlayerState(match.p2Score, match.p1Score)}>
               {match.p2Score === 0 ? "" : match.p2Score}
             </p>
           </div>
-          <p className="p2">{match.p2Name || "?"}</p>
+          <p
+            style={match.p2Name.length > 15 ? { fontSize: "9px" } : {}}
+            className="p2"
+          >
+            {match.p2Name}
+          </p>
         </div>
       )}
       {!match.p2Name && (
         <>
-          <div className={"match-player m" + match.matchNumber + " p2"}>
+          <div className={"match-play-btn m" + match.matchNumber + " p2"}>
             <button
               className="btn btn-dark play-btn"
               onClick={() => {
@@ -83,7 +86,7 @@ const Match = ({ match, onPlay, camp, times }) => {
                   .available
               }
             >
-              ?
+              Jogar
             </button>
           </div>
         </>

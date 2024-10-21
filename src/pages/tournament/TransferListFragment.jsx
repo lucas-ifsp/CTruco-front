@@ -16,11 +16,20 @@ const TransferListFragment = ({
 }) => {
   const [visibleContent, setVisibleContent] = useState(content);
   const [selectedToTransfer, setSelectedToTransfer] = useState([]);
+  const [inputContent, setInputContent] = useState("");
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   useEffect(() => {
     setVisibleContent(content);
   }, [content]);
+
+  useEffect(() => {
+    if (inputContent === "") {
+      setVisibleContent(content);
+    } else {
+      handleInputChange(inputContent);
+    }
+  }, [inputContent]);
 
   const handleTransfer = () => {
     setTransferedContent(selectedToTransfer.sort());
@@ -31,8 +40,7 @@ const TransferListFragment = ({
     }
   };
 
-  const handleInputChange = (target) => {
-    const name = target.value;
+  const handleInputChange = (name) => {
     const newBotsList = content.filter((botName) =>
       botName.toLowerCase().includes(name.toLowerCase())
     );
@@ -77,12 +85,16 @@ const TransferListFragment = ({
     <>
       <ChakraProvider>
         <div className="transfer-list-fragment">
+          <p style={{ margin: "0px" }}>numero de bots {content.length}</p>
           <Input
             className="bot-filter"
-            onChange={(e) => handleInputChange(e.target)}
+            onChange={(e) => {
+              setInputContent(e.target.value);
+            }}
             placeholder="Buscar bot"
           ></Input>
           <button
+            type="button"
             className="btn btn-dark select-all"
             onClick={(e) => {
               e.preventDefault();
@@ -111,6 +123,7 @@ const TransferListFragment = ({
           onClick={(e) => {
             e.preventDefault();
             handleTransfer();
+            setInputContent("");
           }}
         >
           <i className={"bi bi-arrow-" + transferButtonArrowDirection}></i>
