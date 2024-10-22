@@ -85,7 +85,7 @@ const TransferListFragment = ({
     <>
       <ChakraProvider>
         <div className="transfer-list-fragment">
-          <p style={{ margin: "0px" }}>numero de bots {content.length}</p>
+          <p style={{ margin: "0px" }}>Número de bots: {content.length}</p>
           <Input
             className="bot-filter"
             onChange={(e) => {

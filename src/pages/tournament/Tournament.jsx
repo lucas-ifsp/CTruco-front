@@ -42,7 +42,7 @@ const Tournament = () => {
         >
           Cancelar
         </button>
-        <div className="tournament-grid mt-4 mb-3">
+        <div className="tournament-grid mb-3">
           {championship.matchesDTO.map((match) => {
             return (
               <Match
@@ -58,31 +58,31 @@ const Tournament = () => {
           })}
 
           <p id="tournament-winner-label">Final</p>
-          <div className="match-player winner">
-            {!championship.winnerName && (
-              <>
-                <button
-                  className="btn btn-dark play-btn"
-                  onClick={() => {
-                    onOpen();
-                    playCampMatch(championship.size - 1, finalMatchTimes);
-                  }}
-                  disabled={
-                    !championship.matchesDTO[championship.size - 2].available
-                  }
-                >
-                  Jogar
-                </button>
-                <ChakraProvider>
-                  <MatchModal
-                    isOpen={isOpen}
-                    match={championship.matchesDTO[championship.size - 2]}
-                    onClose={onClose}
-                  ></MatchModal>
-                </ChakraProvider>
-              </>
-            )}
-            {championship.winnerName && (
+          {!championship.winnerName && (
+            <div className="match-play-btn winner">
+              <button
+                className="btn btn-dark play-btn"
+                onClick={() => {
+                  onOpen();
+                  playCampMatch(championship.size - 1, finalMatchTimes);
+                }}
+                disabled={
+                  !championship.matchesDTO[championship.size - 2].available
+                }
+              >
+                Jogar
+              </button>
+              <ChakraProvider>
+                <MatchModal
+                  isOpen={isOpen}
+                  match={championship.matchesDTO[championship.size - 2]}
+                  onClose={onClose}
+                ></MatchModal>
+              </ChakraProvider>
+            </div>
+          )}
+          {championship.winnerName && (
+            <div className="match-player winner">
               <div className="winner-info">
                 <img
                   src={medalhaOuro}
@@ -91,11 +91,11 @@ const Tournament = () => {
                 />
                 <p>{championship.winnerName}</p>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <p id="third-place-label">Terceiro Lugar</p>
-          <div className="match-player third-place">
+          <div className="match-play-btn third-place">
             {!championship.matchesDTO[championship.size - 1].winnerName && (
               <>
                 <button
