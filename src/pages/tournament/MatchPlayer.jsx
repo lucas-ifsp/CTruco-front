@@ -36,7 +36,7 @@ const MatchPlayer = ({ isP1, match, camp }) => {
     if (shouldBeScoreOnRight()) {
       return (
         <div className={"match-player m" + match.matchNumber + " p2"}>
-          <p style={match.p2Name.length > 15 ? { fontSize: "9px" } : {}}>
+          <p style={match.p2Name.length >= 14 ? { fontSize: "9px" } : {}}>
             {match.p2Name}
           </p>
           <div className={"t-score m" + match.matchNumber}>
@@ -54,7 +54,7 @@ const MatchPlayer = ({ isP1, match, camp }) => {
             {match.p2Score === 0 ? "" : match.p2Score}
           </p>
         </div>
-        <p style={match.p2Name.length > 15 ? { fontSize: "9px" } : {}}>
+        <p style={match.p2Name.length >= 14 ? { fontSize: "9px" } : {}}>
           {match.p2Name}
         </p>
       </div>

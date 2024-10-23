@@ -1,5 +1,6 @@
-import { axiosPrivate } from "../../api/axios";
+import useAxiosPrivate from "../../hooks/api/useAxiosPrivate";
 const useGetRank = () => {
+  const axiosPrivate = useAxiosPrivate();
   const getFromDB = async () => {
     try {
       const url = `/api/v1/bots/rank`;

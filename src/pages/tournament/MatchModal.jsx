@@ -4,25 +4,28 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
   Spinner,
 } from "@chakra-ui/react";
 import "./MatchModal.css";
 
 const MatchModal = ({ isOpen, onClose, match }) => {
+  if (!match) return <Modal></Modal>;
   const { winnerName, p1Name, p1Score, p2Name, p2Score, timeToExecute } = match;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal
+      isOpen={isOpen}
+      onClose={winnerName ? onClose : null} // Evita fechar durante a simulação
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent maxH="220px" height={"90%"} maxW="600px" width="100%">
-        {" "}
-        {/* Aqui você ajusta o tamanho */}
         <ModalHeader>
           {winnerName ? "Resultado" : "Simulando Partidas"}
         </ModalHeader>
-        <ModalCloseButton />
+        {winnerName && <ModalCloseButton />}{" "}
         <ModalBody>
           {winnerName ? (
             <div id="result">

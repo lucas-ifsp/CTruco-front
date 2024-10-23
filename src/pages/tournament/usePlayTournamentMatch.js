@@ -1,5 +1,6 @@
-import { axiosPrivate } from "../../api/axios";
+import useAxiosPrivate from "../../hooks/api/useAxiosPrivate";
 const usePlayTournamentMatch = () => {
+  const axiosPrivate = useAxiosPrivate();
   const play = async (tournamentId, matchNumber, times) => {
     try {
       const url = `/api/v1/tournament/${tournamentId}/match/${matchNumber}/${times}`;
