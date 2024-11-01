@@ -1,0 +1,23 @@
+.app-tournament {
+  margin: 0px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: var(--header-height) 1fr var(--footer-height);
+  grid-template-areas:
+    "header header"
+    "menu-area mat"
+    "footer footer";
+  height: 100vh;
+}
+
+header.header {
+  grid-area: header;
+}
+
+main.mat-area {
+  grid-area: mat;
+}
+
+footer.footer {
+  grid-area: footer;
+}
