@@ -13,6 +13,14 @@
   grid-column: 3/6;
 }
 
+.s8 #tournament-title {
+  grid-row: 1;
+  grid-column: 3/6;
+  font-size: 24px;
+  margin: 0px;
+  text-align: center;
+}
+
 .s8 .match-player.winner {
   padding: 10px;
   width: fit-content;

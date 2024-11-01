@@ -10,8 +10,14 @@ import { useNavigate } from "react-router-dom";
 const TournamentConfig = () => {
   const [l1Bots, setL1Bots] = useState([]);
   const [l2Bots, setL2Bots] = useState([]);
-  const { championship, setChampionship, setFinalMatchTimes, times, setTimes } =
-    useTournamentStatus();
+  const {
+    championship,
+    setChampionship,
+    setFinalMatchTimes,
+    times,
+    setTimes,
+    setTitle,
+  } = useTournamentStatus();
   const fetchBotNames = useGetBotNames();
   const createTournament = useCreateTournament();
   const navigate = useNavigate();
@@ -80,6 +86,15 @@ const TournamentConfig = () => {
 
           <div id="lower-container">
             <ChakraProvider>
+              <label htmlFor="input-tournament-title">Título do torneio</label>
+              <Input
+                type="text"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                id="input-tournament-title"
+                name="input-tournament-title"
+              />
               <label htmlFor="nbr-simu">Número de simulações</label>
               <Input
                 type="number"
@@ -107,8 +122,8 @@ const TournamentConfig = () => {
                   }
                   setFinalMatchTimes(e.target.value);
                 }}
-                id="nbr-simu"
-                name="nbr-simu"
+                id="nbr-simu-special-matches"
+                name="nbr-simu-special-matches"
               />
             </ChakraProvider>
 

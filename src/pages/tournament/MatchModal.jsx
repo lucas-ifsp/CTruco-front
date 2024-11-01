@@ -17,7 +17,9 @@ const MatchModal = ({ isOpen, onClose, match }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onClose={winnerName ? onClose : null} // Evita fechar durante a simulação
+      // onClose={winnerName ? onClose : null} // Evita fechar durante a simulação
+      closeOnOverlayClick={winnerName ? true : false}
+      onClose={onClose}
       isCentered
     >
       <ModalOverlay />
@@ -25,7 +27,8 @@ const MatchModal = ({ isOpen, onClose, match }) => {
         <ModalHeader>
           {winnerName ? "Resultado" : "Simulando Partidas"}
         </ModalHeader>
-        {winnerName && <ModalCloseButton />}{" "}
+        {/* {winnerName && <ModalCloseButton />}{" "} */}
+        <ModalCloseButton />
         <ModalBody>
           {winnerName ? (
             <div id="result">

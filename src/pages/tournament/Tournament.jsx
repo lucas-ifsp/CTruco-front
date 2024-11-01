@@ -16,7 +16,7 @@ const Tournament = () => {
   const play = usePlayTournamentMatch();
   const getTournament = useGetTournament();
   const navigate = useNavigate();
-  const { championship, setChampionship, times, finalMatchTimes } =
+  const { title, championship, setChampionship, times, finalMatchTimes } =
     useTournamentStatus();
   const { matchesDTO } = championship;
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -46,9 +46,9 @@ const Tournament = () => {
 
   useEffect(() => {
     if (isSimulating) {
-      let intervalTime = 10000;
+      let intervalTime = 3000;
       if (times > 1000) {
-        intervalTime = 15000;
+        intervalTime = 8000;
       }
       const interval = setInterval(() => {
         getTournamentResult();
@@ -78,6 +78,7 @@ const Tournament = () => {
             Cancelar
           </button>
           <div className="tournament-grid mb-3">
+            <p id="tournament-title">{title}</p>
             {championship.matchesDTO.map((match) => {
               return (
                 <Match key={match.uuid} match={match} onPlay={playCampMatch} />

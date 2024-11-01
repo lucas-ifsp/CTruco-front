@@ -39,33 +39,30 @@ const Match = ({ match, onPlay }) => {
           setModalPlayer={setModalPlayer}
         />
       )}
-
-      <ChakraProvider>
-        {modalPlayer === "p1" && (
-          <MatchModal
-            isOpen={isOpen}
-            //puxa a partida que define o p1
-            match={
-              championship.matchesDTO[
-                2 * match.matchNumber - championship.size - 2
-              ]
-            }
-            onClose={onClose}
-          />
-        )}
-        {modalPlayer === "p2" && (
-          <MatchModal
-            isOpen={isOpen}
-            //puxa a partida que define o p2
-            match={
-              championship.matchesDTO[
-                2 * match.matchNumber - championship.size - 1
-              ]
-            }
-            onClose={onClose}
-          />
-        )}
-      </ChakraProvider>
+      {modalPlayer === "p1" && (
+        <MatchModal
+          isOpen={isOpen}
+          //puxa a partida que define o p1
+          match={
+            championship.matchesDTO[
+              2 * match.matchNumber - championship.size - 2
+            ]
+          }
+          onClose={onClose}
+        />
+      )}
+      {modalPlayer === "p2" && (
+        <MatchModal
+          isOpen={isOpen}
+          //puxa a partida que define o p2
+          match={
+            championship.matchesDTO[
+              2 * match.matchNumber - championship.size - 1
+            ]
+          }
+          onClose={onClose}
+        />
+      )}
     </>
   );
 };

@@ -15,9 +15,9 @@ const MatchPlayButton = ({
   const { championship, setChampionship } = useTournamentStatus();
   useEffect(() => {
     if (isSimulating) {
-      let intervalTime = 10000;
+      let intervalTime = 3000;
       if (times > 1000) {
-        intervalTime = 15000;
+        intervalTime = 8000;
       }
       const interval = setInterval(() => {
         getTournamentResult();
@@ -32,9 +32,8 @@ const MatchPlayButton = ({
   };
 
   const getTournamentResult = async () => {
+    console.log(championship.uuid);
     let newTournament = await getTournament(championship.uuid);
-    console.log(matchIndex);
-    console.log(newTournament.matchesDTO[matchIndex].winnerName);
     if (newTournament.matchesDTO[matchIndex].winnerName !== null) {
       setChampionship(newTournament);
       setIsSimulating(false);
