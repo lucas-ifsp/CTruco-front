@@ -13,7 +13,6 @@
   gap: 10px;
   background-color: var(--mat-bg-color);
   border-radius: 20px;
-  width: fit-content;
 }
 
 .tournament section > button {

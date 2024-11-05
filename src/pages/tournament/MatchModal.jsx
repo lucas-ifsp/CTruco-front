@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import "./MatchModal.css";
 
-const MatchModal = ({ isOpen, onClose, match }) => {
+const MatchModal = ({ getTournamentResult, isOpen, onClose, match }) => {
   if (!match) return <Modal></Modal>;
   const { winnerName, p1Name, p1Score, p2Name, p2Score, timeToExecute } = match;
 

@@ -8,11 +8,10 @@ const MatchPlayButton = ({
   times,
   onOpen,
   setModalPlayer,
+  getTournamentResult,
 }) => {
   const [isSimulating, setIsSimulating] = useState(false);
-  const [matchIndex, setMatchIndex] = useState(0);
-  const getTournament = useGetTournament();
-  const { championship, setChampionship } = useTournamentStatus();
+  const { championship } = useTournamentStatus();
   useEffect(() => {
     if (isSimulating) {
       let intervalTime = 3000;
@@ -29,15 +28,6 @@ const MatchPlayButton = ({
   const handleOpenModal = (player) => {
     setModalPlayer(player);
     onOpen();
-  };
-
-  const getTournamentResult = async () => {
-    console.log(championship.uuid);
-    let newTournament = await getTournament(championship.uuid);
-    if (newTournament.matchesDTO[matchIndex].winnerName !== null) {
-      setChampionship(newTournament);
-      setIsSimulating(false);
-    }
   };
   const shouldBeDisable = (isP1) => {
     if (isP1)
@@ -58,7 +48,6 @@ const MatchPlayButton = ({
             className="btn btn-dark play-btn"
             onClick={() => {
               handleOpenModal("p2");
-              setMatchIndex(2 * match.matchNumber - championship.size - 1);
               console.log(2 * match.matchNumber - championship.size - 1);
               setIsSimulating(true);
               onPlay(2 * match.matchNumber - championship.size, times);
@@ -79,7 +68,6 @@ const MatchPlayButton = ({
           className="btn btn-dark play-btn"
           onClick={() => {
             handleOpenModal("p1");
-            setMatchIndex(2 * match.matchNumber - championship.size - 2);
             console.log(2 * match.matchNumber - championship.size - 2);
             setIsSimulating(true);
             onPlay(2 * match.matchNumber - championship.size - 1, times);

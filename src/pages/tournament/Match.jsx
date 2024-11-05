@@ -6,7 +6,7 @@ import MatchPlayButton from "./MatchPlayButton";
 import useTournamentStatus from "../context/useTournamentStatus";
 import "./Match.css";
 
-const Match = ({ match, onPlay }) => {
+const Match = ({ getTournamentResult, match, onPlay }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalPlayer, setModalPlayer] = useState(null);
   const { championship, setChampionship, times } = useTournamentStatus();
@@ -24,6 +24,7 @@ const Match = ({ match, onPlay }) => {
           onOpen={onOpen}
           times={times}
           setModalPlayer={setModalPlayer}
+          getTournamentResult={getTournamentResult}
         />
       )}
       {match.p2Name && (

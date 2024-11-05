@@ -41,6 +41,7 @@ const TournamentConfig = () => {
   useEffect(() => {
     setTimes(31);
     setFinalMatchTimes(31);
+    setTitle("");
   }, []);
   useEffect(() => {
     handleLoading();

@@ -36,14 +36,6 @@ const EvaluateBot = () => {
   };
 
   const updateEvaluateResults = async (botName) => {
-    // public record EvaluateResultsDto(long computingTime,
-    //                                  long numberOfGames,
-    //                                  long evaluatedBotWins,
-    //                                  double winRate,
-    //                                  double percentile,
-    //                                  long matchWins
-    //                                  )
-    //{}
     setIsEvaluating(true);
     const response = await evaluateService(botName);
     setIsEvaluating(false);

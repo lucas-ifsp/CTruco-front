@@ -42,17 +42,25 @@ const Tournament = () => {
       setChampionship(newTournament);
       setIsSimulating(false);
     }
+    setTimeout(async () => {
+      console.log("DNV");
+      let updatedTournament = await getTournament(championship.uuid);
+      if (updatedTournament.matchesDTO[matchIndex].winnerName !== null) {
+        setChampionship(updatedTournament);
+        setIsSimulating(false);
+      }
+    }, 2000);
   };
 
   useEffect(() => {
     let intervalTime = 3000;
+
     if (isSimulating) {
-      if (times > 1000) {
-        intervalTime = 8000;
-      }
+      intervalTime = 8000;
     } else {
       intervalTime = 15000;
     }
+
     const interval = setInterval(() => {
       getTournamentResult();
     }, intervalTime);
@@ -83,7 +91,12 @@ const Tournament = () => {
             <p id="tournament-title">{title}</p>
             {championship.matchesDTO.map((match) => {
               return (
-                <Match key={match.uuid} match={match} onPlay={playCampMatch} />
+                <Match
+                  key={match.uuid}
+                  match={match}
+                  onPlay={playCampMatch}
+                  getTournamentResult={getTournamentResult}
+                />
               );
             })}
 
