@@ -45,17 +45,19 @@ const Tournament = () => {
   };
 
   useEffect(() => {
+    let intervalTime = 3000;
     if (isSimulating) {
-      let intervalTime = 3000;
       if (times > 1000) {
         intervalTime = 8000;
       }
-      const interval = setInterval(() => {
-        getTournamentResult();
-      }, intervalTime);
-
-      return () => clearInterval(interval);
+    } else {
+      intervalTime = 15000;
     }
+    const interval = setInterval(() => {
+      getTournamentResult();
+    }, intervalTime);
+
+    return () => clearInterval(interval);
   }, [isSimulating]);
 
   useEffect(() => {

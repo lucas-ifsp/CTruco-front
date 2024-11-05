@@ -21,7 +21,7 @@
 }
 
 .s16 #tournament-title {
-  grid-row: 2;
+  grid-row: 1;
   grid-column: 4/7;
   font-size: 24px;
   margin: 0px;
