@@ -12,7 +12,6 @@ const RankBots = () => {
   const getFromDB = useGetRank();
 
   const updateRank = async () => {
-    await rankAvailableOnes();
     let payload = await getFromDB();
     // console.log(payload);
     setNumberOfGames(payload.numberOfGames);
@@ -26,7 +25,7 @@ const RankBots = () => {
 
     const interval = setInterval(() => {
       updateRank();
-    }, 10000);
+    }, 90000);
 
     return () => clearInterval(interval);
   }, []);
@@ -47,15 +46,10 @@ const RankBots = () => {
         {rank.length === 0 && (
           <div className="mb-3 mt-4 spinner-container">
             <ChakraProvider>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="black"
-                size="xl"
-                className="spinner"
-              />
-              <p style={{ margin: "0px" }}>Isso pode demorar um pouco...</p>
+              <p style={{ margin: "0px" }}>
+                Ops! O ranking de bots não está disponível no momento.
+              </p>
+              <p style={{ margin: "0px" }}>Tente mais tarde.</p>
             </ChakraProvider>
           </div>
         )}
