@@ -24,10 +24,11 @@ const Tournament = () => {
     finalMatchTimes,
     setIsSimulating,
     isSimulating,
+    matchIndex,
+    setMatchIndex,
   } = useTournamentStatus();
   const { matchesDTO } = championship;
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const [matchIndex, setMatchIndex] = useState(0);
 
   const playCampMatch = async (matchNumber, times) => {
     let response = await play(championship.uuid, matchNumber, times);
@@ -44,15 +45,16 @@ const Tournament = () => {
 
   const getTournamentResult = async () => {
     let newTournament = await getTournament(championship.uuid);
-    if (newTournament.matchesDTO[matchIndex].winnerName !== null) {
+    if (newTournament.matchesDTO[matchIndex].winnerName !== "") {
       setChampionship(newTournament);
       setIsSimulating(false);
     }
     setTimeout(async () => {
       console.log("DNV");
       let updatedTournament = await getTournament(championship.uuid);
-      if (updatedTournament.matchesDTO[matchIndex].winnerName !== null) {
+      if (updatedTournament.matchesDTO[matchIndex].winnerName !== "") {
         setChampionship(updatedTournament);
+        setIsSimulating(false);
       }
     }, 2000);
   };

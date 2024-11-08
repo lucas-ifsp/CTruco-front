@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import useGetTournament from "./useGetTournament";
 import useTournamentStatus from "../context/useTournamentStatus";
 const MatchPlayButton = ({
   isP1,
@@ -9,7 +8,8 @@ const MatchPlayButton = ({
   onOpen,
   setModalPlayer,
 }) => {
-  const { championship, setIsSimulating } = useTournamentStatus();
+  const { championship, setIsSimulating, setMatchIndex } =
+    useTournamentStatus();
   const handleOpenModal = (player) => {
     setModalPlayer(player);
     onOpen();
@@ -33,6 +33,7 @@ const MatchPlayButton = ({
             className="btn btn-dark play-btn"
             onClick={() => {
               handleOpenModal("p2");
+              setMatchIndex(2 * match.matchNumber - championship.size - 1);
               console.log(2 * match.matchNumber - championship.size - 1);
               setIsSimulating(true);
               onPlay(2 * match.matchNumber - championship.size, times);
@@ -53,6 +54,7 @@ const MatchPlayButton = ({
           className="btn btn-dark play-btn"
           onClick={() => {
             handleOpenModal("p1");
+            setMatchIndex(2 * match.matchNumber - championship.size - 2);
             console.log(2 * match.matchNumber - championship.size - 2);
             setIsSimulating(true);
             onPlay(2 * match.matchNumber - championship.size - 1, times);

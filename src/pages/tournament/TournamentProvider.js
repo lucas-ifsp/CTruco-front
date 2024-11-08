@@ -6,6 +6,7 @@ export const TournamentProvider = ({ children }) => {
   const [championship, setChampionship] = useState("");
   const [finalMatchTimes, setFinalMatchTimes] = useState(31);
   const [times, setTimes] = useState(31);
+  const [matchIndex, setMatchIndex] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
 
   return (
@@ -21,6 +22,8 @@ export const TournamentProvider = ({ children }) => {
         isSimulating,
         setIsSimulating,
         setTimes,
+        matchIndex,
+        setMatchIndex,
       }}
     >
       {children}
