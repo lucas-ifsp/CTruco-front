@@ -5,7 +5,6 @@ const useGetTournament = () => {
     try {
       const url = `/api/v1/tournament/${tournamentId}`;
       const response = await axiosPrivate.get(url);
-      console.log("PEGANDO");
       console.log(response);
       return response.data.payload;
     } catch (error) {

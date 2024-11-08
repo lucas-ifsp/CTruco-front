@@ -16,12 +16,18 @@ const Tournament = () => {
   const play = usePlayTournamentMatch();
   const getTournament = useGetTournament();
   const navigate = useNavigate();
-  const { title, championship, setChampionship, times, finalMatchTimes } =
-    useTournamentStatus();
+  const {
+    title,
+    championship,
+    setChampionship,
+    times,
+    finalMatchTimes,
+    setIsSimulating,
+    isSimulating,
+  } = useTournamentStatus();
   const { matchesDTO } = championship;
   const { onOpen, isOpen, onClose } = useDisclosure();
   const [matchIndex, setMatchIndex] = useState(0);
-  const [isSimulating, setIsSimulating] = useState(false);
 
   const playCampMatch = async (matchNumber, times) => {
     let response = await play(championship.uuid, matchNumber, times);
@@ -47,16 +53,16 @@ const Tournament = () => {
       let updatedTournament = await getTournament(championship.uuid);
       if (updatedTournament.matchesDTO[matchIndex].winnerName !== null) {
         setChampionship(updatedTournament);
-        setIsSimulating(false);
       }
     }, 2000);
   };
 
   useEffect(() => {
-    let intervalTime = 3000;
+    console.log(isSimulating);
+    let intervalTime = 1000;
 
     if (isSimulating) {
-      intervalTime = 8000;
+      intervalTime = 3000;
     } else {
       intervalTime = 15000;
     }

@@ -8,23 +8,8 @@ const MatchPlayButton = ({
   times,
   onOpen,
   setModalPlayer,
-  getTournamentResult,
 }) => {
-  const [isSimulating, setIsSimulating] = useState(false);
-  const { championship } = useTournamentStatus();
-  useEffect(() => {
-    if (isSimulating) {
-      let intervalTime = 3000;
-      if (times > 1000) {
-        intervalTime = 8000;
-      }
-      const interval = setInterval(() => {
-        getTournamentResult();
-      }, intervalTime);
-
-      return () => clearInterval(interval);
-    }
-  }, [isSimulating]);
+  const { championship, setIsSimulating } = useTournamentStatus();
   const handleOpenModal = (player) => {
     setModalPlayer(player);
     onOpen();
