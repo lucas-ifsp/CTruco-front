@@ -1,13 +1,9 @@
 import { React, useEffect, useState } from "react";
-import Header from "../../../components/templates/Header";
-import Menu from "../../../components/templates/Menu";
-import Footer from "../../../components/templates/Footer";
 import RemoteBotsTable from "./RemoteBotsTable";
-import { Button, Input, ChakraProvider, useDisclosure } from "@chakra-ui/react";
-import useGetRemoteBotsByUserId from "../../../hooks/api/useGetRemoteBotsByUser";
-import useAuth from "../../../hooks/context/useAuth";
+import { Input, ChakraProvider, useDisclosure } from "@chakra-ui/react";
+import useGetRemoteBotsByUserId from "../../hooks/api/useGetRemoteBotsByUser";
+import useAuth from "../../hooks/context/useAuth";
 import "./RemoteBotsMenu.css";
-import "../Home.css";
 import AddRemoteFormModal from "./add/AddRemoteFormModal";
 
 const RemoteBotsMenu = () => {
@@ -43,7 +39,7 @@ const RemoteBotsMenu = () => {
         <div className="mb-3 mt-4 section-content">
           <ChakraProvider>
             <label id="bots-filter-label" htmlFor="bots-filter">
-              Buscar pelo nome
+              Busque pelo nome
             </label>
             <div className="crud-remote-header">
               <Input

@@ -48,7 +48,7 @@ const MatchModal = ({ getTournamentResult, isOpen, onClose, match }) => {
               </p>
               <p className="p2Name">{p2Name}</p>
               <p className="executionTime">
-                tempo de execução: {timeToExecute}ms
+                Tempo de execução: {timeToExecute}ms
               </p>
             </div>
           ) : (

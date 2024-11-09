@@ -6,6 +6,7 @@ export const EvaluationProvider = ({ children }) => {
   const [simulationResult, setSimulationResult] = useState();
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluateResultString, setEvaluateResultString] = useState("");
+  const [selectedBot, setSelectedBot] = useState("DummyBot");
 
   return (
     <EvaluateContext.Provider
@@ -18,6 +19,7 @@ export const EvaluationProvider = ({ children }) => {
         setIsEvaluating,
         evaluateResultString,
         setEvaluateResultString,
+        selectedBot, setSelectedBot
       }}
     >
       {children}

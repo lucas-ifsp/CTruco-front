@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -10,37 +10,36 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import useEditRemote from "./useEditRemote";
-import useAuth from "../../../../hooks/context/useAuth";
+import useAddRemote from "./useAddRemote";
+import useAuth from "../../../hooks/context/useAuth";
+import "../bot-info-form/RemoteBotForm.css";
 
-const EditButtonModal = ({
-  isOpen,
-  onClose,
-  updateUserBots,
-  prevName,
-  prevUrl,
-  prevPort,
-}) => {
+const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
+  const [name, setName] = useState();
+  const [url, setUrl] = useState();
+  const [port, setPort] = useState();
   const { auth } = useAuth();
-
-  const [newName, setNewName] = useState();
-  const [newUrl, setNewUrl] = useState();
-  const [newPort, setNewPort] = useState();
-
-  const [nameFieldColor, setNameFieldColor] = useState("");
-  const [urlFieldColor, setUrlFieldColor] = useState("");
-  const [portFieldColor, setPortFieldColor] = useState("");
-
-  const [nameWarning, setNameWarning] = useState(" ");
-  const [urlWarning, setUrlWarning] = useState(" ");
-  const [portWarning, setPortWarning] = useState(" ");
-
+  const addBotHook = useAddRemote();
   const nameInputRef = useRef(null);
   const urlInputRef = useRef(null);
   const portInputRef = useRef(null);
   const submitButton = useRef(null);
+  const [nameFieldColor, setNameFieldColor] = useState("");
+  const [urlFieldColor, setUrlFieldColor] = useState("");
+  const [portFieldColor, setPortFieldColor] = useState("");
+  const [nameWarning, setNameWarning] = useState("");
+  const [urlWarning, setUrlWarning] = useState("");
+  const [portWarning, setPortWarning] = useState("");
 
-  const editBotHook = useEditRemote();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await addBotHook(name, auth.uuid, url, port);
+    } catch (error) {
+      console.log(error);
+    }
+    await updateUserBots();
+  };
 
   const validateField = (fieldRef, setColor, setWarningMessage) => {
     if (fieldRef.value.trim().length < 4) {
@@ -53,23 +52,21 @@ const EditButtonModal = ({
     }
   };
 
-  const handleSubmit = async () => {
-    const payload = {
-      prevName: prevName,
-      name: newName,
-      userId: auth.uuid,
-      url: newUrl,
-      port: newPort,
-    };
-    await editBotHook(payload);
-    await updateUserBots();
-  };
+  useEffect(() => {
+    if (
+      nameFieldColor === "red" ||
+      urlFieldColor === "red" ||
+      portFieldColor === "red"
+    ) {
+      // DESABILITAR SUBMIT BUTTON AQUI
+    }
+  }, [nameFieldColor, urlFieldColor, portFieldColor]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>EDITAR</ModalHeader>
+        <ModalHeader>Adicionar Bot</ModalHeader>
         <ModalCloseButton />
         <form className="bot-info-form">
           <ModalBody className="info-form-content">
@@ -82,9 +79,9 @@ const EditButtonModal = ({
                 type="text"
                 name="bot-name"
                 id="bot-name-inp"
-                placeholder={prevName}
+                defaultValue={name}
                 onChange={(e) => {
-                  setNewName(e.target.value);
+                  setName(e.target.value);
                   validateField(
                     nameInputRef.current,
                     setNameFieldColor,
@@ -92,14 +89,7 @@ const EditButtonModal = ({
                   );
                 }}
               />
-              <p
-                style={{
-                  width: "100px",
-                  color: "red",
-                  fontSize: "12px",
-                  margin: "0px",
-                }}
-              >
+              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
                 {nameWarning}
               </p>
             </div>
@@ -112,9 +102,9 @@ const EditButtonModal = ({
                 type="text"
                 name="bot-url"
                 id="bot-url-inp"
-                placeholder={prevUrl}
+                defaultValue={url}
                 onChange={(e) => {
-                  setNewUrl(e.target.value);
+                  setUrl(e.target.value);
                   validateField(
                     urlInputRef.current,
                     setUrlFieldColor,
@@ -122,14 +112,7 @@ const EditButtonModal = ({
                   );
                 }}
               />
-              <p
-                style={{
-                  width: "100px",
-                  color: "red",
-                  fontSize: "12px",
-                  margin: "0px",
-                }}
-              >
+              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
                 {urlWarning}
               </p>
             </div>
@@ -142,9 +125,9 @@ const EditButtonModal = ({
                 type="text"
                 name="bot-port"
                 id="bot-port-inp"
-                placeholder={prevPort}
+                defaultValue={port}
                 onChange={(e) => {
-                  setNewPort(e.target.value);
+                  setPort(e.target.value);
                   validateField(
                     portInputRef.current,
                     setPortFieldColor,
@@ -152,14 +135,7 @@ const EditButtonModal = ({
                   );
                 }}
               />
-              <p
-                style={{
-                  width: "100px",
-                  color: "red",
-                  fontSize: "12px",
-                  margin: "0px",
-                }}
-              >
+              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
                 {portWarning}
               </p>
             </div>
@@ -171,9 +147,8 @@ const EditButtonModal = ({
               type="submit"
               mr={3}
               onClick={(e) => {
-                e.preventDefault();
                 onClose();
-                handleSubmit();
+                handleSubmit(e);
               }}
             >
               Confirmar
@@ -188,4 +163,4 @@ const EditButtonModal = ({
   );
 };
 
-export default EditButtonModal;
+export default AddRemoteFormModal;

@@ -1,15 +1,11 @@
-import OpenCards from "../../../components/game/cards/OpenCards";
-import OpponentHand from "../../../components/game/cards/OpponentHand";
-import PlayerHand from "../../../components/game/cards/PlayerHand";
-import Commands from "../../../components/game/commands/Commands";
-import Message from "../../../components/game/mat/Message";
-import Rounds from "../../../components/game/mat/Rounds";
-import Score from "../../../components/game/mat/Score";
+import OpenCards from "../../components/game/cards/OpenCards";
+import OpponentHand from "../../components/game/cards/OpponentHand";
+import PlayerHand from "../../components/game/cards/PlayerHand";
+import Commands from "../../components/game/commands/Commands";
+import Message from "../../components/game/mat/Message";
+import Rounds from "../../components/game/mat/Rounds";
+import Score from "../../components/game/mat/Score";
 import useAnimation from "./useAnimation";
-import Header from "../../../components/templates/Header";
-import Footer from "../../../components/templates/Footer";
-import Menu from "../../../components/templates/Menu";
-
 import "./GameMat.css";
 
 const Mat = () => {

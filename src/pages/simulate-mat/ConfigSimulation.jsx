@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BotsTable from "../home/mat/BotsTable";
+import BotsTable from "../mat/BotsTable";
 import "./ConfigSimulation.css";
 import { ChakraProvider, Spinner, Input } from "@chakra-ui/react";
 import useEvaluateStatus from "../context/useEvaluateStatus";
@@ -153,7 +153,7 @@ const ConfigSimulation = () => {
                 <Input
                   className="bot-filter in1"
                   onChange={(e) => handleInputChangeT1(e.target)}
-                  placeholder="Buscar bot1"
+                  placeholder="Busque pelo nome"
                 ></Input>
                 <div className="p1-name">
                   <p>{bot1}</p>
@@ -174,7 +174,7 @@ const ConfigSimulation = () => {
                 <Input
                   className="bot-filter in2"
                   onChange={(e) => handleInputChangeT2(e.target)}
-                  placeholder="Buscar bot2"
+                  placeholder="Busque pelo nome"
                 ></Input>
 
                 <div className="others">

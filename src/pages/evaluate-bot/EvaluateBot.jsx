@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useRef } from "react";
-import BotsTable from "../home/mat/BotsTable";
+import BotsTable from "../mat/BotsTable";
 import { ChakraProvider, Input, Spinner } from "@chakra-ui/react";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
 import "./EvaluateBot.css";
@@ -9,13 +9,14 @@ import useEvaluateBot from "./useEvaluateBot";
 const EvaluateBot = () => {
   const [botsList, setBotsList] = useState([]);
   const [botsToShow, setBotsToShow] = useState(botsList);
-  const [selectedBot, setSelectedBot] = useState("DummyBot");
   const [evaluateResult, setEvaluateResult] = useState({});
   const {
     isEvaluating,
     setIsEvaluating,
     evaluateResultString,
     setEvaluateResultString,
+    selectedBot,
+    setSelectedBot,
   } = useEvaluateStatus();
   const fetchBotNames = useGetBotNames();
   const evaluateService = useEvaluateBot();
@@ -159,6 +160,7 @@ const EvaluateBot = () => {
                 onClick={() => {
                   setEvaluateResultString("");
                   setIsEvaluating(false);
+                  setSelectedBot("DummyBot");
                 }}
               >
                 Avaliar outro bot

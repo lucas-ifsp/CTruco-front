@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useRef } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -10,36 +10,37 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import useAddRemote from "./useAddRemote";
-import useAuth from "../../../../hooks/context/useAuth";
-import "../bot-info-form/RemoteBotForm.css";
+import useEditRemote from "./useEditRemote";
+import useAuth from "../../../hooks/context/useAuth";
 
-const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
-  const [name, setName] = useState();
-  const [url, setUrl] = useState();
-  const [port, setPort] = useState();
+const EditButtonModal = ({
+  isOpen,
+  onClose,
+  updateUserBots,
+  prevName,
+  prevUrl,
+  prevPort,
+}) => {
   const { auth } = useAuth();
-  const addBotHook = useAddRemote();
+
+  const [newName, setNewName] = useState();
+  const [newUrl, setNewUrl] = useState();
+  const [newPort, setNewPort] = useState();
+
+  const [nameFieldColor, setNameFieldColor] = useState("");
+  const [urlFieldColor, setUrlFieldColor] = useState("");
+  const [portFieldColor, setPortFieldColor] = useState("");
+
+  const [nameWarning, setNameWarning] = useState(" ");
+  const [urlWarning, setUrlWarning] = useState(" ");
+  const [portWarning, setPortWarning] = useState(" ");
+
   const nameInputRef = useRef(null);
   const urlInputRef = useRef(null);
   const portInputRef = useRef(null);
   const submitButton = useRef(null);
-  const [nameFieldColor, setNameFieldColor] = useState("");
-  const [urlFieldColor, setUrlFieldColor] = useState("");
-  const [portFieldColor, setPortFieldColor] = useState("");
-  const [nameWarning, setNameWarning] = useState("");
-  const [urlWarning, setUrlWarning] = useState("");
-  const [portWarning, setPortWarning] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await addBotHook(name, auth.uuid, url, port);
-    } catch (error) {
-      console.log(error);
-    }
-    await updateUserBots();
-  };
+  const editBotHook = useEditRemote();
 
   const validateField = (fieldRef, setColor, setWarningMessage) => {
     if (fieldRef.value.trim().length < 4) {
@@ -52,21 +53,23 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
     }
   };
 
-  useEffect(() => {
-    if (
-      nameFieldColor === "red" ||
-      urlFieldColor === "red" ||
-      portFieldColor === "red"
-    ) {
-      // DESABILITAR SUBMIT BUTTON AQUI
-    }
-  }, [nameFieldColor, urlFieldColor, portFieldColor]);
+  const handleSubmit = async () => {
+    const payload = {
+      prevName: prevName,
+      name: newName,
+      userId: auth.uuid,
+      url: newUrl,
+      port: newPort,
+    };
+    await editBotHook(payload);
+    await updateUserBots();
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>ADICIONAR BOT</ModalHeader>
+        <ModalHeader>EDITAR</ModalHeader>
         <ModalCloseButton />
         <form className="bot-info-form">
           <ModalBody className="info-form-content">
@@ -79,9 +82,9 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-name"
                 id="bot-name-inp"
-                defaultValue={name}
+                placeholder={prevName}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setNewName(e.target.value);
                   validateField(
                     nameInputRef.current,
                     setNameFieldColor,
@@ -89,7 +92,14 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                   );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {nameWarning}
               </p>
             </div>
@@ -102,9 +112,9 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-url"
                 id="bot-url-inp"
-                defaultValue={url}
+                placeholder={prevUrl}
                 onChange={(e) => {
-                  setUrl(e.target.value);
+                  setNewUrl(e.target.value);
                   validateField(
                     urlInputRef.current,
                     setUrlFieldColor,
@@ -112,7 +122,14 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                   );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {urlWarning}
               </p>
             </div>
@@ -125,9 +142,9 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 type="text"
                 name="bot-port"
                 id="bot-port-inp"
-                defaultValue={port}
+                placeholder={prevPort}
                 onChange={(e) => {
-                  setPort(e.target.value);
+                  setNewPort(e.target.value);
                   validateField(
                     portInputRef.current,
                     setPortFieldColor,
@@ -135,7 +152,14 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                   );
                 }}
               />
-              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+              <p
+                style={{
+                  width: "100px",
+                  color: "red",
+                  fontSize: "12px",
+                  margin: "0px",
+                }}
+              >
                 {portWarning}
               </p>
             </div>
@@ -147,8 +171,9 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
               type="submit"
               mr={3}
               onClick={(e) => {
+                e.preventDefault();
                 onClose();
-                handleSubmit(e);
+                handleSubmit();
               }}
             >
               Confirmar
@@ -163,4 +188,4 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
   );
 };
 
-export default AddRemoteFormModal;
+export default EditButtonModal;

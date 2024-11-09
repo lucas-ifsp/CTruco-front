@@ -100,13 +100,12 @@ const TournamentConfig = () => {
               <Input
                 type="number"
                 onChange={(e) => {
-                  if (e.target.value > 5000) {
-                    e.target.value = 5000;
-                  }
-                  if (e.target.value <= 0) {
-                    e.target.value = 1;
-                  }
-                  setTimes(e.target.value);
+                  let numberOfSimulations = e.target.value;
+                  if (numberOfSimulations > 5000) {
+                    setTimes(5000);
+                  } else if (numberOfSimulations <= 0) {
+                    setTimes(1);
+                  } else setTimes(numberOfSimulations);
                 }}
                 id="nbr-simu"
                 name="nbr-simu"

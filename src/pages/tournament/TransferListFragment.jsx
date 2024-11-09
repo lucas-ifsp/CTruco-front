@@ -91,7 +91,7 @@ const TransferListFragment = ({
             onChange={(e) => {
               setInputContent(e.target.value);
             }}
-            placeholder="Buscar bot"
+            placeholder="Busque pelo nome"
           ></Input>
           <button
             type="button"

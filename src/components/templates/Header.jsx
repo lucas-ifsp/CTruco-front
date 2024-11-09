@@ -5,7 +5,7 @@ import "./Header.css";
 const Header = () => (
   <header className="header">
     <img className="logo" src={logo} alt="logo" />
-    <h1>CTruco - Truco for didactic purposes</h1>
+    <h1>CTruco - Truco for Didactic Purposes</h1>
   </header>
 );
 

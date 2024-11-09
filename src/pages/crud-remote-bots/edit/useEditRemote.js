@@ -1,4 +1,4 @@
-import { axiosPrivate } from "../../../../api/axios";
+import { axiosPrivate } from "../../../api/axios";
 const useEditRemote = () => {
   const EditBot = async (payload) => {
     const prevName = payload.prevName;

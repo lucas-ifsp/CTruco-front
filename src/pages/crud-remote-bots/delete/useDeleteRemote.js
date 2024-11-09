@@ -1,4 +1,4 @@
-import { axiosPrivate } from "../../../../api/axios";
+import { axiosPrivate } from "../../../api/axios";
 const useDeleteRemote = () => {
   const deleteBot = async (botName) => {
     try {

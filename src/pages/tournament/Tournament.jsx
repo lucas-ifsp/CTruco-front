@@ -32,7 +32,6 @@ const Tournament = () => {
 
   const playCampMatch = async (matchNumber, times) => {
     let response = await play(championship.uuid, matchNumber, times);
-    console.log(response);
   };
 
   const shouldBeDisableThirdPlaceMatch = () => {
@@ -45,14 +44,13 @@ const Tournament = () => {
 
   const getTournamentResult = async () => {
     let newTournament = await getTournament(championship.uuid);
-    if (newTournament.matchesDTO[matchIndex].winnerName !== "") {
+    if (newTournament.matchesDTO[matchIndex].winnerName !== null) {
       setChampionship(newTournament);
       setIsSimulating(false);
     }
     setTimeout(async () => {
-      console.log("DNV");
       let updatedTournament = await getTournament(championship.uuid);
-      if (updatedTournament.matchesDTO[matchIndex].winnerName !== "") {
+      if (updatedTournament.matchesDTO[matchIndex].winnerName !== null) {
         setChampionship(updatedTournament);
         setIsSimulating(false);
       }
@@ -60,7 +58,6 @@ const Tournament = () => {
   };
 
   useEffect(() => {
-    console.log(isSimulating);
     let intervalTime = 1000;
 
     if (isSimulating) {
@@ -114,7 +111,6 @@ const Tournament = () => {
                 <button
                   className="btn btn-dark play-btn"
                   onClick={() => {
-                    setIsSimulating(true);
                     onOpen();
                     playCampMatch(championship.size - 1, finalMatchTimes);
                     setIsSimulating(true);
@@ -150,7 +146,6 @@ const Tournament = () => {
                 <button
                   className="btn btn-dark play-btn"
                   onClick={() => {
-                    setIsSimulating(true);
                     onOpen();
                     playCampMatch(championship.size, finalMatchTimes);
                     setIsSimulating(true);

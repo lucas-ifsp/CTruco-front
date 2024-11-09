@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { createMessage } from '../../../components/game/mat/MessageFactory'
-import useDeleteGame from '../../../hooks/api/useDeleteGame'
-import useAuth from '../../../hooks/context/useAuth'
-import useIntel from '../../../hooks/context/useIntel'
+import { createMessage } from '../../components/game/mat/MessageFactory'
+import useDeleteGame from '../../hooks/api/useDeleteGame'
+import useAuth from '../../hooks/context/useAuth'
+import useIntel from '../../hooks/context/useIntel'
 import { useNavigate } from 'react-router-dom'
 
 const useAnimation = () => {

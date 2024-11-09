@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BotsTable from "./BotsTable";
-import useCreateGame from "../../../hooks/api/useCreateGame";
-import useIntel from "../../../hooks/context/useIntel";
+import useCreateGame from "../../hooks/api/useCreateGame";
+import useIntel from "../../hooks/context/useIntel";
 import { ChakraProvider, Input } from "@chakra-ui/react";
-import useGetBotNames from "../../../hooks/api/useGetBotNames";
+import useGetBotNames from "../../hooks/api/useGetBotNames";
 import "./StartGameMat.css";
 
 const StartGameMat = () => {
@@ -64,7 +64,7 @@ const StartGameMat = () => {
                 ref={containerRef}
                 type="text"
                 onChange={(e) => handleInputChange(e.target)}
-                placeholder="Procure pelo Nome"
+                placeholder="Busque pelo nome"
               ></Input>
               <div className="start-game-mat-table">
                 <BotsTable

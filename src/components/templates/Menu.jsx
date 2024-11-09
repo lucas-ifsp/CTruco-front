@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
-import Accordion from "../../pages/home/utils/Accordion";
+import Accordion from "../../pages/utils/Accordion";
 import useDeleteGame from "../../hooks/api/useDeleteGame";
 import useRefreshToken from "../../hooks/api/useRefreshToken";
 import useIntel from "../../hooks/context/useIntel";

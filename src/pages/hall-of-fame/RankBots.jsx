@@ -34,13 +34,6 @@ const RankBots = () => {
     <main id="bots-rank" className="cs-feat">
       <section>
         <div className="section-header">
-          <button
-            className="btn btn-dark"
-            style={{ width: "fit-content" }}
-            onClick={() => updateRank()}
-          >
-            <i className="bi bi-arrow-clockwise"></i>
-          </button>
           <p className="fs-5 mb-0 text-center">Colocação Atual</p>
         </div>
         {rank.length === 0 && (

@@ -1,4 +1,4 @@
-import { axiosPrivate } from "../../../../api/axios";
+import { axiosPrivate } from "../../../api/axios";
 const useAddRemote = () => {
   const AddBot = async (name, userId, url, port) => {
     const body = {

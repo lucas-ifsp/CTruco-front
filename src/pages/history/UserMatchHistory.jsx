@@ -58,8 +58,8 @@ const UserMatchHistory = () => {
                   <th className="default-th">Jogador 2</th>
                   <th className="default-th">Pontos J1</th>
                   <th className="default-th">Pontos J2</th>
-                  <th className="default-th">Data Início</th>
-                  <th className="default-th">Data Fim</th>
+                  <th className="default-th">Data início</th>
+                  <th className="default-th">Data fim</th>
                   <th className="default-th">Duração</th>
                 </tr>
               </thead>
