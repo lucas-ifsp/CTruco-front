@@ -63,7 +63,7 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
   }, [nameFieldColor, urlFieldColor, portFieldColor]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Adicionar Bot</ModalHeader>
