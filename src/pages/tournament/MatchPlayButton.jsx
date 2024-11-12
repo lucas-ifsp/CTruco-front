@@ -34,7 +34,7 @@ const MatchPlayButton = ({
             onClick={() => {
               handleOpenModal("p2");
               setMatchIndex(2 * match.matchNumber - championship.size - 1);
-              console.log(2 * match.matchNumber - championship.size - 1);
+              // console.log("Indice da partida: " 2 * match.matchNumber - championship.size - 1);
               setIsSimulating(true);
               onPlay(2 * match.matchNumber - championship.size, times);
             }}

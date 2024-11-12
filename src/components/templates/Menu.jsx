@@ -34,13 +34,22 @@ const Menu = () => {
         title="Jogar"
         content={
           <>
-            <Link to="/mat/start-game" onClick={handleNewGameSelection}>
+            <Link
+              className="accordion-link"
+              to="/mat/start-game"
+              onClick={handleNewGameSelection}
+            >
               <i className="bi bi-geo-fill" /> Você vs Bot{" "}
             </Link>
-            <Link to="/simulate-bots">
+
+            <Link className="accordion-link" to="/simulate-bots">
               <i className="bi bi-robot" /> Bot vs Bot{" "}
             </Link>
-            <Link to={championship ? "/tournament" : "/tournament/config"}>
+
+            <Link
+              className="accordion-link"
+              to={championship ? "/tournament" : "/tournament/config"}
+            >
               <i className="bi bi-trophy" /> Campeonato{" "}
             </Link>
           </>
@@ -60,11 +69,11 @@ const Menu = () => {
         title="Hall da Fama"
         content={
           <>
-            <Link to="/hall-of-fame">
+            <Link className="accordion-link" to="/hall-of-fame">
               <i style={{ fontStyle: "normal" }} className="bi bi-gem" />{" "}
               Ranking dos Bots
             </Link>
-            <Link to="/top-winners">
+            <Link className="accordion-link" to="/top-winners">
               <i
                 style={{ fontStyle: "normal" }}
                 className="bi bi-trophy-fill"

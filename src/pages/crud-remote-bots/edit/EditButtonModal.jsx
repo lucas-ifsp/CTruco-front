@@ -66,10 +66,10 @@ const EditButtonModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>EDITAR</ModalHeader>
+        <ModalHeader>Editar</ModalHeader>
         <ModalCloseButton />
         <form className="bot-info-form">
           <ModalBody className="info-form-content">

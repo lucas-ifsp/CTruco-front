@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import MatchModal from "./MatchModal";
 import MatchPlayer from "./MatchPlayer";
 import MatchPlayButton from "./MatchPlayButton";

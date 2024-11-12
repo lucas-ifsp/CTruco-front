@@ -1,12 +1,17 @@
 import useAxiosPrivate from "../../hooks/api/useAxiosPrivate";
 const useCreateTournament = () => {
   const axiosPrivate = useAxiosPrivate();
-  const create = async (participants, times) => {
+  const create = async (
+    participants,
+    times,
+    finalAndThirdPlaceMatchTimes
+  ) => {
     try {
       const url = `/api/v1/tournament`;
       const response = await axiosPrivate.post(url, {
         participants: participants,
         times: times,
+        finalAndThirdPlaceMatchTimes: finalAndThirdPlaceMatchTimes,
       });
       // console.log(response);
       return response.data.payload;

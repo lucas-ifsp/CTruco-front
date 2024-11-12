@@ -58,3 +58,7 @@ nav.menu-area {
   color: #fff;
   background: linear-gradient(135deg, #0e484e 0%, #417c81 100%);
 }
+
+.menu-area .accordion-link {
+  background: var(--accordion-link-bg-color);
+}

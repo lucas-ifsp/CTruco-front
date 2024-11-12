@@ -19,7 +19,8 @@ export const EvaluationProvider = ({ children }) => {
         setIsEvaluating,
         evaluateResultString,
         setEvaluateResultString,
-        selectedBot, setSelectedBot
+        selectedBot,
+        setSelectedBot,
       }}
     >
       {children}

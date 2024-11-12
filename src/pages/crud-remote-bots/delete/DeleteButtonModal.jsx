@@ -19,15 +19,15 @@ const DeleteButtonModal = ({ isOpen, onClose, botName, updateUserBots }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>TEM CERTEZA?</ModalHeader>
+        <ModalHeader>Tem Certeza?</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <p
             style={{
-              fontSize: "30px",
+              fontSize: "24px",
               color: "red",
             }}
           >

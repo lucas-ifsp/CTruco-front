@@ -18,23 +18,27 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
   const [name, setName] = useState();
   const [url, setUrl] = useState();
   const [port, setPort] = useState();
+  const [repositoryUrl, setRepositoryUrl] = useState();
   const { auth } = useAuth();
   const addBotHook = useAddRemote();
   const nameInputRef = useRef(null);
   const urlInputRef = useRef(null);
   const portInputRef = useRef(null);
+  const repositoryUrlInputRef = useRef(null);
   const submitButton = useRef(null);
   const [nameFieldColor, setNameFieldColor] = useState("");
   const [urlFieldColor, setUrlFieldColor] = useState("");
   const [portFieldColor, setPortFieldColor] = useState("");
+  const [repositoryUrlFieldColor, setRepositoryUrlFieldColor] = useState("");
   const [nameWarning, setNameWarning] = useState("");
   const [urlWarning, setUrlWarning] = useState("");
   const [portWarning, setPortWarning] = useState("");
+  const [repositoryUrlWarning, setRepositoryUrlWarning] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addBotHook(name, auth.uuid, url, port);
+      await addBotHook(name, auth.uuid, url, port, repositoryUrl);
     } catch (error) {
       console.log(error);
     }
@@ -137,6 +141,29 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
               />
               <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
                 {portWarning}
+              </p>
+            </div>
+            <div className="port-field">
+              <label htmlFor="bot-port-inp">Repository Url</label>
+              <Input
+                ref={repositoryUrlInputRef}
+                borderColor={repositoryUrlFieldColor}
+                w={"70%"}
+                type="text"
+                name="bot-repository-url"
+                id="bot-repository-url-inp"
+                defaultValue={repositoryUrl}
+                onChange={(e) => {
+                  setRepositoryUrl(e.target.value);
+                  validateField(
+                    repositoryUrlInputRef.current,
+                    setRepositoryUrlFieldColor,
+                    setRepositoryUrlWarning
+                  );
+                }}
+              />
+              <p style={{ width: "100px", color: "red", fontSize: "12px" }}>
+                {repositoryUrlWarning}
               </p>
             </div>
           </ModalBody>

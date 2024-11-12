@@ -5,6 +5,7 @@ import "./TournamentConfig.css";
 import useGetBotNames from "../../hooks/api/useGetBotNames";
 import useTournamentStatus from "../context/useTournamentStatus";
 import useCreateTournament from "./useCreateTournament";
+import useGetTournament from "./useGetTournament";
 import { useNavigate } from "react-router-dom";
 
 const TournamentConfig = () => {
@@ -13,6 +14,7 @@ const TournamentConfig = () => {
   const {
     championship,
     setChampionship,
+    finalMatchTimes,
     setFinalMatchTimes,
     times,
     setTimes,
@@ -59,8 +61,8 @@ const TournamentConfig = () => {
     setL1Bots(botsList1.sort());
   }, [tranferedFromL2]);
 
-  const createCamp = async (bots, times) => {
-    let camp = await createTournament(bots, times);
+  const createCamp = async (bots, times, finalMatchTimes) => {
+    let camp = await createTournament(bots, times, finalMatchTimes);
     console.log(camp);
     setChampionship(camp);
 
@@ -102,7 +104,7 @@ const TournamentConfig = () => {
                 onChange={(e) => {
                   let numberOfSimulations = e.target.value;
                   if (numberOfSimulations > 5000) {
-                    setTimes(5000);
+                    setTimes(6000);
                   } else if (numberOfSimulations <= 0) {
                     setTimes(1);
                   } else setTimes(numberOfSimulations);
@@ -114,13 +116,12 @@ const TournamentConfig = () => {
               <Input
                 type="number"
                 onChange={(e) => {
-                  if (e.target.value > 5000) {
-                    e.target.value = 5000;
-                  }
-                  if (e.target.value <= 0) {
-                    e.target.value = 1;
-                  }
-                  setFinalMatchTimes(e.target.value);
+                  let numberOfSimulations = e.target.value;
+                  if (numberOfSimulations > 5000) {
+                    setFinalMatchTimes(5000);
+                  } else if (numberOfSimulations <= 0) {
+                    setFinalMatchTimes(1);
+                  } else setFinalMatchTimes(numberOfSimulations);
                 }}
                 id="nbr-simu-special-matches"
                 name="nbr-simu-special-matches"
@@ -140,7 +141,7 @@ const TournamentConfig = () => {
                 className="btn btn-dark"
                 onClick={(e) => {
                   e.preventDefault();
-                  createCamp(l2Bots, times);
+                  createCamp(l2Bots, times, finalMatchTimes);
                 }}
                 disabled={l2Bots.length !== 8 && l2Bots.length !== 16}
               >

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import medalhaOuro from "../../assets/images/medals/gold_medal-removebg.png";
 import medalhaBronze from "../../assets/images/medals/bronze_medal-removebg.png";
+import trophy from "../../assets/images/medals/trophy.png";
 
 const Tournament = () => {
   const play = usePlayTournamentMatch();
@@ -43,6 +44,7 @@ const Tournament = () => {
   };
 
   const getTournamentResult = async () => {
+    // console.log("isSimulating: " + isSimulating);
     let newTournament = await getTournament(championship.uuid);
     if (newTournament.matchesDTO[matchIndex].winnerName !== null) {
       setChampionship(newTournament);
@@ -51,6 +53,7 @@ const Tournament = () => {
     setTimeout(async () => {
       let updatedTournament = await getTournament(championship.uuid);
       if (updatedTournament.matchesDTO[matchIndex].winnerName !== null) {
+        // console.log("dnv");
         setChampionship(updatedTournament);
         setIsSimulating(false);
       }
@@ -83,16 +86,35 @@ const Tournament = () => {
     <ChakraProvider>
       <main className={"tournament " + "s" + matchesDTO.length}>
         <section>
-          <button
-            className="btn btn-danger"
-            onClick={() => {
-              setChampionship("");
-              navigate("/tournament/config");
-            }}
-          >
-            Cancelar
-          </button>
+          {!championship.winnerName && (
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setChampionship();
+                navigate("/tournament/config");
+              }}
+            >
+              Cancelar
+            </button>
+          )}
+
+          {championship.winnerName && (
+            <button
+              className="btn btn-warning"
+              onClick={() => {
+                setChampionship();
+                navigate("/tournament/config");
+              }}
+            >
+              Voltar
+            </button>
+          )}
           <div className="tournament-grid mb-3">
+            <img
+              src={trophy}
+              alt="Championship Trophy"
+              id="tournament-trophy"
+            />
             <p id="tournament-title">{title}</p>
             {championship.matchesDTO.map((match) => {
               return (
@@ -170,18 +192,6 @@ const Tournament = () => {
                   </p>
                 </div>
               </div>
-            )}
-
-            {championship.winnerName && (
-              <button
-                className="btn btn-warning reset b"
-                onClick={() => {
-                  setChampionship();
-                  navigate("/tournament/config");
-                }}
-              >
-                Novo Torneio
-              </button>
             )}
           </div>
         </section>
