@@ -43,6 +43,10 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
       console.log(error);
     }
     await updateUserBots();
+    setName("");
+    setUrl("");
+    setPort("");
+    setRepositoryUrl("");
   };
 
   const validateField = (fieldRef, setColor, setWarningMessage) => {
@@ -143,7 +147,7 @@ const AddRemoteFormModal = ({ isOpen, onClose, updateUserBots }) => {
                 {portWarning}
               </p>
             </div>
-            <div className="port-field">
+            <div className="bot-repository-url-field">
               <label htmlFor="bot-port-inp">Repository Url</label>
               <Input
                 ref={repositoryUrlInputRef}

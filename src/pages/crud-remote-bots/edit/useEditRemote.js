@@ -7,6 +7,7 @@ const useEditRemote = () => {
       userId: payload.userId,
       url: payload.url,
       port: payload.port,
+      repositoryUrl: payload.repositoryUrl,
     };
     try {
       const url = `/api/v1/remote-bots/${prevName}`;
