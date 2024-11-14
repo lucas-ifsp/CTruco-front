@@ -1,5 +1,7 @@
 #crud-remote {
   display: flex;
+  flex-direction: column;
+  gap: 30px;
   height: 100%;
   background-color: var(--mat-bg-color);
   justify-content: center;

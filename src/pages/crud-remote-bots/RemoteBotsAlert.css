@@ -1,0 +1,9 @@
+.remote-bots-alert > div {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remote-bots-alert > div > i:hover{
+  cursor: pointer;
+}

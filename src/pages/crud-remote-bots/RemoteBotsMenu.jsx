@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import RemoteBotsTable from "./RemoteBotsTable";
+import RemoteBotsAlert from "./RemoteBotsAlert";
 import { Input, ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import useGetRemoteBotsByUserId from "../../hooks/api/useGetRemoteBotsByUser";
 import useAuth from "../../hooks/context/useAuth";
@@ -9,6 +10,9 @@ import AddRemoteFormModal from "./add/AddRemoteFormModal";
 const RemoteBotsMenu = () => {
   const [userBots, setUserBots] = useState([]);
   const [visibleBots, setVisibleBots] = useState([]);
+  const [alertText, setAlertText] = useState(
+    "Remova um bot clicando no icone da lixeira"
+  );
   const { auth } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchBots = useGetRemoteBotsByUserId();
@@ -34,10 +38,10 @@ const RemoteBotsMenu = () => {
 
   return (
     <main id="crud-remote">
-      <section>
-        <p className="fs-5 mb-0 text-center">Remote Bots Menu</p>
-        <div className="mb-3 mt-4 section-content">
-          <ChakraProvider>
+      <ChakraProvider>
+        <section>
+          <p className="fs-5 mb-0 text-center">Remote Bots Menu</p>
+          <div className="mb-3 mt-4 section-content">
             <label id="bots-filter-label" htmlFor="bots-filter">
               Busque pelo nome
             </label>
@@ -64,9 +68,14 @@ const RemoteBotsMenu = () => {
               visibleOnes={visibleBots}
               updateUserBots={updateUserBots}
             />
-          </ChakraProvider>
-        </div>
-      </section>
+          </div>
+        </section>
+        <RemoteBotsAlert
+          bootsTrapColor={"info"}
+          text={alertText}
+          setText={setAlertText}
+        />
+      </ChakraProvider>
     </main>
   );
 };
