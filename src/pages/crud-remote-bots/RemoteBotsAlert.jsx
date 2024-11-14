@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import useAlertStatus from "../context/useAlertStatus";
 import "./RemoteBotsAlert.css";
 
-const RemoteBotsAlert = ({ bootsTrapColor, text, setText }) => {
+const RemoteBotsAlert = () => {
   const [isHidden, setIsHidden] = useState(false);
+  const {
+    alertText: text,
+    setAlertText: setText,
+    alertColor: bootsTrapColor,
+  } = useAlertStatus();
 
   useEffect(() => {
-    console.log(text);
     setIsHidden(text === "" ? true : false);
   }, [text]);
 
@@ -22,7 +27,11 @@ const RemoteBotsAlert = ({ bootsTrapColor, text, setText }) => {
           role="alert"
         >
           {text}
-          <i className="bi bi-x" onClick={() => handleClose()} />
+          <i
+            style={{ fontSize: "20px" }}
+            className="bi bi-x"
+            onClick={() => handleClose()}
+          />
         </div>
       </div>
     </>

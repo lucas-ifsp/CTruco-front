@@ -12,7 +12,7 @@ const useAddRemote = () => {
       const url = `/api/v1/remote-bots`;
       return await axiosPrivate.post(url, JSON.stringify(body));
     } catch (error) {
-      console.log(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
   };
   return AddBot;

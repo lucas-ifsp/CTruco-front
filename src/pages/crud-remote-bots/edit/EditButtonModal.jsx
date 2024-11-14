@@ -11,6 +11,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import useEditRemote from "./useEditRemote";
+import useAlertStatus from "../../context/useAlertStatus";
 import useAuth from "../../../hooks/context/useAuth";
 
 const EditButtonModal = ({
@@ -23,6 +24,8 @@ const EditButtonModal = ({
   prevRepositoryUrl,
 }) => {
   const { auth } = useAuth();
+  const { setAlertColor, setAlertText } = useAlertStatus();
+
   const [newName, setNewName] = useState();
   const [newUrl, setNewUrl] = useState();
   const [newPort, setNewPort] = useState();
@@ -67,7 +70,15 @@ const EditButtonModal = ({
       port: newPort,
       repositoryUrl: newRepositoryUrl,
     };
-    await editBotHook(payload);
+    try {
+      await editBotHook(payload);
+      setAlertText("Bot alterado com sucesso. Aguarde ele ser reavaliado.");
+      setAlertColor("success");
+    } catch (error) {
+      console.log(error);
+      setAlertText("Ocorreu um erro ao alterar o bot: " + error.message);
+      setAlertColor("danger");
+    }
     await updateUserBots();
   };
 

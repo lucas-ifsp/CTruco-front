@@ -11,7 +11,12 @@ import {
 import DeleteButton from "./delete/DeleteButton";
 import EditButton from "./edit/EditButton";
 
-const RemoteBotsTable = ({ visibleOnes, updateUserBots }) => {
+const RemoteBotsTable = ({
+  visibleOnes,
+  updateUserBots,
+  setAlertText,
+  setAlertColor,
+}) => {
   return (
     <TableContainer className="remote-bots-table">
       <Table variant="simple" colorScheme="gray">
@@ -30,7 +35,9 @@ const RemoteBotsTable = ({ visibleOnes, updateUserBots }) => {
               <Td className="table-info">{bot.url}</Td>
               <Td className="table-info">{bot.port}</Td>
               <Td className="table-info">
-                <EditButton updateUserBots={updateUserBots} />
+                <EditButton
+                  updateUserBots={updateUserBots}
+                />
                 <DeleteButton
                   botName={bot.botName}
                   updateUserBots={updateUserBots}

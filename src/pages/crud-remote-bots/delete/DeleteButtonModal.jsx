@@ -10,12 +10,24 @@ import {
   Button,
 } from "@chakra-ui/react";
 import useDeleteRemote from "./useDeleteRemote";
+import useAlertStatus from "../../context/useAlertStatus";
 
 const DeleteButtonModal = ({ isOpen, onClose, botName, updateUserBots }) => {
   const deleteBotHook = useDeleteRemote();
+
+  const { setAlertColor, setAlertText } = useAlertStatus();
+
   const handleDeleteAction = async (botName) => {
-    await deleteBotHook(botName);
-    updateUserBots();
+    try {
+      await deleteBotHook(botName);
+      setAlertText("Bot removido!");
+      setAlertColor("success");
+    } catch (error) {
+      console.log(error);
+      setAlertText("Ocorreu um erro ao remover o bot: " + error.message);
+      setAlertColor("danger");
+    }
+    await updateUserBots();
   };
 
   return (

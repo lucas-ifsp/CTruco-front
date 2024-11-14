@@ -1,9 +1,18 @@
+.remote-bots-alert {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: center;
+  align-self: flex-end;
+}
+
 .remote-bots-alert > div {
   width: 400px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  align-self: flex-end;
 }
 
-.remote-bots-alert > div > i:hover{
+.remote-bots-alert > div > i:hover {
   cursor: pointer;
 }

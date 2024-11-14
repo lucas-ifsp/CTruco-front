@@ -13,7 +13,7 @@ const useEditRemote = () => {
       const url = `/api/v1/remote-bots/${prevName}`;
       return await axiosPrivate.put(url, JSON.stringify(body));
     } catch (error) {
-      console.log(error.response.headers.authorization);
+      throw new Error("erro nos parametros");
     }
   };
   return EditBot;
