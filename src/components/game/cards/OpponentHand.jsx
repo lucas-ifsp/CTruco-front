@@ -3,9 +3,9 @@ import Card from './Card'
 import './OpponentHand.css'
 
 const OpponentHand = ({cards}) => {
-    const left = cards[0] ? 'back' : 'none'
-    const center = cards[1] ? 'back' : 'none'
-    const right = cards[2] ? 'back' : 'none'
+    const left = cards[0] !== 'none' ? 'back' : 'none'
+    const center = cards[1] !== 'none' ? 'back' : 'none'
+    const right = cards[2] !== 'none'  ? 'back' : 'none'
 
     return (
         <div className='opponent-hand'> 

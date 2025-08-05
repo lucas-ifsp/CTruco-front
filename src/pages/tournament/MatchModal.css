@@ -1,0 +1,46 @@
+#match-modal-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#result {
+  height: 100%;
+  display: grid;
+  grid-row: inherit inherit;
+  grid-template-columns: 1fr 1fr 20px 1fr 1fr;
+  max-width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+}
+#result p {
+  margin: 0px;
+}
+
+#result .score {
+  font-size: 25px;
+}
+
+#result .p1Name {
+  text-align: center;
+}
+#result .p2Name {
+  text-align: center;
+}
+
+#result .executionTime {
+  grid-row: 2;
+  grid-column: 1/6;
+  align-self: center;
+}
+
+#match-modal-spinner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

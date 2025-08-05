@@ -1,0 +1,70 @@
+.tournament {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--mat-bg-color);
+}
+
+.tournament section {
+  display: flex;
+  width: 100%;
+  flex-direction: column-reverse;
+  padding: 30px 10px;
+  gap: 10px;
+  background-color: var(--mat-bg-color);
+  border-radius: 20px;
+}
+
+.tournament section > button {
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.t-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 20px;
+  width: 38px;
+  background-color: rgb(255, 255, 255);
+  margin: 0px;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.t-score p {
+  font-size: 12px;
+}
+
+p.loser {
+  color: rgb(232, 104, 53);
+}
+p.winner {
+  color: rgb(53, 188, 53);
+}
+
+.match-player.third-place .winner-info {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.match-player.winner .winner-info {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#tournament-title,
+#tournament-winner-label,
+#third-place-label {
+  color: #fff;
+}

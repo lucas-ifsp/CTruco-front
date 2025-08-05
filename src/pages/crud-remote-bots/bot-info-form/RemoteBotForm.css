@@ -1,0 +1,16 @@
+.info-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-form-content input {
+  width: 100%;
+}
+
+.invalid-inp {
+  border-color: red !important;
+}
+.valid-inp {
+  border-color: green !important;
+}

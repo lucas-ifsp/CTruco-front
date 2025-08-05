@@ -1,0 +1,22 @@
+.bots-table .tr {
+  border-radius: 10px;
+}
+
+.bots-table .selected {
+  background-color: #014e0180;
+}
+
+.bots-table .tr:hover:not(.selected) {
+  background-color: #c6c6c6bf;
+}
+
+.bots-table .tr a:hover {
+  color: #000;
+}
+
+.bots-table a {
+  color: #000;
+}
+
+
+

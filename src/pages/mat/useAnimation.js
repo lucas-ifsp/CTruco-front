@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { createMessage } from '../../../components/game/mat/MessageFactory'
-import useDeleteGame from '../../../hooks/api/useDeleteGame'
-import useAuth from '../../../hooks/context/useAuth'
-import useIntel from '../../../hooks/context/useIntel'
+import { createMessage } from '../../components/game/mat/MessageFactory'
+import useDeleteGame from '../../hooks/api/useDeleteGame'
+import useAuth from '../../hooks/context/useAuth'
+import useIntel from '../../hooks/context/useIntel'
+import { useNavigate } from 'react-router-dom'
 
 const useAnimation = () => {
+    const navigate = useNavigate();
     const nextScoreAsString = { 1: 'truco', 3: 'seis', 6: 'nove', 9: 'doze', 12: 'doze' }
     const DELAY_UNIT = 120;
 
@@ -71,6 +73,7 @@ const useAnimation = () => {
             updateMessage(currentIntel)
             await delay(DELAY_UNIT * 30)
             await deleteConcludedGame()
+            navigate('/mat/start-game');
         } else {
             if (hasChangedMatchProperty('handPoints', currentIntel, prevIntel)) {
                 await delay(DELAY_UNIT * 3)
@@ -148,7 +151,7 @@ const useAnimation = () => {
         if (intel.event !== 'PLAY') return
         const lastPlayedCard = intel.openCards.slice(-1)[0]
         const cardAsString = toCardString(lastPlayedCard)
-        if (intel.eventPlayerUUID === uuid) setPlayerCard(cardAsString)
+        if (intel.eventPlayerUuid === uuid) setPlayerCard(cardAsString)
         else setOpponentCard(cardAsString)
     }
 

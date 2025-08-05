@@ -6,7 +6,6 @@ import useAuthenticationForm from './useAuthenticationForm';
 import validate from './validateAuthenticationInfo';
 
 const Authentication = () => {
-    
     const [authenticated, setAuthenticated] = useState(false)
     const {values, errors, handleChange, handleSubmit} = useAuthenticationForm(validate)    
     const silentlySignIn = useSilentSignIn()
@@ -21,7 +20,7 @@ const Authentication = () => {
     }, [])
     
     return (
-        authenticated ? <Navigate to='/'/> :
+        authenticated ? <Navigate to="/" /> :
         <main className="authentication">
             <form>
                 <p className="title fs-4 mb-3 fw-bold text-center">

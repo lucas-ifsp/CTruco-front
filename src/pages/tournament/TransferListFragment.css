@@ -1,0 +1,8 @@
+.transfer-list-fragment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 520px;
+  gap: 10px;
+}

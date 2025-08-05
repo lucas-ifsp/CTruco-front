@@ -1,0 +1,222 @@
+.config-simulation {
+  background-color: var(--mat-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.config-simulation section {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.config-simulation section form {
+  margin: 10px 0px 10px 0px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 200px 350px 200px;
+  justify-items: center;
+}
+
+.config-simulation form .bot-filter {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.config-simulation form .others {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.config-simulation form .in1 {
+  align-self: end;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.config-simulation form .in2 {
+  align-self: end;
+  grid-row: 1;
+  grid-column: 3;
+}
+
+.config-simulation form .p1-name {
+  min-width: 200px;
+  background-color: var(--bs-body-color);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.config-simulation form .p1-name p {
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 0px;
+}
+
+.config-simulation form .p2-name {
+  min-width: 200px;
+  background-color: var(--bs-body-color);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.config-simulation form .p2-name p {
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 0px;
+}
+
+.config-simulation form .middle-container {
+  display: inline-grid;
+  flex-direction: column;
+  grid-row: 3;
+  grid-column: 2;
+}
+
+.config-simulation form .middle-container img {
+  height: 80%;
+  width: 50%;
+  margin-bottom: 15px;
+  align-self: center;
+}
+
+.config-simulation form .middle-container i {
+  font-size: 7rem;
+  align-self: center;
+}
+
+.config-simulation form .middle-container button {
+  justify-self: center;
+  align-self: flex-end;
+}
+
+.config-simulation form .table1 {
+  grid-row: 3;
+  grid-column: 1;
+  height: 250px;
+  overflow: auto;
+}
+
+.config-simulation form .table2 {
+  grid-row: 3;
+  grid-column: 3;
+  height: 250px;
+  overflow: auto;
+}
+
+.config-simulation form .others {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+#number-of-simulations {
+  align-self: center;
+  text-align: center;
+  width: 80%;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  align-self: center;
+  padding: 10px;
+}
+
+#simulation-results p {
+  font-size: 20px;
+}
+
+#simulation-results {
+  display: grid;
+  gap: 10px;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: 150px auto 20px auto 150px;
+}
+
+#simulation-results .times {
+  justify-self: center;
+  grid-row: 1;
+  grid-column: 1/6;
+}
+
+#simulation-results .bot1-name {
+  /* width: 100%; */
+  font-size: 20px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#simulation-results .bot2-name {
+  /* width: 100%; */
+  font-size: 20px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 5;
+}
+
+#simulation-results .versus {
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+#simulation-results .bot1-wins {
+  font-size: 26px;
+  align-self: center;
+  justify-self: center;
+  grid-row: 2;
+  grid-column: 2;
+}
+
+#simulation-results .bot2-wins {
+  font-size: 26px;
+  justify-self: center;
+  align-self: center;
+  grid-row: 2;
+  grid-column: 4;
+}
+
+#simulation-results .time-to-execute {
+  justify-self: center;
+  grid-row: 3;
+  grid-column: 1/6;
+}
+
+#simulation-results button {
+  justify-self: center;
+  grid-row: 4;
+  grid-column: 1/6;
+}
+
+.scoreboard {
+  grid-row: 2;
+  grid-column: 1/6;
+  display: flex;
+  gap: 15px;
+  flex-direction: row;
+  justify-content: space-around;
+}
