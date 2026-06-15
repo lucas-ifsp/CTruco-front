@@ -1,20 +1,20 @@
-import useAuth from '../context/useAuth'
 import useIntel from '../context/useIntel'
-import useAxiosPrivate from './useAxiosPrivate'
+import useWebSocket from '../context/useWebSocket';
 
 const useDeleteGame = () => {
-    const axiosPrivate = useAxiosPrivate()
-    const { auth: { uuid } } = useAuth()
-    const { setIntel } = useIntel()
+    const { intel } = useIntel()
+    const { sendMessage } = useWebSocket();
 
     const deleteConcludedGame = async () => {
         try {
-            const url = `/api/v1/games/players/${uuid}`
-            await axiosPrivate.delete(url)
-            setIntel(null)
+            const game = intel.last;
+            const gameId = game.gameId
+            const loserUuid = game.players.find(p => p.uuid !== intel.last.gameWinner).uuid;
+            const destination = `/api/v2/games/${gameId}/quit`
+            sendMessage(destination, loserUuid)
         }
         catch (error) {
-            console.log(error.response.headers.authorization)
+            console.error("Erro ao deletar o jogo:", error);
         }
     }
     return deleteConcludedGame

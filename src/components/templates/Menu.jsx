@@ -12,18 +12,24 @@ const Menu = () => {
   const deleteConcludedGame = useDeleteGame();
   const { deleteTokens } = useRefreshToken();
   const [logged, setLogged] = useState(true);
-  const { championship, setChampionship } = useTournamentStatus();
+  const { championship } = useTournamentStatus();
 
   const handleNewGameSelection = () => {
     if (!intel) setIntel({});
   };
 
-  const handleLogout = (event) => {
+  const handleLogout = async (event) => {
     event.preventDefault();
-    const hasActiveGame = !!intel && Object.keys(intel).length > 0;
-    if (hasActiveGame) deleteConcludedGame();
-    deleteTokens();
-    setLogged(false);
+
+    try {
+      const hasActiveGame = !!intel && Object.keys(intel).length > 0;
+      if (hasActiveGame) deleteConcludedGame();
+      deleteTokens();
+    } catch (error) {
+      console.error("Erro durante o processo de logout:", error);
+    } finally {
+      setLogged(false);
+    }
   };
 
   return !logged ? (
@@ -39,7 +45,7 @@ const Menu = () => {
               to="/mat/start-game"
               onClick={handleNewGameSelection}
             >
-              <i className="bi bi-geo-fill" /> Você vs Bot{" "}
+              <i className="bi bi-geo-fill" /> Partida Única{" "}
             </Link>
 
             <Link className="accordion-link" to="/simulate-bots">
